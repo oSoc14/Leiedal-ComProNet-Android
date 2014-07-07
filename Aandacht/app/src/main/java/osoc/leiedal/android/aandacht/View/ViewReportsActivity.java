@@ -1,24 +1,24 @@
-package osoc.leiedal.android.aandacht;
+package osoc.leiedal.android.aandacht.View;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import osoc.leiedal.android.aandacht.R;
 
-
-public class LoginActivity extends ActionBarActivity {
+public class ViewReportsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_view_reports);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.login, menu);
+        getMenuInflater().inflate(R.menu.view_reports, menu);
         return true;
     }
 
