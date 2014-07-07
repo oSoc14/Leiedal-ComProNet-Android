@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import osoc.leiedal.android.aandacht.R;
 
 public class ViewReportsActivity extends ActionBarActivity {
@@ -11,7 +13,15 @@ public class ViewReportsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //get reports in area
+
         setContentView(R.layout.activity_view_reports);
+
+        // => see where the intent originated from to determine if all events should be pulled
+        String user = getIntent().getStringExtra("user");
+        Toast t = Toast.makeText(getApplicationContext(),"user: " + user,Toast.LENGTH_LONG);
+        t.show();
     }
 
 

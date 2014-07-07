@@ -1,5 +1,6 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -51,9 +52,12 @@ public class LoginActivity extends ActionBarActivity {
             Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.login_tstSucces), Toast.LENGTH_LONG);
             toast.show();
 
+            Intent gotoPref = new Intent(this,ViewReportsActivity.class);
+            gotoPref.putExtra("user",login);
+            startActivity(gotoPref);
 
         }else{
-            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.login_tstFail), Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.login_tstFail), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
