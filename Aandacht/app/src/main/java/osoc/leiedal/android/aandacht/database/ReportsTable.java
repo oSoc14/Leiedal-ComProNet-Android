@@ -14,6 +14,7 @@ public class ReportsTable {
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_LOCATION = "location";
     public static final String COLUMN_TIMESTAMP = "timestamp";
+    public static final String COLUMN_STATUS = "status";
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE =
@@ -22,7 +23,8 @@ public class ReportsTable {
             + COLUMN_ID + " integer primary key autoincrement,"
             + COLUMN_DESCRIPTION + " text not null,"
             + COLUMN_LOCATION + "string not null,"
-            + COLUMN_TIMESTAMP + "string not null"
+            + COLUMN_TIMESTAMP + "string not null,"
+            + COLUMN_STATUS + "string not null"
             + ")";
 
     public static void onCreate(final SQLiteDatabase database) {
