@@ -22,7 +22,7 @@
             android:authorities="osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider"
             android:exported="false"
             android:syncable="false"
-        />
+        /> <!-- does syncable need to be true? -->
 
     </application>
 
