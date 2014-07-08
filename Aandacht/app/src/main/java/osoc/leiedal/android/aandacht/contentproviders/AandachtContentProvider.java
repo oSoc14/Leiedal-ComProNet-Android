@@ -7,17 +7,51 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.media.UnsupportedSchemeException;
 import android.net.Uri;
 import android.text.TextUtils;
-
-import java.util.IllegalFormatCodePointException;
 
 import osoc.leiedal.android.aandacht.database.DatabaseHelper;
 import osoc.leiedal.android.aandacht.database.MessagesTable;
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 /**
+ * The ContentProvider which provides access to reports and messages through URIs. Below is a list
+ * of possible URIs and their supported actions.
+ *
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider
+ *
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports
+ * -query: the complete reports table
+ * -insert: insert into the reports table
+ * -update: update all rows in the reports table
+ * -delete: delete all rows in the reports table
+ *
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports/id/[id]
+ * -query: the report with the given id
+ * -update: update the row with the given id
+ * -delete: delete the row with the given id
+ *
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports/status/[status]
+ * -query: all reports with the given status
+ * -update: update all rows with the given status
+ * -delete: delete all rows with the given status
+ *
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages
+ * -query: the complete messages table
+ * -insert: insert into the messages table
+ * -update: update all rows in the reports table
+ * -delete: delete all rows in the reports table
+ *
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages/id/[id]
+ * -query: the message with the given id
+ * -update: update the message with the given id
+ * -delete: delete the message with the given id
+ *
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages/report/[id]
+ * -query: all messages belonging to the report with the given id
+ * -update: update all messages belonging to the report with the given id
+ * -delete: delete all messages belonging to the report with the given id
+ *
  * Created by Maarten on 7/07/2014.
  */
 public class AandachtContentProvider extends ContentProvider {
@@ -25,18 +59,17 @@ public class AandachtContentProvider extends ContentProvider {
     public static final String PROVIDER_NAME = "osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider";
 
     public static final Uri CONTENT_URI_ALL = Uri.parse("content://" + PROVIDER_NAME);
-
     // uris for the tables
     public static final Uri CONTENT_URI_REPORTS = Uri.parse("content://" + PROVIDER_NAME + "/reports");
     public static final Uri CONTENT_URI_MESSAGES = Uri.parse("content://" + PROVIDER_NAME + "/messages");
     // uris for the reports table
-    public static final Uri CONTENT_URI_REPORTS_ID = Uri.parse("content://" + PROVIDER_NAME + "/reports/id");
+    public static final Uri CONTENT_URI_REPORTS_ID = Uri.parse("content://" + PROVIDER_NAME + "/reports");
     public static final Uri CONTENT_URI_REPORTS_STATUS = Uri.parse("content://" + PROVIDER_NAME + "/reports/status");
     // uris for the messages table
-    public static final Uri CONTENT_URI_MESSAGES_ID = Uri.parse("content://" + PROVIDER_NAME + "/messages/id");
+    public static final Uri CONTENT_URI_MESSAGES_ID = Uri.parse("content://" + PROVIDER_NAME + "/messages");
     public static final Uri CONTENT_URI_MESSAGES_REPORT = Uri.parse("content://" + PROVIDER_NAME + "/messages/report");
 
-    private static final int TYPE_ALL = 1;                  // uri for the contentprovider
+    private static final int TYPE_ALL = 1;                  // uri for the ContentProvider
     private static final int TYPE_REPORTS = 10;             // uri for the reports table
     private static final int TYPE_REPORTS_ID = 11;          // uri for the reports by id
     private static final int TYPE_REPORTS_STATUS = 12;      // uri for the reports by status
@@ -50,14 +83,14 @@ public class AandachtContentProvider extends ContentProvider {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, null, TYPE_ALL);
         uriMatcher.addURI(PROVIDER_NAME, "reports", TYPE_REPORTS);
-        uriMatcher.addURI(PROVIDER_NAME, "reports/id/#", TYPE_REPORTS_ID);
+        uriMatcher.addURI(PROVIDER_NAME, "reports/#", TYPE_REPORTS_ID);
         uriMatcher.addURI(PROVIDER_NAME, "reports/status/*", TYPE_REPORTS_STATUS);
         uriMatcher.addURI(PROVIDER_NAME, "messages", TYPE_MESSAGES);
-        uriMatcher.addURI(PROVIDER_NAME, "messages/id/#", TYPE_MESSAGES_ID);
+        uriMatcher.addURI(PROVIDER_NAME, "messages/#", TYPE_MESSAGES_ID);
         uriMatcher.addURI(PROVIDER_NAME, "messages/report/#", TYPE_MESSAGES_REPORT);
     }
 
-    // ------------------------------
+    // ------------------------------------------------------------------------------------------
 
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase database;
@@ -195,8 +228,9 @@ public class AandachtContentProvider extends ContentProvider {
         if (newId < 0) {
             throw new SQLException("Failed to insert row into " + uri);
         }
+        getContext().getContentResolver().notifyChange(uri, null);
         // return the uri of the inserted data
-        return Uri.parse(uri + "/id/" + newId);
+        return Uri.parse(uri + "/" + newId);
     }
 
     @Override
