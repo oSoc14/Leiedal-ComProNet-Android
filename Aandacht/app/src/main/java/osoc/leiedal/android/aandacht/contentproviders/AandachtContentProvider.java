@@ -26,7 +26,7 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
  * -update: update all rows in the reports table
  * -delete: delete all rows in the reports table
  *
- * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports/id/[id]
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports/[id]
  * -query: the report with the given id
  * -update: update the row with the given id
  * -delete: delete the row with the given id
@@ -42,7 +42,7 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
  * -update: update all rows in the reports table
  * -delete: delete all rows in the reports table
  *
- * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages/id/[id]
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages/[id]
  * -query: the message with the given id
  * -update: update the message with the given id
  * -delete: delete the message with the given id
