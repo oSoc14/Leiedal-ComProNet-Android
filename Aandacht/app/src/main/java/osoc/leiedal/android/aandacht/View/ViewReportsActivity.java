@@ -2,9 +2,13 @@ package osoc.leiedal.android.aandacht.View;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import osoc.leiedal.android.aandacht.R;
 
@@ -19,11 +23,10 @@ public class ViewReportsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_reports);
 
         // => see where the intent originated from to determine if all events should be pulled
-        String user = getIntent().getStringExtra("user");
+        /*String user = getIntent().getStringExtra("user");
         Toast t = Toast.makeText(getApplicationContext(),"user: " + user,Toast.LENGTH_LONG);
-        t.show();
+        t.show();*/
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,4 +46,11 @@ public class ViewReportsActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
 }
