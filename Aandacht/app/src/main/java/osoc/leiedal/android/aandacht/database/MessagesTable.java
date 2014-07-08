@@ -24,7 +24,7 @@ public class MessagesTable {
             + COLUMN_REPORT_ID + " integer not null,"
             + COLUMN_SOURCE + " text,"
             + COLUMN_CONTENT + "text,"
-            + COLUMN_TIMESTAMP + "string not null"
+            + COLUMN_TIMESTAMP + "integer not null"
             + ")";
 
     public static void onCreate(final SQLiteDatabase database) {
