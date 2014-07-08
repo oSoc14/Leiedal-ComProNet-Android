@@ -23,7 +23,7 @@ public class ReportsTable {
             + COLUMN_ID + " integer primary key autoincrement,"
             + COLUMN_DESCRIPTION + " text not null,"
             + COLUMN_LOCATION + "string not null,"
-            + COLUMN_TIMESTAMP + "string not null,"
+            + COLUMN_TIMESTAMP + "integer not null,"
             + COLUMN_STATUS + "string not null"
             + ")";
 
