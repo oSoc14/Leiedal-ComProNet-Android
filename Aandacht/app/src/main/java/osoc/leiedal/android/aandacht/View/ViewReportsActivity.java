@@ -1,24 +1,34 @@
-package osoc.leiedal.android.aandacht;
+package osoc.leiedal.android.aandacht.View;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import osoc.leiedal.android.aandacht.R;
 
-public class LoginActivity extends ActionBarActivity {
+public class ViewReportsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
+        //get reports in area
+
+        setContentView(R.layout.activity_view_reports);
+
+        // => see where the intent originated from to determine if all events should be pulled
+        String user = getIntent().getStringExtra("user");
+        Toast t = Toast.makeText(getApplicationContext(),"user: " + user,Toast.LENGTH_LONG);
+        t.show();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.login, menu);
+        getMenuInflater().inflate(R.menu.view_reports, menu);
         return true;
     }
 

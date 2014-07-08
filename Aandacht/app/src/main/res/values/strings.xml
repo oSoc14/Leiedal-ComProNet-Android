@@ -2,7 +2,20 @@
 <resources>
 
     <string name="app_name">Aandacht</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- login -->
+    <string name="login_hintLogin">Login</string>
+    <string name="login_hintPass">Password</string>
+
+    <string name="login_btnLogin">Log in</string>
+
+    <string name="login_tstSucces">Gelukt!</string>
+    <string name="login_tstFail">Aanmelden mislukt!</string>
+
+
+    <!-- ViewReports -->
+    <string name="reports_title">Reports</string>
+
 
 </resources>
