@@ -5,26 +5,14 @@
     android:layout_height="match_parent"
     tools:context="osoc.leiedal.android.aandacht.View.ViewReportsActivity">
 
-
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/reports_btnCall"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
-        <Button
-            android:id="@+id/reports_btnCall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/reports_btnCall"
-            android:textColor="#FFFBEB"
-            android:background="#BF3504"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:onClick="call"/>
 
         <TextView
             android:id="@+id/textView"
@@ -39,7 +27,7 @@
 
         <com.astuetz.PagerSlidingTabStrip
             android:id="@+id/tabs"
-           app:pstsShouldExpand="true"
+            app:pstsShouldExpand="true"
             android:layout_width="match_parent"
             android:layout_height="48dip"/>
 
@@ -50,6 +38,20 @@
             android:layout_above="@+id/colors"
             android:layout_below="@+id/tabs" />
 
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/reports_btnCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reports_btnCall"
+        android:layout_alignParentBottom="true"
+        android:textColor="#FFFBEB"
+        android:background="#BF3504"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="call"/>
+
 </RelativeLayout>
