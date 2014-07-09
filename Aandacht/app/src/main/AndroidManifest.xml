@@ -7,8 +7,10 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <permission android:name="com.example.gcm.permission.C2D_MESSAGE"
+    <permission
+        android:name="com.example.gcm.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
 
     <application
@@ -16,8 +18,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
@@ -31,20 +33,23 @@
         </activity>
         <activity
             android:name=".View.ViewReportsActivity"
-            android:label="@string/reports_title">
+            android:label="@string/reports_title" >
         </activity>
 
-        <!-- recievers
         <receiver
-            android:name=".GcmBroadcastReceiver"
+            android:name="osoc.leiedal.android.aandacht.Tools.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="com.example.gcm" />
             </intent-filter>
         </receiver>
-        <service android:name=".GcmIntentService" />
-        -->
+        <service android:name="osoc.leiedal.android.aandacht.Tools.GcmIntentService"/>
+<!--
+        <service
+            android:name=".Tools.GcmIntentService"
+            android:exported="false" >
+        </service>-->
     </application>
 
 </manifest>

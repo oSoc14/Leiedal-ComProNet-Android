@@ -22,10 +22,13 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.io.IOException;
 
 import osoc.leiedal.android.aandacht.R;
+import osoc.leiedal.android.aandacht.Tools.GcmBroadcastReceiver;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.DummyAPIAccess;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.iAPIAccess;
 
 public class LoginActivity extends ActionBarActivity {
+
+    public final static String SENDER_ID = "200184399948";
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     public static final String EXTRA_MESSAGE = "message";
@@ -33,8 +36,11 @@ public class LoginActivity extends ActionBarActivity {
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private GoogleCloudMessaging gcm = null;
-    private final static String SENDER_ID = "200184399948";
     private static String regid;
+
+    public static String getRegId(){
+        return regid;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +59,17 @@ public class LoginActivity extends ActionBarActivity {
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
+
+        //start recieve rommel
+
+
+        //(Toast.makeText(getApplicationContext(),regid,Toast.LENGTH_LONG)).show(); //weergegeven
     }
     @Override
     protected void onResume() {
         super.onResume();
         checkPlayServices();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
