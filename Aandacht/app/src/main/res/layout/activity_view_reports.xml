@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="osoc.leiedal.android.aandacht.View.ViewReportsActivity">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -41,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/colors"
             android:layout_below="@+id/tabs" />
-
 
     </LinearLayout>
 </RelativeLayout>

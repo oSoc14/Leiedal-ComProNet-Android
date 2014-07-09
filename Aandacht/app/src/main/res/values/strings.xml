@@ -10,8 +10,8 @@
 
     <string name="login_btnLogin">Log in</string>
 
-    <string name="login_tstSucces">Gelukt!</string>
     <string name="login_tstFail">Aanmelden mislukt!</string>
+    <string name="login_gpsFail">Google playservices mislukt!</string>
 
 
     <!-- ViewReports -->

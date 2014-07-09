@@ -7,6 +7,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Color;
@@ -29,25 +33,36 @@ import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.internal.cu;
+
+import java.io.IOException;
+
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.views.FontTextView;
 
 public class ViewReportsActivity extends ActionBarActivity {
+
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
     private MyPagerAdapter adapter;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //get reports in area
-
         setContentView(R.layout.activity_view_reports);
 
         // => see where the intent originated from to determine if all events should be pulled
-        String user = getIntent().getStringExtra("user");
+        /*String user = getIntent().getStringExtra("user");
         Toast t = Toast.makeText(getApplicationContext(),"user: " + user,Toast.LENGTH_LONG);
-        t.show();
+        t.show();*/
 
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager = (ViewPager) findViewById(R.id.pager);
@@ -60,8 +75,11 @@ public class ViewReportsActivity extends ActionBarActivity {
 
         tabs.setViewPager(pager);
 
+        /* View generated id
+        TextView t = (TextView) findViewById(R.id.txtRegId);
+        t.setText(LoginActivity.getRegId());
+        */
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,7 +135,7 @@ public class ViewReportsActivity extends ActionBarActivity {
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = { "Actief", "Alle", "Mijn Incidenten" };
+        private final String[] TITLES = {"Actief", "Alle", "Mijn Incidenten"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -137,7 +155,35 @@ public class ViewReportsActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             return MyFrag.instantiate(position);
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    public void send(final View view) {
+        new AsyncTask() {
+
+            @Override
+            protected Object doInBackground(Object[] params) {
+                String msg = "";
+                try {
+                    Bundle data = new Bundle();
+                    data.putString("my_message", "Hello World");
+                    data.putString("my_action",
+                            "com.google.android.gcm.demo.app.ECHO_NOW");
+                    String id = Long.toString(System.currentTimeMillis());
+                    GoogleCloudMessaging.getInstance(getApplicationContext())
+                            .send(LoginActivity.SENDER_ID + "@gcm.googleapis.com", id, data);
+                    msg = "Sent message";
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                }
+                return msg;
+            }
+        }.execute(null, null, null);
     }
 }
 
