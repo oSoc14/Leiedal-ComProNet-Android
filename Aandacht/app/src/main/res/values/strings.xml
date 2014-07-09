@@ -15,9 +15,13 @@
 
 
     <!-- ViewReports -->
-    <string name="reports_title">Reports</string>
+    <string name="reports_title">Aandacht</string>
     <string name="reports_btnCall">Bel 112</string>
     <string name="reports_txtIncidenten">Incidenten</string>
+    <string name="action_map">Kaart</string>
+    <string name="action_profile">Profiel</string>
+    <string name="action_logout">Logout</string>
+
 
 
 

@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="osoc.leiedal.android.aandacht.View.ViewReportsActivity">
@@ -19,7 +20,11 @@
             android:text="@string/reports_btnCall"
             android:textColor="#FFFBEB"
             android:background="#BF3504"
-            android:id="@+id/reports_btnCall" />
+            android:id="@+id/reports_btnCall"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:onClick="call"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,10 +33,13 @@
             android:text="@string/reports_txtIncidenten"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
-            android:textColor="#0075c6"/>
+            android:textColor="#0075c6"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
 
         <com.astuetz.PagerSlidingTabStrip
             android:id="@+id/tabs"
+           app:pstsShouldExpand="true"
             android:layout_width="match_parent"
             android:layout_height="48dip"/>
 

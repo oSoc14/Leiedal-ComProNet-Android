@@ -1,12 +1,19 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Color;
@@ -59,9 +66,35 @@ public class ViewReportsActivity extends ActionBarActivity {
                 .getDisplayMetrics());
 
         tabs.setViewPager(pager);
+    }
+
+    public void call(View v){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Bel 112");
+        builder.setMessage("Weet u zeker dat u de nooddiensten wil bellen?\nMisbruik is strafbaar!");
+        builder.setPositiveButton("Bel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton){
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:0478927411"));
+                startActivity(callIntent);
+            }
+        });
+        builder.setNegativeButton("Annuleer", null);
+
+        AlertDialog dialog = builder.show();
+        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER);
+        dialog.show();
+    }
+
+    public void callNumber(){
 
     }
 
+    public void map(View v){
+        Intent gotoPref = new Intent(this,ViewReportsActivity.class);
+        startActivity(gotoPref);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,7 +150,7 @@ public class ViewReportsActivity extends ActionBarActivity {
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = { "Actief", "Alle", "Mijn Incidenten" };
+        private final String[] TITLES = { "Actief", "Alle", "Mijn" };
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

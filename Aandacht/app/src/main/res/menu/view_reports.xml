@@ -2,8 +2,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="osoc.leiedal.android.aandacht.View.ViewReportsActivity" >
+    <item android:id="@+id/action_map"
+        android:icon="@drawable/ic_action_map"
+        android:title="@string/action_map"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_profile"
+        android:icon="@drawable/ic_action_profile"
+        android:title="@string/action_profile"
+        app:showAsAction="always"/>
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_logout"
+        android:title="@string/action_logout"
+        android:orderInCategory="200"
         app:showAsAction="never" />
 </menu>
