@@ -7,18 +7,14 @@
     <!-- login -->
     <string name="login_hintLogin">Login</string>
     <string name="login_hintPass">Password</string>
-
     <string name="login_btnLogin">Log in</string>
-
     <string name="login_tstSucces">Gelukt!</string>
     <string name="login_tstFail">Aanmelden mislukt!</string>
-
 
     <!-- ViewReports -->
     <string name="reports_title">Reports</string>
     <string name="reports_btnCall">Bel 112</string>
     <string name="reports_txtIncidenten">Incidenten</string>
-
-
+    <string name="title_activity_maps">Map</string>
 
 </resources>
