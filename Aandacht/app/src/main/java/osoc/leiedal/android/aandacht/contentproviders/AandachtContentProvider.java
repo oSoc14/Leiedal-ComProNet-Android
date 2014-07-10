@@ -120,7 +120,7 @@ public class AandachtContentProvider extends ContentProvider {
                 // all reports ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
                 if (sortOrder == null || sortOrder == "") {
-                    sortOrder = ReportsTable.COLUMN_TIMESTAMP + " DESC";
+                    sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
                 break;
             case TYPE_REPORTS_ID:
@@ -133,7 +133,7 @@ public class AandachtContentProvider extends ContentProvider {
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
                 qBuilder.appendWhere(ReportsTable.COLUMN_STATUS + "=" + uri.getLastPathSegment());
                 if (sortOrder == null || sortOrder == "") {
-                    sortOrder = ReportsTable.COLUMN_TIMESTAMP + " DESC";
+                    sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
                 break;
             case TYPE_MESSAGES:

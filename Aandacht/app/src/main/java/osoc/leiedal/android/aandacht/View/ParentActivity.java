@@ -45,6 +45,9 @@ public class ParentActivity extends ActionBarActivity {
             case R.id.action_logout:
                 this.startActivity(new Intent(this,LoginActivity.class));
                 break;
+            case R.id.action_map:
+                this.startActivity(new Intent(this,MapsActivity.class));
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
