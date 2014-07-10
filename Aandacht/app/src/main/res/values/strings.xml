@@ -31,5 +31,12 @@ Misbruik is strafbaar!</string>
     <string name="title_activity_default">defaultActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_parent">parentActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- settings -->
+    <string name="settings_active">Notifications</string>
+    <string name="title_activity_view_settings">ViewSettingsActivity</string>
+    <string name="settings_sound">Sound</string>
+
 
 </resources>

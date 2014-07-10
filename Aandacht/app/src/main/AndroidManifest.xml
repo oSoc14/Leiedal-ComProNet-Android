@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CALL_PHONE" android:required="false"/>
+    <uses-permission
+        android:name="android.permission.CALL_PHONE"
+        android:required="false" />
 
     <permission
         android:name="com.example.gcm.permission.C2D_MESSAGE"
@@ -32,16 +34,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".View.LoginActivity"
             android:label="@string/reports_title" >
         </activity>
-
         <activity
             android:name=".View.ViewProfileActivity"
             android:label="@string/title_activity_view_profile"
-            android:parentActivityName="osoc.leiedal.android.aandacht.View.ViewReportsActivity">
+            android:parentActivityName=".View.ViewReportsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="osoc.leiedal.android.aandacht.View.ViewReportsActivity" />
@@ -68,6 +68,10 @@
         <activity
             android:name=".View.ParentActivity"
             android:label="@string/title_activity_parent" >
+        </activity>
+        <activity
+            android:name=".View.ViewSettingsActivity"
+            android:label="@string/title_activity_view_settings" >
         </activity>
     </application>
 
