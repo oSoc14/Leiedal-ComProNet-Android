@@ -102,22 +102,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            //goto settings
-
-            return true;
-        }else if(id == R.id.action_profile){
-            //goto profile
-            this.startActivity(new Intent(this,ViewProfileActivity.class));
-            return true;
-        }else if(id == R.id.action_logout){
-            this.startActivity(new Intent(this,LoginActivity.class));
-            return true;
-        }else {
-            return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static class MyFrag extends Fragment {

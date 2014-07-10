@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CALL_PHONE" android:required="false"/>
+    <uses-permission
+        android:name="android.permission.CALL_PHONE"
+        android:required="false" />
 
     <permission
         android:name="com.example.gcm.permission.C2D_MESSAGE"
@@ -24,6 +26,14 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
+            android:name=".View.ParentActivity"
+            android:label="@string/title_activity_parent" >
+        </activity>
+        <activity
+            android:name=".View.LoginActivity"
+            android:label="@string/reports_title" >
+        </activity>
+        <activity
             android:name=".View.ViewReportsActivity"
             android:label="@string/app_name" >
             <intent-filter>
@@ -34,25 +44,30 @@
         </activity>
 
         <activity
-            android:name=".View.LoginActivity"
-            android:label="@string/reports_title" >
-        </activity>
-
-        <activity
             android:name=".View.ViewProfileActivity"
             android:label="@string/title_activity_view_profile"
-            android:parentActivityName="osoc.leiedal.android.aandacht.View.ViewReportsActivity">
+            android:parentActivityName=".View.ViewReportsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="osoc.leiedal.android.aandacht.View.ViewReportsActivity" />
+        </activity>
+        <activity
+            android:name=".View.ViewSettingsActivity"
+            android:label="@string/title_activity_view_settings"
+            android:parentActivityName=".View.ViewReportsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="osoc.leiedal.android.aandacht.View.ViewReportsActivity" />
         </activity>
 
+
         <provider
             android:name=".contentproviders.AandachtContentProvider"
             android:authorities="osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider"
             android:exported="false"
-            android:syncable="false" /> <!-- does syncable need to be true? -->
+            android:syncable="false" /> <!-- does syncable need to be true? = nobody knows -->
 
+        <!-- push notifications -->
         <receiver
             android:name=".Tools.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -62,13 +77,7 @@
                 <category android:name="com.example.gcm" />
             </intent-filter>
         </receiver>
-
         <service android:name=".Tools.GcmIntentService" />
-
-        <activity
-            android:name=".View.ParentActivity"
-            android:label="@string/title_activity_parent" >
-        </activity>
     </application>
 
 </manifest>
