@@ -38,5 +38,6 @@ Misbruik is strafbaar!</string>
     <string name="title_activity_view_settings">ViewSettingsActivity</string>
     <string name="settings_sound">Sound</string>
 
+    <string name="title_activity_maps">Map</string>
 
 </resources>
