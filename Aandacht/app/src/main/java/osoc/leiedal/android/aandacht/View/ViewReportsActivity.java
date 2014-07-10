@@ -37,7 +37,7 @@ import java.io.IOException;
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.views.FontTextView;
 
-public class ViewReportsActivity extends ActionBarActivity implements View.OnCreateContextMenuListener {
+public class ViewReportsActivity extends ParentActivity implements View.OnCreateContextMenuListener {
 
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
@@ -95,6 +95,8 @@ public class ViewReportsActivity extends ActionBarActivity implements View.OnCre
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
+
         getMenuInflater().inflate(R.menu.view_reports, menu);
         return true;
     }

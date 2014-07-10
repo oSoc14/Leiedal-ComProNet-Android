@@ -19,8 +19,8 @@
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
@@ -32,7 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".View.LoginActivity"
             android:label="@string/reports_title" >
@@ -46,20 +45,24 @@
             android:name=".contentproviders.AandachtContentProvider"
             android:authorities="osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider"
             android:exported="false"
-            android:syncable="false"
-        /> <!-- does syncable need to be true? -->
+            android:syncable="false" /> <!-- does syncable need to be true? -->
 
         <receiver
-            android:name="osoc.leiedal.android.aandacht.Tools.GcmBroadcastReceiver"
+            android:name=".Tools.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.example.gcm" />
             </intent-filter>
         </receiver>
-        <service android:name="osoc.leiedal.android.aandacht.Tools.GcmIntentService"/>
 
+        <service android:name=".Tools.GcmIntentService" />
+
+        <activity
+            android:name=".View.parentActivity"
+            android:label="@string/title_activity_parent" >
+        </activity>
     </application>
-
 
 </manifest>

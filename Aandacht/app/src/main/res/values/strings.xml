@@ -30,5 +30,6 @@ Misbruik is strafbaar!</string>
     <string name="profile_btnEditPicture">Edit picture</string>
     <string name="title_activity_default">defaultActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_parent">parentActivity</string>
 
 </resources>

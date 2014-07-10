@@ -21,7 +21,7 @@ import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.fragments.ViewProfileFragment;
 import osoc.leiedal.android.aandacht.views.FontTextView;
 
-public class ViewProfileActivity extends ActionBarActivity implements ViewProfileFragment.OnFragmentInteractionListener {
+public class ViewProfileActivity extends ParentActivity implements ViewProfileFragment.OnFragmentInteractionListener {
 
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
@@ -48,7 +48,8 @@ public class ViewProfileActivity extends ActionBarActivity implements ViewProfil
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present.7
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.view_profile, menu);
         return true;
     }
