@@ -7,12 +7,9 @@
     <!-- login -->
     <string name="login_hintLogin">Login</string>
     <string name="login_hintPass">Password</string>
-
     <string name="login_btnLogin">Log in</string>
-
     <string name="login_tstSucces">Gelukt!</string>
     <string name="login_tstFail">Aanmelden mislukt!</string>
-
 
     <!-- ViewReports -->
     <string name="reports_title">Aandacht</string>
@@ -21,8 +18,17 @@
     <string name="action_map">Kaart</string>
     <string name="action_profile">Profiel</string>
     <string name="action_logout">Logout</string>
+    <string name="reports_popup_title">Bel 112</string>
+    <string name="reports_popup_text">Weet u zeker dat u de nooddiensten wil bellen?
+Misbruik is strafbaar!</string>
+    <string name="reports_popup_btnCall">Bel</string>
+    <string name="reports_popup_btnCancel">Annuleer</string>
 
-
-
+    <!-- profile -->
+    <string name="profile_banner">U bent aangemeld als </string>
+    <string name="title_activity_view_profile">View Profile</string>
+    <string name="profile_btnEditPicture">Edit picture</string>
+    <string name="title_activity_default">defaultActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

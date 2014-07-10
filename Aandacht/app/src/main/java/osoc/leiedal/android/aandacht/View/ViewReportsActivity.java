@@ -1,6 +1,5 @@
 package osoc.leiedal.android.aandacht.View;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,36 +12,25 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.TransitionDrawable;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.views.FontTextView;
 
-public class ViewReportsActivity extends ActionBarActivity {
+public class ViewReportsActivity extends ActionBarActivity implements View.OnCreateContextMenuListener {
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
     private MyPagerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +40,9 @@ public class ViewReportsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_reports);
 
         // => see where the intent originated from to determine if all events should be pulled
-        String user = getIntent().getStringExtra("user");
+       /* String user = getIntent().getStringExtra("user");
         Toast t = Toast.makeText(getApplicationContext(),"user: " + user,Toast.LENGTH_LONG);
-        t.show();
+        t.show();*/
 
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager = (ViewPager) findViewById(R.id.pager);
@@ -70,16 +58,16 @@ public class ViewReportsActivity extends ActionBarActivity {
 
     public void call(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Bel 112");
-        builder.setMessage("Weet u zeker dat u de nooddiensten wil bellen?\nMisbruik is strafbaar!");
-        builder.setPositiveButton("Bel", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.reports_popup_title);
+        builder.setMessage(R.string.reports_popup_text);
+        builder.setPositiveButton(R.string.reports_btnCall, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton){
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:0478927411"));
                 startActivity(callIntent);
             }
         });
-        builder.setNegativeButton("Annuleer", null);
+        builder.setNegativeButton(R.string.reports_popup_btnCancel, null);
 
         AlertDialog dialog = builder.show();
         TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
@@ -109,10 +97,21 @@ public class ViewReportsActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         if (id == R.id.action_settings) {
+            //goto settings
+
             return true;
+        }else if(id == R.id.action_profile){
+            //goto profile
+            this.startActivity(new Intent(this,ViewProfileActivity.class));
+            return true;
+        }else if(id == R.id.action_logout){
+            this.startActivity(new Intent(this,LoginActivity.class));
+            return true;
+        }else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public static class MyFrag extends Fragment {
@@ -148,7 +147,7 @@ public class ViewReportsActivity extends ActionBarActivity {
     }
 
 
-    public class MyPagerAdapter extends FragmentPagerAdapter {
+    private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private final String[] TITLES = { "Actief", "Alle", "Mijn" };
 

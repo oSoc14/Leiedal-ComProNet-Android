@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.DummyAPIAccess;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.iAPIAccess;
@@ -20,6 +21,10 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ((EditText) findViewById(R.id.login_txtPass)).setText("");
+
+
     }
 
 
@@ -52,9 +57,8 @@ public class LoginActivity extends ActionBarActivity {
             Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.login_tstSucces), Toast.LENGTH_LONG);
             toast.show();
 
-            Intent gotoPref = new Intent(this,ViewReportsActivity.class);
-            gotoPref.putExtra("user",login);
-            startActivity(gotoPref);
+            //gotoPref.putExtra("user",login);
+            startActivity(new Intent(this,ViewReportsActivity.class));
 
         }else{
             Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.login_tstFail), Toast.LENGTH_SHORT);
