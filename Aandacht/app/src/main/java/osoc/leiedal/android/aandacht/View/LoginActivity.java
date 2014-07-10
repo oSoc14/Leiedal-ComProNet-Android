@@ -14,12 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
+
 
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.Tools.GcmBroadcastReceiver;
@@ -59,12 +59,11 @@ public class LoginActivity extends ActionBarActivity {
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
+        setContentView(R.layout.activity_login);
+        ((EditText) findViewById(R.id.login_txtPass)).setText("");
 
-        //start recieve rommel
-
-
-        //(Toast.makeText(getApplicationContext(),regid,Toast.LENGTH_LONG)).show(); //weergegeven
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -105,6 +104,8 @@ public class LoginActivity extends ActionBarActivity {
         if (api.login(login, pass)) {
 
             int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+            //gotoPref.putExtra("user",login);
+            startActivity(new Intent(this,ViewReportsActivity.class));
 
             if (checkPlayServices()){
                 Intent gotoPref = new Intent(this,ViewReportsActivity.class);
