@@ -32,13 +32,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".View.LoginActivity"
             android:label="@string/reports_title" >
         </activity>
+
         <activity
             android:name=".View.ViewProfileActivity"
-            android:label="@string/title_activity_view_profile" >
+            android:label="@string/title_activity_view_profile"
+            android:parentActivityName="osoc.leiedal.android.aandacht.View.ViewReportsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="osoc.leiedal.android.aandacht.View.ViewReportsActivity" />
         </activity>
 
         <provider
@@ -60,7 +66,7 @@
         <service android:name=".Tools.GcmIntentService" />
 
         <activity
-            android:name=".View.parentActivity"
+            android:name=".View.ParentActivity"
             android:label="@string/title_activity_parent" >
         </activity>
     </application>

@@ -43,6 +43,9 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
 
         tabs.setViewPager(pager);
 
+        //back / up button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 
