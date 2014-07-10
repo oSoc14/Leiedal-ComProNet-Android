@@ -84,10 +84,6 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         dialog.show();
     }
 
-    public void callNumber(){
-
-    }
-
     public void map(View v){
         Intent gotoPref = new Intent(this,MapsActivity.class);
         startActivity(gotoPref);
