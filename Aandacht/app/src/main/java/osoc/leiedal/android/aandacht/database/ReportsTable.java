@@ -8,13 +8,25 @@ import android.util.Log;
  */
 public class ReportsTable {
 
-    // Database and column names
+    // database and column names
     public static final String TABLE_NAME = "reports";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_LOCATION = "location";
-    public static final String COLUMN_TIMESTAMP = "timestamp";
+    public static final String COLUMN_ADDRESS = "address";
+    public static final String COLUMN_LOCATION_LAT = "latitude";
+    public static final String COLUMN_LOCATION_LNG = "longitude";
+    public static final String COLUMN_TIMESTAMP_START = "timestamp_start";
+    public static final String COLUMN_TIMESTAMP_END = "timestamp_end";
     public static final String COLUMN_STATUS = "status";
+
+    // possible status values
+    public static final String STATUS_ACTIVE = "active";
+    public static final String STATUS_DENIED = "denied";
+    public static final String STATUS_PENDING = "pending";
+    public static final String STATUS_FINISHED = "finished";
+
+    // projections
+    public static final String[] PROJECTION_ALL = null;
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE =
@@ -22,9 +34,12 @@ public class ReportsTable {
             + "("
             + COLUMN_ID + " integer primary key autoincrement,"
             + COLUMN_DESCRIPTION + " text not null,"
-            + COLUMN_LOCATION + "string not null,"
-            + COLUMN_TIMESTAMP + "integer not null,"
-            + COLUMN_STATUS + "string not null"
+            + COLUMN_ADDRESS + " text not null,"
+            + COLUMN_LOCATION_LAT + " real not null,"
+            + COLUMN_LOCATION_LNG + " real not null,"
+            + COLUMN_STATUS + " string not null,"
+            + COLUMN_TIMESTAMP_START + " integer not null,"
+            + COLUMN_TIMESTAMP_END + " integer not null"
             + ")";
 
     public static void onCreate(final SQLiteDatabase database) {
