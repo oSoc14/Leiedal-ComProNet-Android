@@ -15,6 +15,9 @@ public class ViewSettingsActivity extends ActionBarActivity implements ViewSetti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_settings);
+
+        //back / up button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -30,10 +33,6 @@ public class ViewSettingsActivity extends ActionBarActivity implements ViewSetti
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
