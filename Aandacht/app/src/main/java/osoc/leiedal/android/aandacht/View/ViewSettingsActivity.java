@@ -17,7 +17,8 @@ public class ViewSettingsActivity extends ActionBarActivity implements ViewSetti
         setContentView(R.layout.activity_view_settings);
 
         //back / up button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null)
+            getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
