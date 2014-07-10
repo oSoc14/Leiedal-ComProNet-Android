@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int dbVersion = 1;
+    private static final int dbVersion = 2;
     private static final String dbName = "aandacht.db";
 
     public DatabaseHelper(Context context) {

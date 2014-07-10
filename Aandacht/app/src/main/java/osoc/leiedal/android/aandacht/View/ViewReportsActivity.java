@@ -33,6 +33,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.internal.cu;
 
 import java.io.IOException;
+import java.util.Map;
 
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.views.FontTextView;
@@ -84,7 +85,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
     }
 
     public void map(View v){
-        Intent gotoPref = new Intent(this,ViewReportsActivity.class);
+        Intent gotoPref = new Intent(this,MapsActivity.class);
         startActivity(gotoPref);
     }
 
