@@ -28,7 +28,10 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
         setContentView(R.layout.activity_view_profile);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabs.setIndicatorColor(Color.parseColor("#007AFF"));
+        tabs.setIndicatorColor(Color.parseColor("#0075c6"));
+        tabs.setTextColor(Color.parseColor("#0075c6"));
+        tabs.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());

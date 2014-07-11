@@ -50,7 +50,9 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        tabs.setIndicatorColor(Color.parseColor("#007AFF"));
+        tabs.setIndicatorColor(Color.parseColor("#0075c6"));
+        tabs.setTextColor(Color.parseColor("#0075c6"));
+        tabs.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         pager.setAdapter(adapter);
 
