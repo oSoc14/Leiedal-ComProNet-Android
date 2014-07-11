@@ -8,12 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtView_adress"
-        android:text="adresss"/>
+        android:text="adresss"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtView_update"
-        android:text="summary"/>
+        android:text="summary"
+        android:paddingBottom="20px"/>
 
 </LinearLayout>
