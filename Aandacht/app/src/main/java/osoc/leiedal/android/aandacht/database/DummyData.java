@@ -83,11 +83,11 @@ public class DummyData {
     }
 
     private static double Latitude() {
-        return LOCATION[0] + rnd.nextDouble() * 0.01 - 0.005;
+        return LOCATION[0] + rnd.nextDouble() * 0.008 - 0.004;
     }
 
     private static double Longitude() {
-        return LOCATION[1] + rnd.nextDouble() * 0.01 - 0.005;
+        return LOCATION[1] + rnd.nextDouble() * 0.008 - 0.004;
     }
 
     private static String Status() {

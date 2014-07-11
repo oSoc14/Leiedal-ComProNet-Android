@@ -27,6 +27,8 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 public class MapsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final int LOADER_REQUEST = 3;
+
     // ------------------------------
 
     private BitmapDescriptor MARKER_PENDING;
@@ -42,7 +44,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
-        getSupportLoaderManager().initLoader(1000, null, this);
+        getSupportLoaderManager().initLoader(LOADER_REQUEST, null, this);
         //back / up button
         if (getActionBar() != null)
             getActionBar().setDisplayHomeAsUpEnabled(true);

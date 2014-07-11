@@ -11,6 +11,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import osoc.leiedal.android.aandacht.MyCursorAdaptor;
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
+import osoc.leiedal.android.aandacht.database.ReportsTable;
 import osoc.leiedal.android.aandacht.views.FontTextView;
 
 public class ViewReportsActivity extends ParentActivity implements View.OnCreateContextMenuListener {
@@ -124,16 +126,11 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_test, container, false);
-            final FontTextView textView = (FontTextView) v.findViewById(R.id.textview_test);
-            textView.setText(String.format("position %d", mPosition));
-
+            //final FontTextView textView = (FontTextView) v.findViewById(R.id.textview_test);
+            //textView.setText(String.format("position %d", mPosition));
             listReports = (ListView) v.findViewById(R.id.list_report);
             myCursorAdaptor = new MyCursorAdaptor( getActivity(), null, 0 );
             listReports.setAdapter(myCursorAdaptor);
-
-
-
-
             return v;
         }
 
@@ -143,7 +140,6 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
                 case LOADER_REQUEST:
                     final Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
                     return new CursorLoader(getActivity(), uri, null, null, null, null);
-
                 default:
                     return null;
             }
