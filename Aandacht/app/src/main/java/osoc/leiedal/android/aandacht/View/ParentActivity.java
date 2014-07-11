@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.fragments.ViewSettingsFragment;
+import osoc.leiedal.android.aandacht.database.DummyData;
 
 /**
  * Used for 'global stuffs' like option menu, ...
@@ -17,6 +18,10 @@ public class ParentActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
+
+        // inject dummy data
+        DummyData.InjectDummyData(this);
+
     }
 
 

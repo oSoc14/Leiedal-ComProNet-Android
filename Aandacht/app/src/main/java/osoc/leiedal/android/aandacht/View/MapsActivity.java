@@ -45,7 +45,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
-        getSupportLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().initLoader(1000, null, this);
     }
 
     @Override
@@ -82,9 +82,8 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
-        String[] projection = ReportsTable.PROJECTION_ALL;
         String selection = ReportsTable.COLUMN_STATUS + " IN ('" + ReportsTable.STATUS_ACTIVE + "','" + ReportsTable.STATUS_PENDING + "')";
-        CursorLoader cursorLoader = new CursorLoader(this, uri, projection, selection, null, null);
+        CursorLoader cursorLoader = new CursorLoader(this, uri, null, selection, null, null);
         return cursorLoader;
     }
 
