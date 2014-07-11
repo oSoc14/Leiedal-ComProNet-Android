@@ -15,9 +15,9 @@ public class ReportsTable {
     public static final String COLUMN_ADDRESS = "address";
     public static final String COLUMN_LOCATION_LAT = "latitude";
     public static final String COLUMN_LOCATION_LNG = "longitude";
+    public static final String COLUMN_STATUS = "status";
     public static final String COLUMN_TIMESTAMP_START = "timestamp_start";
     public static final String COLUMN_TIMESTAMP_END = "timestamp_end";
-    public static final String COLUMN_STATUS = "status";
 
     // possible status values
     public static final String STATUS_ACTIVE = "active";

@@ -1,11 +1,13 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -34,12 +36,17 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
 
     private GoogleMap map;
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        //back / up button
+        if (getActionBar() != null)
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+
         setUpMapIfNeeded();
-        getSupportLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().initLoader(1000, null, this);
     }
 
     @Override
@@ -76,9 +83,9 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
-        String[] projection = ReportsTable.PROJECTION_ALL;
         String selection = ReportsTable.COLUMN_STATUS + " IN ('" + ReportsTable.STATUS_ACTIVE + "','" + ReportsTable.STATUS_PENDING + "')";
-        return new CursorLoader(this, uri, projection, selection, null, null);
+        CursorLoader cursorLoader = new CursorLoader(this, uri, null, selection, null, null);
+        return cursorLoader;
     }
 
     @Override

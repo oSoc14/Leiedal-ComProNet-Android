@@ -8,9 +8,11 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,10 +25,11 @@ import java.io.IOException;
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.DummyAPIAccess;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.iAPIAccess;
+import osoc.leiedal.android.aandacht.database.DummyData;
 
 public class LoginActivity extends ParentActivity {
 
-    public final static String SENDER_ID = "200184399948";
+    public final static String SENDER_ID = "@string/senderId";
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     public static final String PROPERTY_REG_ID = "registration_id";
@@ -52,33 +55,46 @@ public class LoginActivity extends ParentActivity {
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
-        setContentView(R.layout.activity_login);
-        ((EditText) findViewById(R.id.login_txtPass)).setText("");
 
+        if (getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean("authenticated",false)){
+            //ALREADY SIGNED IN
+            Intent gotoPref = new Intent(this,ViewReportsActivity.class);
+            startActivity(gotoPref);
+        }else{
+            setContentView(R.layout.activity_login);
+            final EditText edittext = (EditText) findViewById(R.id.login_txtPass);
+            edittext.setOnKeyListener(new View.OnKeyListener() {
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        String login = ( (EditText)findViewById(R.id.login_txtLogin)).getText().toString();
+                        String pass  = ( (EditText)findViewById(R.id.login_txtPass) ).getText().toString();
+
+                        login(login,pass);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            ((EditText) findViewById(R.id.login_txtLogin)).setText(getSharedPreferences(getResources().getString(R.string.app_pref),0).getString("user",""));
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         checkPlayServices();
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(osoc.leiedal.android.aandacht.R.menu.login, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    }
 
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Handles the login button
@@ -90,8 +106,10 @@ public class LoginActivity extends ParentActivity {
         String login = ( (EditText)findViewById(R.id.login_txtLogin)).getText().toString();
         String pass  = ( (EditText)findViewById(R.id.login_txtPass) ).getText().toString();
 
+        login(login,pass);
+    }
+    public void login(String login, String pass){
         iAPIAccess api = DummyAPIAccess.getInstance();
-
         if (api.login(login, pass)) {
 
             //gotoPref.putExtra("user",login);
@@ -99,8 +117,12 @@ public class LoginActivity extends ParentActivity {
 
             if (checkPlayServices()){
                 Intent gotoPref = new Intent(this,ViewReportsActivity.class);
-                gotoPref.putExtra("user",login);
                 startActivity(gotoPref);
+
+                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().putString("user",login).commit();
+                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().putBoolean("authenticated",true).commit();
+            }else{
+                finish();
             }
             //else => finish in checkPlayServices()
         }else{
@@ -108,6 +130,8 @@ public class LoginActivity extends ParentActivity {
             toast.show();
         }
     }
+
+    //GCM stuffs
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
@@ -127,8 +151,6 @@ public class LoginActivity extends ParentActivity {
         }
         return true;
     }
-
-
     /**
      * Gets the current registration ID for application on GCM service.
      * <p>
@@ -176,7 +198,6 @@ public class LoginActivity extends ParentActivity {
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
-
     /**
      * Registers the application with GCM servers asynchronously.
      * <p>
@@ -220,7 +241,6 @@ public class LoginActivity extends ParentActivity {
             }
         }).execute(null, null, null);
     }
-
     /**
      * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP
      * or CCS to send messages to your app. Not needed for this demo since the

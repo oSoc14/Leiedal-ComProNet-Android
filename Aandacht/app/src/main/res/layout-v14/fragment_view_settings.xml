@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_active"
-            android:id="@+id/notifications"
+            android:id="@+id/settings_notifications"
             android:padding="10dp"
         />
 
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_sound"
-            android:id="@+id/sound"
+            android:id="@+id/settings_sound"
             android:padding="10dp"
             />
 
