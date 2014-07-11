@@ -3,8 +3,12 @@ package osoc.leiedal.android.aandacht.View;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,6 +20,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,7 +40,9 @@ import com.google.android.gms.internal.cu;
 import java.io.IOException;
 import java.util.Map;
 
+import osoc.leiedal.android.aandacht.MyCursorAdaptor;
 import osoc.leiedal.android.aandacht.R;
+import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.views.FontTextView;
 
 public class ViewReportsActivity extends ParentActivity implements View.OnCreateContextMenuListener {
@@ -106,10 +113,13 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         return super.onOptionsItemSelected(item);
     }
 
-    public static class MyFrag extends Fragment {
+    public static class MyFrag extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
         private final static String ARG_POSITION = "arg_position";
         private int mPosition;
+        private ListView listReports;
+        private MyCursorAdaptor myCursorAdaptor;
+        private static final int LOADER_REQUEST = 1;
 
         public static MyFrag instantiate(int number)
         {
@@ -127,6 +137,8 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
             {
                 mPosition = getArguments().getInt(ARG_POSITION);
             }
+
+            getLoaderManager().initLoader(LOADER_REQUEST, null, this);
         }
 
         @Override
@@ -134,7 +146,42 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
             View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_test, container, false);
             final FontTextView textView = (FontTextView) v.findViewById(R.id.textview_test);
             textView.setText(String.format("position %d", mPosition));
+
+            listReports = (ListView) v.findViewById(R.id.list_report);
+            myCursorAdaptor = new MyCursorAdaptor( getActivity(), null, 0 );
+            listReports.setAdapter(myCursorAdaptor);
+
+
+
+
             return v;
+        }
+
+        @Override
+        public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+            switch (i) {
+                case LOADER_REQUEST:
+                    final Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
+                    return new CursorLoader(getActivity(), uri, null, null, null, null);
+
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> objectLoader, Cursor o) {
+            switch (objectLoader.getId()) {
+                case LOADER_REQUEST:
+                    if ( o.moveToFirst()) {
+                        myCursorAdaptor.swapCursor(o);
+                    }
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> objectLoader) {
+
         }
     }
 
@@ -159,6 +206,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
 
         @Override
         public Fragment getItem(int position) {
+
             return MyFrag.instantiate(position);
         }
     }
