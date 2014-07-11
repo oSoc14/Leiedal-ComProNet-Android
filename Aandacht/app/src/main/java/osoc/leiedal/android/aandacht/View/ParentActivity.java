@@ -42,6 +42,10 @@ public class ParentActivity extends ActionBarActivity {
                 this.startActivity(new Intent(this,ViewProfileActivity.class));
                 break;
             case R.id.action_logout:
+
+                //clear login data
+                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().clear().commit();
+
                 this.startActivity(new Intent(this,LoginActivity.class));
                 break;
             case R.id.action_map:
@@ -49,6 +53,29 @@ public class ParentActivity extends ActionBarActivity {
                 break;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        // Determine what activity I am and find the menu item for that activity
+        MenuItem menuItem = null;
+        if (getClass().equals(osoc.leiedal.android.aandacht.View.ViewSettingsActivity.class)) {
+            menuItem = menu.findItem(R.id.action_settings);
+        }else if (getClass().equals(osoc.leiedal.android.aandacht.View.ViewProfileActivity.class)) {
+            menuItem = menu.findItem(R.id.action_profile);
+        }else if (getClass().equals(osoc.leiedal.android.aandacht.View.LoginActivity.class)) {
+            menuItem = menu.findItem(R.id.action_logout);
+        }
+
+
+        // Disable this menu item
+        if (menuItem != null) {
+            menuItem.setEnabled(false); // Make it non-selectable (even with shortcut)
+            menuItem.setVisible(false); // Make it non-visible
         }
         return true;
     }

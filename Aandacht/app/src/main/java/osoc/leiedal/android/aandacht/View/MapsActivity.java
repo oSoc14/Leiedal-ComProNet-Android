@@ -1,11 +1,13 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -34,12 +36,17 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
 
     private GoogleMap map;
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
         getSupportLoaderManager().initLoader(0, null, this);
+
+        //back / up button
+        if (getActionBar() != null)
+            getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

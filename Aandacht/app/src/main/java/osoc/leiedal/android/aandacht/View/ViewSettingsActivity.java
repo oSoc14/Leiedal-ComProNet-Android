@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.fragments.ViewSettingsFragment;
 
-public class ViewSettingsActivity extends ActionBarActivity implements ViewSettingsFragment.OnFragmentInteractionListener {
+public class ViewSettingsActivity extends ParentActivity implements ViewSettingsFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,13 +16,16 @@ public class ViewSettingsActivity extends ActionBarActivity implements ViewSetti
         setContentView(R.layout.activity_view_settings);
 
         //back / up button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.view_settings, menu);
         return true;
     }

@@ -1,13 +1,15 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import osoc.leiedal.android.aandacht.views.FontTextView;
 
 public class ViewProfileActivity extends ParentActivity implements ViewProfileFragment.OnFragmentInteractionListener {
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +42,8 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
         tabs.setViewPager(pager);
 
         //back / up button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null)
+            getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
