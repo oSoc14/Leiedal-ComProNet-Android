@@ -25,11 +25,6 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 public class MapsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, MapsActivity.class);
-        return intent;
-    }
-
     // ------------------------------
 
     private BitmapDescriptor MARKER_PENDING;
@@ -38,7 +33,6 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
     private BitmapDescriptor MARKER_FINISHED;
 
     private GoogleMap map;
-    private MarkerOptions[] markerOptionses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +78,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
         String[] projection = ReportsTable.PROJECTION_ALL;
         String selection = ReportsTable.COLUMN_STATUS + " IN ('" + ReportsTable.STATUS_ACTIVE + "','" + ReportsTable.STATUS_PENDING + "')";
-        CursorLoader cursorLoader = new CursorLoader(this, uri, projection, selection, null, null);
-        return cursorLoader;
+        return new CursorLoader(this, uri, projection, selection, null, null);
     }
 
     @Override
@@ -94,7 +87,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         setUpMapIfNeeded();
         if (cursor != null && cursor.moveToFirst()) {
             // create a new array to hold all MarkerOptions
-            markerOptionses = new MarkerOptions[cursor.getCount()];
+            MarkerOptions[] markerOptionses = new MarkerOptions[cursor.getCount()];
             do {
                 // compare the current time to the expiry timestamp of the report and only add it if it's not expired
                 long timestamp_end = cursor.getLong(cursor.getColumnIndex(ReportsTable.COLUMN_TIMESTAMP_END));
@@ -104,8 +97,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
                     markerOptionses[cursor.getPosition()] = extractMarkerOptions(cursor);
                 }
             } while (cursor.moveToNext());
-            setUpMarkers(markerOptionses);        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
+            setUpMarkers(markerOptionses);
         }
     }
 
@@ -139,12 +131,11 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         double lng = cursor.getDouble(cursor.getColumnIndex(ReportsTable.COLUMN_LOCATION_LNG));
         LatLng latLng = new LatLng(lat, lng);
         // create the new MarkerOptions object
-        MarkerOptions markerOptions = new MarkerOptions()
+        return new MarkerOptions()
                 .title(address)
                 .snippet(description)
                 .position(latLng)
                 .icon(markerColor);
-        return markerOptions;
     }
 
     private void setUpMarkers(MarkerOptions[] markerOptionses) {

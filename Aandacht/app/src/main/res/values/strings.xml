@@ -26,7 +26,7 @@ Misbruik is strafbaar!</string>
 
     <!-- profile -->
     <string name="profile_banner">U bent aangemeld als </string>
-    <string name="title_activity_view_profile">View Profile</string>
+    <string name="title_activity_view_profile">Profile</string>
     <string name="profile_btnEditPicture">Edit picture</string>
     <string name="title_activity_default">defaultActivity</string>
     <string name="hello_world">Hello world!</string>

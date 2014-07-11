@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import osoc.leiedal.android.aandacht.R;
-import osoc.leiedal.android.aandacht.View.fragments.ViewSettingsFragment;
 
 /**
  * Used for 'global stuffs' like option menu, ...

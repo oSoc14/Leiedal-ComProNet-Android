@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import osoc.leiedal.android.aandacht.R;
-import osoc.leiedal.android.aandacht.View.fragments.ViewProfileFragment;
 import osoc.leiedal.android.aandacht.View.fragments.ViewSettingsFragment;
 
 public class ViewSettingsActivity extends ActionBarActivity implements ViewSettingsFragment.OnFragmentInteractionListener {
@@ -17,7 +16,7 @@ public class ViewSettingsActivity extends ActionBarActivity implements ViewSetti
         setContentView(R.layout.activity_view_settings);
 
         //back / up button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 

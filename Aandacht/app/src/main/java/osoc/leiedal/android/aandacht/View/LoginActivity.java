@@ -29,16 +29,11 @@ public class LoginActivity extends ParentActivity {
     public final static String SENDER_ID = "200184399948";
 
     private static final String TAG = LoginActivity.class.getSimpleName();
-    public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private GoogleCloudMessaging gcm = null;
     private static String regid;
-
-    public static String getRegId(){
-        return regid;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +76,7 @@ public class LoginActivity extends ParentActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
 
@@ -102,7 +94,6 @@ public class LoginActivity extends ParentActivity {
 
         if (api.login(login, pass)) {
 
-            int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
             //gotoPref.putExtra("user",login);
             startActivity(new Intent(this,ViewReportsActivity.class));
 
@@ -147,7 +138,7 @@ public class LoginActivity extends ParentActivity {
      *         registration ID.
      */
     private String getRegistrationId(Context context) {
-        final SharedPreferences prefs = getGCMPreferences(context);
+        final SharedPreferences prefs = getGCMPreferences();
         String registrationId = prefs.getString(PROPERTY_REG_ID, "");
         if (registrationId.isEmpty()) {
             Log.i(TAG, "Registration not found.");
@@ -167,7 +158,7 @@ public class LoginActivity extends ParentActivity {
     /**
      * @return Application's {@code SharedPreferences}.
      */
-    private SharedPreferences getGCMPreferences(Context context) {
+    private SharedPreferences getGCMPreferences() {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the regID in your app is up to you.
         return getSharedPreferences(LoginActivity.class.getSimpleName(),
@@ -196,7 +187,7 @@ public class LoginActivity extends ParentActivity {
         (new AsyncTask() {
             @Override
             protected String doInBackground(Object[] params) {
-                String msg = "";
+                String msg;
                 try {
                     Context context = getApplicationContext();
 
@@ -250,7 +241,7 @@ public class LoginActivity extends ParentActivity {
      * @param regId registration ID
      */
     private void storeRegistrationId(Context context, String regId) {
-        final SharedPreferences prefs = getGCMPreferences(context);
+        final SharedPreferences prefs = getGCMPreferences();
         int appVersion = getAppVersion(context);
         Log.i(TAG, "Saving regId on app version " + appVersion);
         SharedPreferences.Editor editor = prefs.edit();

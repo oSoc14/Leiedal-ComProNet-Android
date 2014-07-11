@@ -4,21 +4,19 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,19 +24,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.internal.cu;
 
 import java.io.IOException;
-import java.util.Map;
 
 import osoc.leiedal.android.aandacht.MyCursorAdaptor;
 import osoc.leiedal.android.aandacht.R;
@@ -46,10 +37,6 @@ import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.views.FontTextView;
 
 public class ViewReportsActivity extends ParentActivity implements View.OnCreateContextMenuListener {
-
-    private PagerSlidingTabStrip tabs;
-    private ViewPager pager;
-    private MyPagerAdapter adapter;
 
 
     @Override
@@ -60,14 +47,12 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         setContentView(R.layout.activity_view_reports);
 
 
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        pager = (ViewPager) findViewById(R.id.pager);
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        tabs.setIndicatorColor(Color.parseColor("#007AFF"));
 
         pager.setAdapter(adapter);
-
-        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-                .getDisplayMetrics());
 
         tabs.setViewPager(pager);
     }
@@ -89,11 +74,6 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
         messageText.setGravity(Gravity.CENTER);
         dialog.show();
-    }
-
-    public void map(View v){
-        Intent gotoPref = new Intent(this,MapsActivity.class);
-        startActivity(gotoPref);
     }
 
     @Override

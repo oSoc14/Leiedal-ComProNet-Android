@@ -1,14 +1,13 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,28 +22,24 @@ import osoc.leiedal.android.aandacht.views.FontTextView;
 
 public class ViewProfileActivity extends ParentActivity implements ViewProfileFragment.OnFragmentInteractionListener {
 
-    private PagerSlidingTabStrip tabs;
-    private ViewPager pager;
-    private MyPagerAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
 
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        pager = (ViewPager) findViewById(R.id.pager);
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs.setIndicatorColor(Color.parseColor("#007AFF"));
 
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
 
-        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-                .getDisplayMetrics());
+        tabs.setShouldExpand(true);
 
         tabs.setViewPager(pager);
 
         //back / up button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -72,7 +67,7 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = { "response time", "numbers", "other" };
+        private final String[] TITLES = { "time", "numbers", "other" };
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

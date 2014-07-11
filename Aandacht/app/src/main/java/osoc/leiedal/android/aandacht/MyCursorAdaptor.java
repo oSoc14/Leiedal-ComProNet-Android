@@ -10,9 +10,6 @@ import android.widget.TextView;
 
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
-/**
- * Created by ruben on 11-7-2014.
- */
 public class MyCursorAdaptor extends CursorAdapter {
     public MyCursorAdaptor(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -22,9 +19,8 @@ public class MyCursorAdaptor extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.list_item_report, parent, false);
 
-        return view;
+        return inflater.inflate(R.layout.list_item_report, parent, false);
     }
 
     @Override
