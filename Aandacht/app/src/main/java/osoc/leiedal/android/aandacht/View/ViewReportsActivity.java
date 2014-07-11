@@ -3,46 +3,40 @@ package osoc.leiedal.android.aandacht.View;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.internal.cu;
 
 import java.io.IOException;
-import java.util.Map;
 
+import osoc.leiedal.android.aandacht.MyCursorAdaptor;
 import osoc.leiedal.android.aandacht.R;
+import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.views.FontTextView;
 
 public class ViewReportsActivity extends ParentActivity implements View.OnCreateContextMenuListener {
-
-    private PagerSlidingTabStrip tabs;
-    private ViewPager pager;
-    private MyPagerAdapter adapter;
 
 
     @Override
@@ -53,14 +47,12 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         setContentView(R.layout.activity_view_reports);
 
 
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        pager = (ViewPager) findViewById(R.id.pager);
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        tabs.setIndicatorColor(Color.parseColor("#007AFF"));
 
         pager.setAdapter(adapter);
-
-        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-                .getDisplayMetrics());
 
         tabs.setViewPager(pager);
     }
@@ -84,11 +76,6 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         dialog.show();
     }
 
-    public void map(View v){
-        Intent gotoPref = new Intent(this,MapsActivity.class);
-        startActivity(gotoPref);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -106,10 +93,13 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         return super.onOptionsItemSelected(item);
     }
 
-    public static class MyFrag extends Fragment {
+    public static class MyFrag extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
         private final static String ARG_POSITION = "arg_position";
         private int mPosition;
+        private ListView listReports;
+        private MyCursorAdaptor myCursorAdaptor;
+        private static final int LOADER_REQUEST = 1;
 
         public static MyFrag instantiate(int number)
         {
@@ -127,6 +117,8 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
             {
                 mPosition = getArguments().getInt(ARG_POSITION);
             }
+
+            getLoaderManager().initLoader(LOADER_REQUEST, null, this);
         }
 
         @Override
@@ -134,7 +126,42 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
             View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_test, container, false);
             final FontTextView textView = (FontTextView) v.findViewById(R.id.textview_test);
             textView.setText(String.format("position %d", mPosition));
+
+            listReports = (ListView) v.findViewById(R.id.list_report);
+            myCursorAdaptor = new MyCursorAdaptor( getActivity(), null, 0 );
+            listReports.setAdapter(myCursorAdaptor);
+
+
+
+
             return v;
+        }
+
+        @Override
+        public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+            switch (i) {
+                case LOADER_REQUEST:
+                    final Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
+                    return new CursorLoader(getActivity(), uri, null, null, null, null);
+
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> objectLoader, Cursor o) {
+            switch (objectLoader.getId()) {
+                case LOADER_REQUEST:
+                    if ( o.moveToFirst()) {
+                        myCursorAdaptor.swapCursor(o);
+                    }
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> objectLoader) {
+
         }
     }
 
@@ -159,6 +186,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
 
         @Override
         public Fragment getItem(int position) {
+
             return MyFrag.instantiate(position);
         }
     }
