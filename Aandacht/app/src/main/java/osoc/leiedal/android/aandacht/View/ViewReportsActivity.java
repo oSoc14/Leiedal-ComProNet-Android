@@ -1,11 +1,13 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -149,6 +151,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
             }
         }
 
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         @Override
         public void onLoadFinished(Loader<Cursor> objectLoader, Cursor o) {
             switch (objectLoader.getId()) {
