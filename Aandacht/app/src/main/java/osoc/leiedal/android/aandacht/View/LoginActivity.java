@@ -8,9 +8,11 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -64,6 +66,19 @@ public class LoginActivity extends ParentActivity {
             startActivity(gotoPref);
         }else{
             setContentView(R.layout.activity_login);
+            final EditText edittext = (EditText) findViewById(R.id.login_txtPass);
+            edittext.setOnKeyListener(new View.OnKeyListener() {
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        String login = ( (EditText)findViewById(R.id.login_txtLogin)).getText().toString();
+                        String pass  = ( (EditText)findViewById(R.id.login_txtPass) ).getText().toString();
+
+                        login(login,pass);
+                        return true;
+                    }
+                    return false;
+                }
+            });
             ((EditText) findViewById(R.id.login_txtLogin)).setText(getSharedPreferences(getResources().getString(R.string.app_pref),0).getString("user",""));
         }
     }
