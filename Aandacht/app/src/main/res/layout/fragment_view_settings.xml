@@ -9,20 +9,20 @@
         android:orientation="vertical">
 
         <CheckBox
+            android:id="@+id/settings_notifications"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_active"
-            android:id="@+id/notifications"
             android:padding="10dp"
         />
 
         <CheckBox
+            android:id="@+id/settings_sound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_sound"
-            android:id="@+id/sound"
             android:padding="10dp"
-            />
+        />
 
 
 

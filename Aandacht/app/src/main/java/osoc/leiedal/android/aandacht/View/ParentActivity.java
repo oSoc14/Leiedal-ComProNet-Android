@@ -43,6 +43,10 @@ public class ParentActivity extends ActionBarActivity {
                 this.startActivity(new Intent(this,ViewProfileActivity.class));
                 break;
             case R.id.action_logout:
+
+                //clear login data
+                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().clear().commit();
+
                 this.startActivity(new Intent(this,LoginActivity.class));
                 break;
             default:
