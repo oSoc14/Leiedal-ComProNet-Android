@@ -41,12 +41,13 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        setUpMapIfNeeded();
-        getSupportLoaderManager().initLoader(0, null, this);
 
         //back / up button
         if (getActionBar() != null)
             getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setUpMapIfNeeded();
+        getSupportLoaderManager().initLoader(0, null, this);
     }
 
     @Override
