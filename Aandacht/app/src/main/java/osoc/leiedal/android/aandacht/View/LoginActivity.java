@@ -25,7 +25,8 @@ import java.io.IOException;
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.DummyAPIAccess;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.iAPIAccess;
-import osoc.leiedal.android.aandacht.database.DummyData;
+
+
 
 public class LoginActivity extends ParentActivity {
 
@@ -262,6 +263,8 @@ public class LoginActivity extends ParentActivity {
 
         //TODO
         //send id to own backend
+
+
     }
     /**
      * Stores the registration ID and app versionCode in the application's

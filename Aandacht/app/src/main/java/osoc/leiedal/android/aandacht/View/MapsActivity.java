@@ -2,9 +2,8 @@ package osoc.leiedal.android.aandacht.View;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.location.Criteria;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -14,12 +13,16 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
@@ -46,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         //back / up button
         if (getActionBar() != null)
             getActionBar().setDisplayHomeAsUpEnabled(true);
+
         setUpMapIfNeeded();
         getSupportLoaderManager().initLoader(LOADER_REQUEST, null, this);
     }
@@ -77,10 +81,33 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         MARKER_ACTIVE = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
         MARKER_DENIED = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
         MARKER_FINISHED = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
+
+        double loc[] = getGPS();
+        LatLng coordinate = new LatLng(loc[0], loc[1]);
+        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 13);
+        map.animateCamera(yourLocation);
     }
 
-    // ------------------------------
+    //get last know location
+    private double[] getGPS() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = lm.getProviders(true);
 
+        /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
+        Location l = null;
+
+        for (int i=providers.size()-1; i>=0; i--) {
+            l = lm.getLastKnownLocation(providers.get(i));
+            if (l != null) break;
+        }
+
+        double[] gps = new double[2];
+        if (l != null) {
+            gps[0] = l.getLatitude();
+            gps[1] = l.getLongitude();
+        }
+        return gps;
+    }
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
