@@ -45,6 +45,9 @@ public class LoginActivity extends ParentActivity {
 
         // Check device for Play Services APK. If check succeeds, proceed with
         //  GCM registration.
+        ((EditText) findViewById(R.id.login_txtPass)).setText("");
+        ((EditText) findViewById(R.id.login_txtLogin)).setText("");
+
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(getApplicationContext());
@@ -52,30 +55,36 @@ public class LoginActivity extends ParentActivity {
             if (regid.isEmpty()) {
                 registerInBackground();
             }
+
+            //NOTE this is not secure at all; a used can edit sharedpreferences and set the authenticated boolean to true
+            //For a more secure login, a working backend is needed.
+            //used for proof of concept! handle with care!
+
+            //if authenticated & action is main => proceed
+            if (getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean("authenticated",false)){
+                //ALREADY SIGNED IN
+                Intent gotoPref = new Intent(this,ViewReportsActivity.class);
+                startActivity(gotoPref);
+            }else{
+
+                setContentView(R.layout.activity_login);
+                final EditText edittext = (EditText) findViewById(R.id.login_txtPass);
+                edittext.setOnKeyListener(new View.OnKeyListener() {
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                            String login = ( (EditText)findViewById(R.id.login_txtLogin)).getText().toString();
+                            String pass  = ( (EditText)findViewById(R.id.login_txtPass) ).getText().toString();
+
+                            login(login,pass);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+                ((EditText) findViewById(R.id.login_txtLogin)).setText(getSharedPreferences(getResources().getString(R.string.app_pref),0).getString("user",""));
+            }
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
-        }
-
-        if (getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean("authenticated",false)){
-            //ALREADY SIGNED IN
-            Intent gotoPref = new Intent(this,ViewReportsActivity.class);
-            startActivity(gotoPref);
-        }else{
-            setContentView(R.layout.activity_login);
-            final EditText edittext = (EditText) findViewById(R.id.login_txtPass);
-            edittext.setOnKeyListener(new View.OnKeyListener() {
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                        String login = ( (EditText)findViewById(R.id.login_txtLogin)).getText().toString();
-                        String pass  = ( (EditText)findViewById(R.id.login_txtPass) ).getText().toString();
-
-                        login(login,pass);
-                        return true;
-                    }
-                    return false;
-                }
-            });
-            ((EditText) findViewById(R.id.login_txtLogin)).setText(getSharedPreferences(getResources().getString(R.string.app_pref),0).getString("user",""));
         }
     }
 
@@ -83,6 +92,7 @@ public class LoginActivity extends ParentActivity {
     protected void onResume() {
         super.onResume();
         checkPlayServices();
+        ((EditText) findViewById(R.id.login_txtPass)).setText("");
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

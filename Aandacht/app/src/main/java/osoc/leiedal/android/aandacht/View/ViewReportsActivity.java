@@ -198,6 +198,15 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //clear login data
+        getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().clear().commit();
+
+        this.startActivity(new Intent(this,LoginActivity.class));
+    }
+
     public void send(final View view) {
         new AsyncTask() {
 
