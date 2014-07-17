@@ -2,9 +2,11 @@ package osoc.leiedal.android.aandacht.View;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,6 +64,13 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
             getActionBar().setDisplayHomeAsUpEnabled(true);
 
         profPic = (ImageButton) findViewById(R.id.profile_picture);
+        SharedPreferences pref = getSharedPreferences(getResources().getString(R.string.app_pref,""),0);
+        if (pref != null) {
+            mCurrentPhotoPath = pref.getString("profilePicture", "");
+            if (!"".equals(mCurrentPhotoPath)) {
+                setPic();
+            }
+        }
 
     }
 
@@ -102,16 +111,43 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        setPic();
-        galleryAddPic();
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //crop & set picture in image button
+        setPic();
+
+        //add picture to image gallery so other apps can use it
+        galleryAddPic();
+
+        //save picture path i shared preferences so we can load it next time.
+        getSharedPreferences(getResources().getString(R.string.app_pref,""),0).edit().putString("profilePicture",mCurrentPhotoPath).commit();
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void setPic() {
         // Get the dimensions of the View
-        int targetW = profPic.getWidth();
-        int targetH = profPic.getHeight();
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        int targetW = size.x /6;
+        int targetH = size.y /6;
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -130,24 +166,6 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         profPic.setImageBitmap(bitmap);
-    }
-
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
     }
 
     private void galleryAddPic() {
