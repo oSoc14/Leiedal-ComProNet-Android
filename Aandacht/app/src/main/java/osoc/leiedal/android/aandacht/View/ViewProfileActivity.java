@@ -105,6 +105,7 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         setPic();
+        galleryAddPic();
     }
 
     private void setPic() {
@@ -147,6 +148,14 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
     @Override
