@@ -3,10 +3,6 @@
 
     <string name="app_name">Aandacht</string>
     <string name="app_pref">SettingsAandacht</string> <!-- shared preferences id -->
-
-    <!-- GCM -->
-    <string name="app_senderId">200184399948</string>
-
     <string name="action_settings">Settings</string>
 
     <!-- login -->

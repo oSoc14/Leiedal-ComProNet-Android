@@ -1,5 +1,6 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +31,7 @@ import osoc.leiedal.android.aandacht.View.model.apiAccess.iAPIAccess;
 
 public class LoginActivity extends ParentActivity {
 
-    public final static String SENDER_ID = "@string/senderId";
+    public static String SENDER_ID;
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     public static final String PROPERTY_REG_ID = "registration_id";
@@ -50,10 +51,12 @@ public class LoginActivity extends ParentActivity {
         ((EditText) findViewById(R.id.login_txtLogin)).setText("");
 
         if (checkPlayServices()) {
+            SENDER_ID = getResources().getString(R.string.app_senderId);
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(getApplicationContext());
 
-            if (regid.isEmpty()) {
+            if ("".equals(regid)) {
+                Log.i(TAG,"regid empty, registering");
                 registerInBackground();
             }
 
@@ -119,6 +122,7 @@ public class LoginActivity extends ParentActivity {
 
         login(login,pass);
     }
+
     public void login(String login, String pass){
         iAPIAccess api = DummyAPIAccess.getInstance();
         if (api.login(login, pass)) {
@@ -141,6 +145,8 @@ public class LoginActivity extends ParentActivity {
             toast.show();
         }
     }
+
+
 
     //GCM stuffs
     /**
@@ -177,6 +183,7 @@ public class LoginActivity extends ParentActivity {
             Log.i(TAG, "Registration not found.");
             return "";
         }
+
         // Check if app was updated; if so, it must clear the registration ID
         // since the existing regID is not guaranteed to work with the new
         // app version.
@@ -228,6 +235,7 @@ public class LoginActivity extends ParentActivity {
                     }
                     regid = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regid;
+                    Log.i(TAG,"registering in background: " + regid);
 
                     // You should send the registration ID to your server over HTTP,
                     // so it can use GCM/HTTP or CCS to send messages to your app.
@@ -247,7 +255,7 @@ public class LoginActivity extends ParentActivity {
                     // Require the user to click a button again, or perform
                     // exponential back-off.
                 }
-
+                Log.i(TAG,msg);
                 return msg;
             }
         }).execute(null, null, null);
