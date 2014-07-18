@@ -55,9 +55,12 @@ public class LoginActivity extends ParentActivity {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(getApplicationContext());
 
+
             if ("".equals(regid)) {
                 Log.i(TAG,"regid empty, registering");
                 registerInBackground();
+            }else {
+                Log.i(TAG,"devide already registered id: " + regid);
             }
 
             //NOTE this is not secure at all; a used can edit sharedpreferences and set the authenticated boolean to true

@@ -347,10 +347,16 @@ public class SmackCcsClient {
     // Send a sample hello downstream message to a device.
     String toRegId = properties.regId;
     String messageId = ccsClient.getRandomMessageId();
-    Map<String, String> payload = new HashMap<String, String>();
-    payload.put("Hello", "World");
-    payload.put("CCS", "Dummy Message");
-    payload.put("EmbeddedMessageId", messageId);
+    Map<String, String> payload = new HashMap<>();
+    
+    payload.put("description" , "description");
+    payload.put("address","address");
+    payload.put("latitude","0.0");
+    payload.put("longitude","0.0");
+    payload.put("status","active");
+    payload.put("timestamp_start",System.currentTimeMillis() + "");
+    payload.put("timestamp_end",  System.currentTimeMillis() + "");
+
     String collapseKey = "sample";
     Long timeToLive = 10000L;
     Boolean delayWhileIdle = true;

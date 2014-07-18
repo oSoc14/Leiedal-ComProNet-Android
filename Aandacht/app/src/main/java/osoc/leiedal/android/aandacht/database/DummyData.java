@@ -1,6 +1,7 @@
 package osoc.leiedal.android.aandacht.database;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 
 import java.util.Random;
@@ -14,7 +15,7 @@ import osoc.leiedal.android.aandacht.database.model.reports.Report;
  */
 public class DummyData {
 
-    public static int REPORT_COUNT = 200;
+    public static int REPORT_COUNT = 10;
     public static int MESSAGE_COUNT = 25; // per report
 
     public static String[] STATUSES_LABELS = {ReportsTable.STATUS_ACTIVE, ReportsTable.STATUS_PENDING, ReportsTable.STATUS_DENIED, ReportsTable.STATUS_FINISHED};
@@ -34,6 +35,7 @@ public class DummyData {
     public static void InjectDummyData(Activity a) {
         System.out.println("[DummyData] InjectDummyData(" + a + ")");
 
+        //delete old data
         a.getContentResolver().delete(AandachtContentProvider.CONTENT_URI_REPORTS, null, null);
         a.getContentResolver().delete(AandachtContentProvider.CONTENT_URI_MESSAGES, null, null);
 
@@ -52,6 +54,12 @@ public class DummyData {
             }
         }
         a.getContentResolver().bulkInsert(AandachtContentProvider.CONTENT_URI_REPORTS, reports);
+    }
+
+    public static void injectReport(ContentResolver cr, Report r){
+        System.out.println("[DummyData] InjectReport(" + cr + ")");
+
+        cr.insert(AandachtContentProvider.CONTENT_URI_REPORTS, r.getContentValues());
     }
 
     // ------------------------------

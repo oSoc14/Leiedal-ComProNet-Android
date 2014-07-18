@@ -1,10 +1,12 @@
-package osoc.leiedal.android.aandacht.Tools;
+package osoc.leiedal.android.aandacht.gcm;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -14,6 +16,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.LoginActivity;
+import osoc.leiedal.android.aandacht.database.DummyData;
+import osoc.leiedal.android.aandacht.database.model.reports.Report;
 
 public class GcmIntentService extends IntentService {
     private static final String TAG = "GcmIntentService";
@@ -47,21 +51,15 @@ public class GcmIntentService extends IntentService {
                     MESSAGE_TYPE_DELETED.equals(messageType)) {
                 sendNotification("Deleted messages on server: " +
                         extras.toString());
-                // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                // This loop represents the service doing some work.
-                for (int i=0; i<5; i++) {
-                    Log.i(TAG, "Working... " + (i + 1)
-                            + "/5 @ " + SystemClock.elapsedRealtime());
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                    }
-                }
-                Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
+
+                //add report to SQLite
+                addReport(extras);
+
                 // Post notification of received message.
-                sendNotification("Received: " + extras.toString());
+                sendNotification(extras.toString());
+
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -81,7 +79,7 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_launcher)//ic_stat_gcm)
+                        .setSmallIcon(R.drawable.logo)//ic_stat_gcm)
                         .setContentTitle("GCM Notification")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
@@ -89,5 +87,9 @@ public class GcmIntentService extends IntentService {
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
+    private void addReport(Bundle bundle){
+        DummyData.injectReport(getContentResolver(),new Report(bundle));
     }
 }
