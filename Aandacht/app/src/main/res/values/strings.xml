@@ -40,6 +40,9 @@ Misbruik is strafbaar!</string>
     <string name="settings_sound">Sound</string>
     <string name="settings_option_notif">notifications</string>
     <string name="settings_option_sound">sound</string>
+    <string name="settings_option_vibrate">vibrate</string>
+    <string name="settings_vibrate">vibrate</string>
+
 
     <!-- maps -->
     <string name="title_activity_maps">Map</string>

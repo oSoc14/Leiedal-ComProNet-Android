@@ -7,6 +7,9 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -58,7 +61,7 @@ public class GcmIntentService extends IntentService {
                 addReport(extras);
 
                 if ( getSharedPreferences(getResources().getString(R.string.app_pref),0)
-                        .getBoolean(getResources().getString(R.string.settings_option_notif),true)
+                        .getBoolean(getResources().getString(R.string.settings_option_notif), true)
                 ){
                     // Post notification of received message.
                     sendNotification(extras.toString());
@@ -83,11 +86,23 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.logo)//ic_stat_gcm)
-                        .setContentTitle("GCM Notification")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg);
+                    .setSmallIcon(R.drawable.logo)//ic_stat_gcm)
+                    .setContentTitle("GCM Notification")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(msg))
+                    .setContentText(msg)
+                    .setLights(Color.BLUE, 500, 500);
+
+        if ( getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean(getResources().getString(R.string.settings_option_sound),true) ){
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            mBuilder.setSound(alarmSound);
+        }
+
+        if ( getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean(getResources().getString(R.string.settings_option_vibrate),true) ){
+            long[] pattern = {500,500,500,500,500,500,500,500,500};
+            mBuilder.setVibrate(pattern);
+        }
+
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

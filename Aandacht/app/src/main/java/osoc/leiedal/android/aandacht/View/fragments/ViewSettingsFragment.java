@@ -57,10 +57,13 @@ public class ViewSettingsFragment extends Fragment {
 
         CompoundButton notif = (CompoundButton) view.findViewById(R.id.settings_notifications);
         CompoundButton sound = (CompoundButton) view.findViewById(R.id.settings_sound);
+        CompoundButton vibrate = (CompoundButton) view.findViewById(R.id.settings_vibrate);
+
 
         SharedPreferences pref = getActivity().getSharedPreferences(getResources().getString(R.string.app_pref),0);
         notif.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_notif),true));
         sound.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_sound),true));
+        vibrate.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_vibrate),true));
 
         notif.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -75,6 +78,14 @@ public class ViewSettingsFragment extends Fragment {
                 getActivity().getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean(getResources().getString(R.string.settings_option_sound), isChecked).commit();
             }
         });
+
+        vibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                getActivity().getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean(getResources().getString(R.string.settings_option_vibrate), isChecked).commit();
+            }
+        });
+
 
         return view;
     }
