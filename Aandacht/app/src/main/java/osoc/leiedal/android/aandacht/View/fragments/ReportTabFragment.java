@@ -72,7 +72,7 @@ public class ReportTabFragment extends Fragment implements LoaderManager.LoaderC
                 final Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
                 String selection = null;
                 if (mPosition == TAB_ACTIVE) {
-                    selection = ReportsTable.COLUMN_STATUS + "=" + ReportsTable.STATUS_ACTIVE;
+                    selection = ReportsTable.COLUMN_STATUS + "=\"" + ReportsTable.STATUS_ACTIVE + "\"";
                 }
                 else if (mPosition == TAB_MINE) {
                     selection = ReportsTable.COLUMN_STATUS + " IN ('" + ReportsTable.STATUS_ACTIVE + "','" + ReportsTable.STATUS_PENDING + "')";

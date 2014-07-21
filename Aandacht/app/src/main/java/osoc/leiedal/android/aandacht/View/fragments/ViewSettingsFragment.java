@@ -59,20 +59,20 @@ public class ViewSettingsFragment extends Fragment {
         CompoundButton sound = (CompoundButton) view.findViewById(R.id.settings_sound);
 
         SharedPreferences pref = getActivity().getSharedPreferences(getResources().getString(R.string.app_pref),0);
-        notif.setChecked(pref.getBoolean("notifications",true));
-        sound.setChecked(pref.getBoolean("sound",true));
+        notif.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_notif),true));
+        sound.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_sound),true));
 
         notif.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                getActivity().getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean("notifications", isChecked).commit();
+                getActivity().getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean(getResources().getString(R.string.settings_option_notif), isChecked).commit();
             }
         });
 
         sound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                getActivity().getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean("sound", isChecked).commit();
+                getActivity().getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean(getResources().getString(R.string.settings_option_sound), isChecked).commit();
             }
         });
 

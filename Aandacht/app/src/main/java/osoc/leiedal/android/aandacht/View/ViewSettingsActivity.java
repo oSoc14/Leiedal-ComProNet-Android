@@ -1,6 +1,8 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.annotation.TargetApi;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import osoc.leiedal.android.aandacht.View.fragments.ViewSettingsFragment;
 
 public class ViewSettingsActivity extends ParentActivity implements ViewSettingsFragment.OnFragmentInteractionListener {
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

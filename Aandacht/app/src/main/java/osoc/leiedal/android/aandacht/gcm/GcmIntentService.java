@@ -57,8 +57,12 @@ public class GcmIntentService extends IntentService {
                 //add report to SQLite
                 addReport(extras);
 
-                // Post notification of received message.
-                sendNotification(extras.toString());
+                if ( getSharedPreferences(getResources().getString(R.string.app_pref),0)
+                        .getBoolean(getResources().getString(R.string.settings_option_notif),true)
+                ){
+                    // Post notification of received message.
+                    sendNotification(extras.toString());
+                }
 
                 Log.i(TAG, "Received: " + extras.toString());
             }
