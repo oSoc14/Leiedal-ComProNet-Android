@@ -12,16 +12,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -32,9 +29,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import osoc.leiedal.android.aandacht.R;
-import osoc.leiedal.android.aandacht.View.fragments.ViewProfileFragment;
+import osoc.leiedal.android.aandacht.View.fragments.StatsTabFragment;
 
-public class ViewProfileActivity extends ParentActivity implements ViewProfileFragment.OnFragmentInteractionListener {
+public class ViewProfileActivity extends ParentActivity implements StatsTabFragment.OnFragmentInteractionListener {
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
     private ImageButton profPic;
@@ -146,8 +143,8 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
         // Get the dimensions of the View
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
-        int targetW = size.x /6;
-        int targetH = size.y /6;
+        int targetW = size.x /5;
+        int targetH = size.y /5;
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -183,7 +180,7 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = { "time", "numbers", "other" };
+        private final String[] TITLES = { "avg time", "total time" };
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -201,44 +198,10 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
 
         @Override
         public Fragment getItem(int position) {
-            return MyFrag.instantiate(position);
+
+            return StatsTabFragment.instance(position);
         }
 
-    }
-
-    public static class MyFrag extends Fragment {
-
-        private final static String ARG_POSITION = "arg_position";
-        private int mPosition;
-
-        public static MyFrag instantiate(int number)
-        {
-            final MyFrag frag = new MyFrag();
-            final Bundle args = new Bundle();
-            args.putInt(ARG_POSITION, number);
-            frag.setArguments(args);
-            return frag;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            if(getArguments().containsKey(ARG_POSITION))
-            {
-                mPosition = getArguments().getInt(ARG_POSITION);
-            }
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_test, container, false);
-
-            //final FontTextView textView = (FontTextView) v.findViewById(R.id.textview_test);
-            String[] text = {"response time", "numbers", "other"};
-
-            //textView.setText(text[mPosition]);
-            return v;
-        }
     }
 
 }
