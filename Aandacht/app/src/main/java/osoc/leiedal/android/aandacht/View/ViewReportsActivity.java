@@ -37,6 +37,7 @@ import java.io.IOException;
 
 import osoc.leiedal.android.aandacht.MyCursorAdaptor;
 import osoc.leiedal.android.aandacht.R;
+import osoc.leiedal.android.aandacht.View.fragments.ReportTabFragment;
 import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 import osoc.leiedal.android.aandacht.views.FontTextView;
@@ -100,7 +101,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         return super.onOptionsItemSelected(item);
     }
 
-    public static class MyFrag extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+ /*   public static class MyFrag extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
         private final static String ARG_POSITION = "arg_position";
         private int mPosition;
@@ -144,6 +145,13 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
             switch (i) {
                 case LOADER_REQUEST:
                     final Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
+                    String selection;
+                    if(mPosition == 0) {
+
+                    }
+                    if(mPosition == 2) {
+
+                    }
                     return new CursorLoader(getActivity(), uri, null, null, null, null);
                 default:
                     return null;
@@ -165,8 +173,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         public void onLoaderReset(Loader<Cursor> objectLoader) {
 
         }
-    }
-
+    }*/
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
@@ -189,7 +196,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         @Override
         public Fragment getItem(int position) {
 
-            return MyFrag.instantiate(position);
+            return ReportTabFragment.instantiate(position);
         }
     }
 
