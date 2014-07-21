@@ -1,21 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imgView_status"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtView_adress"
-        android:text="adresss"
-        android:textStyle="bold"/>
+        android:layout_gravity="center_vertical"
+        android:layout_margin="15dp"
+        android:background="@+drawable/status_icon" />
 
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtView_update"
-        android:text="summary"
-        android:paddingBottom="20px"/>
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tatView_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="address"
+                android:textColor="#3333CC"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtView_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="summary"
+                android:textColor="#333377" />
+
+            <TextView
+                android:id="@+id/txtView_timestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="timestamp"
+                android:textColor="#7777AA"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imgButton_accept"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_confirm_inactive"/>
+
+        <ImageButton
+            android:id="@+id/imgButton_deny"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_deny_inactive"/>
+
+    </LinearLayout>
 
 </LinearLayout>

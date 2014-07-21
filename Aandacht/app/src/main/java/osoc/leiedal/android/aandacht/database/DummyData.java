@@ -15,11 +15,11 @@ import osoc.leiedal.android.aandacht.database.model.reports.Report;
  */
 public class DummyData {
 
-    public static int REPORT_COUNT = 10;
+    public static int REPORT_COUNT = 20;
     public static int MESSAGE_COUNT = 25; // per report
 
     public static String[] STATUSES_LABELS = {ReportsTable.STATUS_ACTIVE, ReportsTable.STATUS_PENDING, ReportsTable.STATUS_DENIED, ReportsTable.STATUS_FINISHED};
-    public static double[] STATUSES_CHANCES = {0.01, 0.02, 0.17, 0.80};
+    public static double[] STATUSES_CHANCES = {0.15, 0.15, 0.20, 0.50};
 
     private static final Random rnd = new Random();
 
@@ -48,7 +48,7 @@ public class DummyData {
                 messages[j] = new Message(
                         i,
                         (i % 2 == 0 ? "Dispatch" : "Ik"),
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vestibulum, urna sit amet tristique mollis, nunc quam rhoncus erat, eget semper sapien massa ac tellus. Nam pulvinar vitae augue et viverra",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                         time += rnd.nextInt(30)
                     ).getContentValues();
             }
@@ -77,14 +77,8 @@ public class DummyData {
     }
 
     private static String Description() {
-        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vestibulum," +
-                "urna sit amet tristique mollis, nunc quam rhoncus erat, eget semper sapien massa" +
-                "ac tellus. Nam pulvinar vitae augue et viverra. Ut faucibus diam molestie faucibus" +
-                "scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque" +
-                "semper volutpat velit nec fermentum. Cum sociis natoque penatibus et magnis dis" +
-                "parturient montes, nascetur ridiculus mus. Sed laoreet magna nisi, eu ultrices est" +
-                "hendrerit id. Nullam placerat vitae eros eget mollis.";
-    }
+        return "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken.";
+}
 
     private static String Address() {
         return ADDRESSES[rnd.nextInt(ADDRESSES.length)];
@@ -112,7 +106,7 @@ public class DummyData {
 
     private static long TimeStart() {
         long curr = System.currentTimeMillis();
-        return (curr / 1000) - rnd.nextInt(3600);
+        return (curr / 1000) - rnd.nextInt(600);
     }
 
     private static long TimeEnd() {
