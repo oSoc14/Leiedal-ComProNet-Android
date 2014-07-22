@@ -201,7 +201,7 @@ public class ViewProfileActivity extends ParentActivity implements StatsTabFragm
 
             return StatsTabFragment.instance(position);
         }
-
+        
     }
 
 }

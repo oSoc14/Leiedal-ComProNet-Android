@@ -174,8 +174,12 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void setUpMarkers(MarkerOptions[] markerOptionses) {
-        for (MarkerOptions markerOptions : markerOptionses) {
-            map.addMarker(markerOptions);
+        try {
+            for (MarkerOptions markerOptions : markerOptionses) {
+                map.addMarker(markerOptions);
+            }
+        } catch(NullPointerException npe) {
+            System.out.println(npe);
         }
     }
 
