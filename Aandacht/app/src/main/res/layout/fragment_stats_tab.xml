@@ -4,25 +4,67 @@
     android:layout_height="match_parent"
     tools:context=".View.fragments.StatsTabFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/stats_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-        />
+            <TextView
+                android:id="@+id/txtavgtimeres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Average\nResponse Time"
+                android:textAlignment="center"
+                android:layout_alignParentLeft="true"
+                />
+            <ImageView
+                android:id="@+id/avg_image"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icon_avg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txtavgtimeres"
+                />
+            <TextView
+                android:id="@+id/avg_text"
+                tools:text="5 minuten"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                />
 
-        <TextView
-            android:id="@+id/stats_text"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-        />
+            <TextView
+                android:id="@+id/txttottimeactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Time Active"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                />
+            <ImageView
+                android:id="@+id/total_image"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icon_total_time_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_above="@+id/total_text"
+                />
+            <TextView
+                android:id="@+id/total_text"
+                tools:text="5uur 3 minuten"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                />
 
-    </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>

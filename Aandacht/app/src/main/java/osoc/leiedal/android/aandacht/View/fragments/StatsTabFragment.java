@@ -57,22 +57,13 @@ public class StatsTabFragment extends Fragment{
             position = getArguments().getInt(ARG_POSITION);
         }
 
-        String[] text = {"5 minutes", "3 hours 2 minutes"};
-        int[] imgsID = {R.drawable.icon_average_respons_time, R.drawable.icon_total_time_active};
+        String[] text = {"5 minutes", "3 hours 2 minutes"}; //TODO get stats from backend
 
-        Point size = new Point();
-        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        int targetW = size.x /3;
-        //int targetH = size.y /6;
+        //((ImageView) v.findViewById(R.id.avg_image)).setImageDrawable(getResources().getDrawable(R.drawable.icon_average_response_time));
+        ((TextView) v.findViewById(R.id.avg_text)).setText(text[0]);
 
-        ((ImageView) v.findViewById(R.id.stats_image)).setImageBitmap(
-                Bitmap.createScaledBitmap(((BitmapDrawable) getResources().getDrawable(imgsID[position])).getBitmap(),
-                        targetW,
-                        targetW,
-                        false
-                )
-        );
-        ((TextView) v.findViewById(R.id.stats_text)).setText(text[position]);
+        //((ImageView) v.findViewById(R.id.total_image)).setImageDrawable(getResources().getDrawable(R.drawable.icon_total_time_active));
+        ((TextView) v.findViewById(R.id.total_text)).setText(text[1]);
 
         return v;
     }

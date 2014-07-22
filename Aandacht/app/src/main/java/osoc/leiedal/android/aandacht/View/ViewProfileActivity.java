@@ -180,7 +180,7 @@ public class ViewProfileActivity extends ParentActivity implements StatsTabFragm
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = { "avg time", "total time" };
+        private final String[] TITLES = { "time" };
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
