@@ -143,8 +143,8 @@ public class ViewProfileActivity extends ParentActivity implements StatsTabFragm
         // Get the dimensions of the View
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
-        int targetW = size.x /5;
-        int targetH = size.y /5;
+        int targetW = size.x /6;
+        int targetH = size.y /6;
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
