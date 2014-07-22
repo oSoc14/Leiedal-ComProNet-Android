@@ -1,19 +1,24 @@
 package osoc.leiedal.android.aandacht;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.sql.SQLOutput;
 import java.util.GregorianCalendar;
 
+import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 public class MyCursorAdaptor extends CursorAdapter {
@@ -29,49 +34,75 @@ public class MyCursorAdaptor extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, final Cursor cursor) {
         ImageView imgView = (ImageView) view.findViewById(R.id.imgView_status);
         TextView txtName = (TextView) view.findViewById(R.id.tatView_address);
         TextView txtUpdate = (TextView) view.findViewById(R.id.txtView_update);
         TextView txtTimestamp = (TextView) view.findViewById(R.id.txtView_timestamp);
+        ImageButton btnConfirm = (ImageButton) view.findViewById(R.id.imgButton_confirm);
+        ImageButton btnDeny = (ImageButton) view.findViewById(R.id.imgButton_deny);
 
+        int id = cursor.getInt(cursor.getColumnIndex(ReportsTable.COLUMN_ID));
         String name = cursor.getString(cursor.getColumnIndex(ReportsTable.COLUMN_ADDRESS));
         String update = cursor.getString(cursor.getColumnIndex(ReportsTable.COLUMN_DESCRIPTION));
         String status = cursor.getString(cursor.getColumnIndex(ReportsTable.COLUMN_STATUS));
         int timestamp = cursor.getInt(cursor.getColumnIndex(ReportsTable.COLUMN_TIMESTAMP_START));
 
         txtName.setText(name);
-        txtUpdate.setText(wrapText(update, 40));
+        txtUpdate.setText(update);
         txtTimestamp.setText(wrapTimestamp(System.currentTimeMillis() / 1000 - timestamp));
 
         int color = context.getResources().getColor(R.color.status_standard);
+        int confirmBg = R.drawable.button_confirm_inactive;
+        int confirmVisibility = View.VISIBLE;
+        int denyBg = R.drawable.button_deny_inactive;
+        int denyVisibility = View.VISIBLE;
         if(status.equals(ReportsTable.STATUS_ACTIVE)) {
             color = context.getResources().getColor(R.color.status_active);
+            confirmBg = R.drawable.button_confirm_active;
         } else if(status.equals(ReportsTable.STATUS_PENDING)) {
             color = context.getResources().getColor(R.color.status_pending);
         } else if(status.equals(ReportsTable.STATUS_DENIED)) {
             color = context.getResources().getColor(R.color.status_denied);
+            denyBg = R.drawable.button_deny_active;
         } else if(status.equals(ReportsTable.STATUS_FINISHED)) {
             color = context.getResources().getColor(R.color.status_finished);
+            confirmVisibility = View.INVISIBLE;
         }
 
         GradientDrawable background = (GradientDrawable) imgView.getBackground();
         background.setColor(color);
+        btnConfirm.setBackgroundResource(confirmBg);
+        btnConfirm.setVisibility(confirmVisibility);
+        btnDeny.setBackgroundResource(denyBg);
+        btnDeny.setVisibility(denyVisibility);
+
+        btnConfirm.setOnClickListener(new ButtonListener(context, id, ButtonListener.TYPE_CONFIRM));
+        btnDeny.setOnClickListener(new ButtonListener(context, id, ButtonListener.TYPE_DENY));
+
     }
 
     private String wrapText(String text, int length) {
-        char[] charArray = text.toCharArray();
-        String textBuff = "";
-        String wordBuff = "";
-        for(int i = 0; i < length; i++) {
-            wordBuff += charArray[i];
-            if(charArray[i] == ' ') {
-                textBuff += wordBuff;
-                wordBuff = "";
+        if(text.length() <= length) {
+            return text;
+        } else {
+            try {
+                char[] charArray = text.toCharArray();
+                String textBuff = "";
+                String wordBuff = "";
+                for (int i = 0; i < length; i++) {
+                    wordBuff += charArray[i];
+                    if (charArray[i] == ' ') {
+                        textBuff += wordBuff;
+                        wordBuff = "";
+                    }
+                }
+                textBuff += "...";
+                return textBuff;
+            } catch(ArrayIndexOutOfBoundsException aioobe) {
+                return text;
             }
         }
-        textBuff += "[...]";
-        return textBuff;
     }
 
     private String wrapTimestamp(long timestamp) {
@@ -93,28 +124,6 @@ public class MyCursorAdaptor extends CursorAdapter {
         }
         textBuff+= " geleden";
         return textBuff;
-/*
-        textBuff = addTimePart(timeBuff, 604800, textBuff, "en", "week", "weken");
-        timeBuff %= 604800;
-        textBuff = addTimePart(timeBuff, 86400, textBuff, "en", "dag", "dagen");
-        timeBuff %= 86400;
-        textBuff = addTimePart(timeBuff, 3600, textBuff, "en", "uur", "uren");
-        timeBuff %= 3600;
-        textBuff = addTimePart(timeBuff, 60, textBuff, "en", "minuut", "minuten");
-        timeBuff %= 60;
-        textBuff = addTimePart(timeBuff, 1, textBuff, "en", "seconde", "seconden");
-        timeBuff %= 1;
-        textBuff += " geleden";
-        return textBuff;*/
-    }
-
-    private String addTimePart(long time, long threshold, String target, String and, String singular, String plural) {
-        String buff = "";
-        if(time >= threshold) {
-            long h = time / threshold;
-            buff += (target.equals("") ? "" : " " + and + " ") + h + " " + (h > 1 ? plural : singular);
-        }
-        return target += buff;
     }
 
 }

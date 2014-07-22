@@ -65,6 +65,7 @@ public class AandachtContentProvider extends ContentProvider {
     // uris for the reports table
     public static final Uri CONTENT_URI_REPORTS_ID = Uri.parse("content://" + PROVIDER_NAME + "/reports");
     public static final Uri CONTENT_URI_REPORTS_STATUS = Uri.parse("content://" + PROVIDER_NAME + "/reports/status");
+    public static final Uri CONTENT_URI_REPORTS_ADDRESS = Uri.parse("content://" + PROVIDER_NAME + "/reports/address");
     // uris for the messages table
     public static final Uri CONTENT_URI_MESSAGES_ID = Uri.parse("content://" + PROVIDER_NAME + "/messages");
     public static final Uri CONTENT_URI_MESSAGES_REPORT = Uri.parse("content://" + PROVIDER_NAME + "/messages/report");
@@ -73,6 +74,7 @@ public class AandachtContentProvider extends ContentProvider {
     private static final int TYPE_REPORTS = 10;             // uri for the reports table
     private static final int TYPE_REPORTS_ID = 11;          // uri for the reports by id
     private static final int TYPE_REPORTS_STATUS = 12;      // uri for the reports by status
+    private static final int TYPE_REPORTS_ADDRESS = 13;     // uri for the reports by address
     private static final int TYPE_MESSAGES = 20;            // uri for the messages table
     private static final int TYPE_MESSAGES_ID = 21;         // uri for the messages by id
     private static final int TYPE_MESSAGES_REPORT = 22;     // uri for the messages by report(-id)
@@ -85,6 +87,7 @@ public class AandachtContentProvider extends ContentProvider {
         uriMatcher.addURI(PROVIDER_NAME, "reports", TYPE_REPORTS);
         uriMatcher.addURI(PROVIDER_NAME, "reports/#", TYPE_REPORTS_ID);
         uriMatcher.addURI(PROVIDER_NAME, "reports/status/*", TYPE_REPORTS_STATUS);
+        uriMatcher.addURI(PROVIDER_NAME, "reports/address/*", TYPE_REPORTS_ADDRESS);
         uriMatcher.addURI(PROVIDER_NAME, "messages", TYPE_MESSAGES);
         uriMatcher.addURI(PROVIDER_NAME, "messages/#", TYPE_MESSAGES_ID);
         uriMatcher.addURI(PROVIDER_NAME, "messages/report/#", TYPE_MESSAGES_REPORT);
@@ -131,7 +134,15 @@ public class AandachtContentProvider extends ContentProvider {
             case TYPE_REPORTS_STATUS:
                 // all reports with a given status ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
-                qBuilder.appendWhere(ReportsTable.COLUMN_STATUS + "=" + uri.getLastPathSegment());
+                qBuilder.appendWhere(ReportsTable.COLUMN_STATUS + "=\"" + uri.getLastPathSegment() + "\"");
+                if (sortOrder == null || sortOrder == "") {
+                    sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
+                }
+                break;
+            case TYPE_REPORTS_ADDRESS:
+                // all reports with a given address ordered by timestamp descending, unless specified otherwise
+                qBuilder.setTables(ReportsTable.TABLE_NAME);
+                qBuilder.appendWhere(ReportsTable.COLUMN_ADDRESS + "=\"" + uri.getLastPathSegment() + "\"");
                 if (sortOrder == null || sortOrder == "") {
                     sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
@@ -160,6 +171,8 @@ public class AandachtContentProvider extends ContentProvider {
                 // uri did not match one of our specified uris, throw an exception
                 throw new IllegalArgumentException("Invalid uri: " + uri);
         }
+
+        //checkForFinishedReports();
 
         // execute the query on the given database, then notify all observers for the uri
         Cursor cursor = qBuilder.query(this.database, projection, selection, selectionArgs, null, null, sortOrder);
@@ -246,22 +259,26 @@ public class AandachtContentProvider extends ContentProvider {
                 break;
             case TYPE_REPORTS_ID:
                 tableName = ReportsTable.TABLE_NAME;
-                selection += (TextUtils.isEmpty(selection)?"":" AND ") + ReportsTable.COLUMN_ID + "=" + uri.getLastPathSegment();
+                selection = ReportsTable.COLUMN_ID + "=" + uri.getLastPathSegment();
                 break;
             case TYPE_REPORTS_STATUS:
                 tableName = ReportsTable.TABLE_NAME;
-                selection += (TextUtils.isEmpty(selection)?"":" AND ") + ReportsTable.COLUMN_STATUS + "=" + uri.getLastPathSegment();
+                selection = ReportsTable.COLUMN_STATUS + "=\"" + uri.getLastPathSegment() + "\"";
+                break;
+            case TYPE_REPORTS_ADDRESS:
+                tableName = ReportsTable.TABLE_NAME;
+                selection =ReportsTable.COLUMN_ADDRESS + "=\"" + uri.getLastPathSegment() + "\"";
                 break;
             case TYPE_MESSAGES:
                 tableName = MessagesTable.TABLE_NAME;
                 break;
             case TYPE_MESSAGES_ID:
                 tableName = MessagesTable.TABLE_NAME;
-                selection += (TextUtils.isEmpty(selection)?"":" AND ") + MessagesTable.COLUMN_ID + "=" + uri.getLastPathSegment();
+                selection = MessagesTable.COLUMN_ID + "=" + uri.getLastPathSegment();
                 break;
             case TYPE_MESSAGES_REPORT:
                 tableName = MessagesTable.TABLE_NAME;
-                selection += (TextUtils.isEmpty(selection)?"":" AND ") + MessagesTable.COLUMN_REPORT_ID + "=" + uri.getLastPathSegment();
+                selection = MessagesTable.COLUMN_REPORT_ID + "=" + uri.getLastPathSegment();
                 break;
             default:
                 throw new IllegalArgumentException("Invalid uri: " + uri);
@@ -285,22 +302,26 @@ public class AandachtContentProvider extends ContentProvider {
                 break;
             case TYPE_REPORTS_ID:
                 tableName = ReportsTable.TABLE_NAME;
-                selection += (TextUtils.isEmpty(selection)?"":" AND ") + ReportsTable.COLUMN_ID + "=" + uri.getLastPathSegment();
+                selection = ReportsTable.COLUMN_ID + "=" + uri.getLastPathSegment();
                 break;
             case TYPE_REPORTS_STATUS:
                 tableName = ReportsTable.TABLE_NAME;
-                selection += (TextUtils.isEmpty(selection)?"":" AND ") + ReportsTable.COLUMN_STATUS + "=" + uri.getLastPathSegment();
+                selection = ReportsTable.COLUMN_STATUS + "=\"" + uri.getLastPathSegment() + "\"";
+                break;
+            case TYPE_REPORTS_ADDRESS:
+                tableName = ReportsTable.TABLE_NAME;
+                selection = ReportsTable.COLUMN_ADDRESS + "=\"" + uri.getLastPathSegment() + "\"";
                 break;
             case TYPE_MESSAGES:
                 tableName = MessagesTable.TABLE_NAME;
                 break;
             case TYPE_MESSAGES_ID:
                 tableName = MessagesTable.TABLE_NAME;
-                selection += (TextUtils.isEmpty(selection)?"":" AND ") + MessagesTable.COLUMN_ID + "=" + uri.getLastPathSegment();
+                selection = MessagesTable.COLUMN_ID + "=" + uri.getLastPathSegment();
                 break;
             case TYPE_MESSAGES_REPORT:
                 tableName = MessagesTable.TABLE_NAME;
-                selection += (TextUtils.isEmpty(selection)?"":" AND ") + MessagesTable.COLUMN_REPORT_ID + "=" + uri.getLastPathSegment();
+                selection = MessagesTable.COLUMN_REPORT_ID + "=" + uri.getLastPathSegment();
                 break;
             default:
                 throw new IllegalArgumentException("Invalid uri: " + uri);
@@ -328,6 +349,17 @@ public class AandachtContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Invalid uri: " + uri);
         }
         return type;
+    }
+
+    // ------------------------------
+
+    private void checkForFinishedReports() {
+        String time = Long.toString(System.currentTimeMillis() / 1000);
+        String selection = ReportsTable.COLUMN_STATUS + " != \"" + ReportsTable.STATUS_FINISHED + "\"" +
+            " AND " + ReportsTable.COLUMN_TIMESTAMP_END + " <= " + time;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ReportsTable.COLUMN_STATUS, ReportsTable.STATUS_FINISHED);
+        update(CONTENT_URI_REPORTS, contentValues, selection, null);
     }
 
 }

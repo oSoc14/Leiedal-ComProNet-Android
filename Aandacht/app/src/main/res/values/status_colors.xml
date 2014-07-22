@@ -4,5 +4,5 @@
     <color name="status_active">#00CC55</color>
     <color name="status_pending">#FFAA00</color>
     <color name="status_denied">#CC0000</color>
-    <color name="status_finished">#0000CC</color>
+    <color name="status_finished">#999999</color>
 </resources>

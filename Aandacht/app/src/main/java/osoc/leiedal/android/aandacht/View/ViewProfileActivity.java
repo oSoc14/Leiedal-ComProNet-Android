@@ -231,7 +231,7 @@ public class ViewProfileActivity extends ParentActivity implements ViewProfileFr
 
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_test, container, false);
+            View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_report_list, container, false);
 
             //final FontTextView textView = (FontTextView) v.findViewById(R.id.textview_test);
             String[] text = {"response time", "numbers", "other"};

@@ -36,6 +36,7 @@
         android:text="@string/reports_btnCall"
         android:layout_alignParentBottom="true"
         android:textColor="#FFFBEB"
+        android:textStyle="bold"
         android:background="#BF3504"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"

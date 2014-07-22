@@ -56,7 +56,7 @@ public class ReportTabFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_test, container, false);
+        View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_report_list, container, false);
         //final FontTextView textView = (FontTextView) v.findViewById(R.id.textview_test);
         //textView.setText(String.format("position %d", mPosition));
         listReports = (ListView) v.findViewById(R.id.list_report);
@@ -101,4 +101,5 @@ public class ReportTabFragment extends Fragment implements LoaderManager.LoaderC
     public void onLoaderReset(Loader<Cursor> objectLoader) {
 
     }
+
 }

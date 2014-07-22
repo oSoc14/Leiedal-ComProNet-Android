@@ -19,8 +19,8 @@ public class ParentActivity extends ActionBarActivity {
         setContentView(R.layout.activity_parent);
 
         // inject dummy data
-        DummyData.InjectDummyData(this);
-
+        DummyData.InjectDummyData(this.getContentResolver());
+        DummyData.StartDynamicInjecting(this.getContentResolver());
     }
 
 

@@ -24,6 +24,7 @@ public class ReportsTable {
     public static final String STATUS_DENIED = "denied";
     public static final String STATUS_PENDING = "pending";
     public static final String STATUS_FINISHED = "finished";
+    public static final String STATUS_DELETED = "deleted";
 
     // projections
     public static final String[] PROJECTION_ALL = null;
