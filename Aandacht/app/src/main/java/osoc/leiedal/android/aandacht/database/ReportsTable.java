@@ -1,9 +1,11 @@
 package osoc.leiedal.android.aandacht.database;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 /**
+ * The static class which represents the Messages table in the database. It contains the SQL command
+ * responsible for it's creation.
+ *
  * Created by Maarten on 7/07/2014.
  */
 public class ReportsTable {
@@ -25,9 +27,6 @@ public class ReportsTable {
     public static final String STATUS_PENDING = "pending";
     public static final String STATUS_FINISHED = "finished";
     public static final String STATUS_DELETED = "deleted";
-
-    // projections
-    public static final String[] PROJECTION_ALL = null;
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE =

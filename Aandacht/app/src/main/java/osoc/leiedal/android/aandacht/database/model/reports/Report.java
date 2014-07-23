@@ -2,14 +2,13 @@ package osoc.leiedal.android.aandacht.database.model.reports;
 
 import android.content.ContentValues;
 import android.os.Bundle;
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 /**
+ * The model representing a report in the database. This class is currently only used to
+ * temporarily store generated test data.
+ *
  * Created by Maarten on 11/07/2014.
  */
 public class Report {
@@ -25,24 +24,6 @@ public class Report {
             long timestamp_start,
             long timestamp_end) {
        fillValues(description,address,latitude,longitude,status,timestamp_start,timestamp_end);
-    }
-
-    public Report (String json){
-        try {
-            JSONObject jor = new JSONObject(json);
-            fillValues(jor.getString("description"),
-                    jor.getString("address"),
-                    jor.getDouble("latitude"),
-                    jor.getDouble("longitude"),
-                    jor.getString("status"),
-                    jor.getLong("timestamp_start"),
-                    jor.getLong("timestamp_end")
-            );
-        } catch (JSONException e) {
-            Log.i("REPORT", "invalid json: " + json);
-            e.printStackTrace();
-        }
-
     }
 
     public Report(Bundle jor){

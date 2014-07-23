@@ -3,10 +3,10 @@ package osoc.leiedal.android.aandacht.View;
 import android.annotation.TargetApi;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.fragments.ViewSettingsFragment;
 
@@ -19,8 +19,8 @@ public class ViewSettingsActivity extends ParentActivity implements ViewSettings
         setContentView(R.layout.activity_view_settings);
 
         //back / up button
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 

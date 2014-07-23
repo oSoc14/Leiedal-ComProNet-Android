@@ -1,48 +1,29 @@
 package osoc.leiedal.android.aandacht.View;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
-
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
-import osoc.leiedal.android.aandacht.MyCursorAdaptor;
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.fragments.ReportTabFragment;
-import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
-import osoc.leiedal.android.aandacht.database.ReportsTable;
-import osoc.leiedal.android.aandacht.views.FontTextView;
 
 public class ViewReportsActivity extends ParentActivity implements View.OnCreateContextMenuListener {
 

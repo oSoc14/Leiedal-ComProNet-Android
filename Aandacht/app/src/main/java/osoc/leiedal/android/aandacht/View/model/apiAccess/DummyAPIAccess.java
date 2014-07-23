@@ -11,7 +11,7 @@ public class DummyAPIAccess implements iAPIAccess {
 
     @Override
     public boolean login(String user, String pass) {
-        return "hoi".equals(user) && "hoi".equals(pass);
+        return "login".equals(user) && "pass".equals(pass);
     }
 
 

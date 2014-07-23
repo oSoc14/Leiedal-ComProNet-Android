@@ -1,12 +1,12 @@
 package osoc.leiedal.android.aandacht.View;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import osoc.leiedal.android.aandacht.R;
-import osoc.leiedal.android.aandacht.database.DummyData;
 
 /**
  * Used for 'global stuffs' like option menu, ...

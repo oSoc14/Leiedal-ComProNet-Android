@@ -20,9 +20,6 @@ import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
-/**
- * Created by Maarten on 21/07/2014.
- */
 public class ReportTabFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private final static String ARG_POSITION = "arg_position";
@@ -33,7 +30,6 @@ public class ReportTabFragment extends Fragment implements LoaderManager.LoaderC
     private static final int TAB_MINE = 2;
 
     private int mPosition;
-    private ListView listReports;
     private MyCursorAdaptor myCursorAdaptor;
 
     public static ReportTabFragment instantiate(int number) {
@@ -57,9 +53,7 @@ public class ReportTabFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_report_list, container, false);
-        //final FontTextView textView = (FontTextView) v.findViewById(R.id.textview_test);
-        //textView.setText(String.format("position %d", mPosition));
-        listReports = (ListView) v.findViewById(R.id.list_report);
+        ListView listReports = (ListView) v.findViewById(R.id.list_report);
         myCursorAdaptor = new MyCursorAdaptor(getActivity(), null, 0);
         listReports.setAdapter(myCursorAdaptor);
         return v;

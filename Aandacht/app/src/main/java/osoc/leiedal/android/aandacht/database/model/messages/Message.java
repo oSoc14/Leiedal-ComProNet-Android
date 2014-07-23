@@ -5,6 +5,9 @@ import android.content.ContentValues;
 import osoc.leiedal.android.aandacht.database.MessagesTable;
 
 /**
+ * The model representing a message in the database. This class is currently only used to
+ * temporarily store generated test data.
+ *
  * Created by Maarten on 11/07/2014.
  */
 public class Message {

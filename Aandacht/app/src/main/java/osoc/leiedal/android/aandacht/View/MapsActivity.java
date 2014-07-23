@@ -112,8 +112,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
         String selection = ReportsTable.COLUMN_STATUS + " IN ('" + ReportsTable.STATUS_ACTIVE + "','" + ReportsTable.STATUS_PENDING + "')";
-        CursorLoader cursorLoader = new CursorLoader(this, uri, null, selection, null, null);
-        return cursorLoader;
+        return new CursorLoader(this, uri, null, selection, null, null);
     }
 
     @Override
@@ -174,13 +173,13 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void setUpMarkers(MarkerOptions[] markerOptionses) {
-        try {
+        //try {
             for (MarkerOptions markerOptions : markerOptionses) {
                 map.addMarker(markerOptions);
             }
-        } catch(NullPointerException npe) {
-            System.out.println(npe);
-        }
+        //} catch(NullPointerException ignored) {
+
+       // }
     }
 
 }

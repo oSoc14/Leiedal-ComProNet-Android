@@ -3,15 +3,12 @@ package osoc.leiedal.android.aandacht.gcm;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
-import android.content.Intent;
 import android.content.Context;
-import android.database.Cursor;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -23,10 +20,11 @@ import osoc.leiedal.android.aandacht.database.DummyData;
 import osoc.leiedal.android.aandacht.database.model.reports.Report;
 
 public class GcmIntentService extends IntentService {
+
     private static final String TAG = "GcmIntentService";
     public static final int NOTIFICATION_ID = 1;
-    private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
+
+    // ------------------------------
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -78,8 +76,7 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(String msg) {
-        mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, LoginActivity.class), 0);
@@ -111,4 +108,5 @@ public class GcmIntentService extends IntentService {
     private void addReport(Bundle bundle){
         DummyData.injectReport(getContentResolver(),new Report(bundle));
     }
+
 }

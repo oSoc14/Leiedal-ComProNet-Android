@@ -1,12 +1,10 @@
 package osoc.leiedal.android.aandacht;
 
-import android.content.ContentValues;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.media.Image;
-import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +13,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.sql.SQLOutput;
-import java.util.GregorianCalendar;
-
-import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 public class MyCursorAdaptor extends CursorAdapter {
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public MyCursorAdaptor(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
@@ -80,29 +75,6 @@ public class MyCursorAdaptor extends CursorAdapter {
         btnConfirm.setOnClickListener(new ButtonListener(context, id, ButtonListener.TYPE_CONFIRM));
         btnDeny.setOnClickListener(new ButtonListener(context, id, ButtonListener.TYPE_DENY));
 
-    }
-
-    private String wrapText(String text, int length) {
-        if(text.length() <= length) {
-            return text;
-        } else {
-            try {
-                char[] charArray = text.toCharArray();
-                String textBuff = "";
-                String wordBuff = "";
-                for (int i = 0; i < length; i++) {
-                    wordBuff += charArray[i];
-                    if (charArray[i] == ' ') {
-                        textBuff += wordBuff;
-                        wordBuff = "";
-                    }
-                }
-                textBuff += "...";
-                return textBuff;
-            } catch(ArrayIndexOutOfBoundsException aioobe) {
-                return text;
-            }
-        }
     }
 
     private String wrapTimestamp(long timestamp) {

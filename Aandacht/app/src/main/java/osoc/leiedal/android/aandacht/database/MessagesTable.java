@@ -4,6 +4,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
+ * The static class which represents the Messages table in the database. It contains the SQL command
+ * responsible for it's creation.
+ *
  * Created by Maarten on 7/07/2014.
  */
 public class MessagesTable {

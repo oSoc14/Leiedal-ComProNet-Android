@@ -8,7 +8,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.text.TextUtils;
 
 import osoc.leiedal.android.aandacht.database.DatabaseHelper;
 import osoc.leiedal.android.aandacht.database.MessagesTable;
@@ -35,6 +34,11 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
  * -query: all reports with the given status
  * -update: update all rows with the given status
  * -delete: delete all rows with the given status
+ *
+ * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports/address/[address]
+ * -query: all reports with the given address
+ * -update: update all rows with the given address
+ * -delete: delete all rows with the given address
  *
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages
  * -query: the complete messages table
@@ -95,13 +99,12 @@ public class AandachtContentProvider extends ContentProvider {
 
     // ------------------------------------------------------------------------------------------
 
-    private DatabaseHelper databaseHelper;
     private SQLiteDatabase database;
 
     @Override
     public boolean onCreate() {
-        this.databaseHelper = new DatabaseHelper(this.getContext());
-        this.database = this.databaseHelper.getWritableDatabase();
+        DatabaseHelper databaseHelper = (new DatabaseHelper(this.getContext()));
+        this.database = databaseHelper.getWritableDatabase();
         return true;
     }
 
@@ -122,7 +125,7 @@ public class AandachtContentProvider extends ContentProvider {
             case TYPE_REPORTS:
                 // all reports ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
-                if (sortOrder == null || sortOrder == "") {
+                if (sortOrder == null || sortOrder.equals("")) {
                     sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
                 break;
@@ -135,7 +138,7 @@ public class AandachtContentProvider extends ContentProvider {
                 // all reports with a given status ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
                 qBuilder.appendWhere(ReportsTable.COLUMN_STATUS + "=\"" + uri.getLastPathSegment() + "\"");
-                if (sortOrder == null || sortOrder == "") {
+                if (sortOrder == null || sortOrder.equals("")) {
                     sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
                 break;
@@ -143,14 +146,14 @@ public class AandachtContentProvider extends ContentProvider {
                 // all reports with a given address ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
                 qBuilder.appendWhere(ReportsTable.COLUMN_ADDRESS + "=\"" + uri.getLastPathSegment() + "\"");
-                if (sortOrder == null || sortOrder == "") {
+                if (sortOrder == null || sortOrder.equals("")) {
                     sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
                 break;
             case TYPE_MESSAGES:
                 // all messages ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(MessagesTable.TABLE_NAME);
-                if (sortOrder == null || sortOrder == "") {
+                if (sortOrder == null || sortOrder.equals("")) {
                     sortOrder = MessagesTable.COLUMN_TIMESTAMP + " DESC";
                 }
                 break;
@@ -163,7 +166,7 @@ public class AandachtContentProvider extends ContentProvider {
                 // all messages belonging to a report with a given id ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(MessagesTable.TABLE_NAME);
                 qBuilder.appendWhere(MessagesTable.COLUMN_REPORT_ID + "=" + uri.getLastPathSegment());
-                if (sortOrder == null || sortOrder == "") {
+                if (sortOrder == null || sortOrder.equals("")) {
                     sortOrder = MessagesTable.COLUMN_TIMESTAMP + " DESC";
                 }
                 break;
@@ -353,6 +356,7 @@ public class AandachtContentProvider extends ContentProvider {
 
     // ------------------------------
 
+    /* UNUSED
     private void checkForFinishedReports() {
         String time = Long.toString(System.currentTimeMillis() / 1000);
         String selection = ReportsTable.COLUMN_STATUS + " != \"" + ReportsTable.STATUS_FINISHED + "\"" +
@@ -361,5 +365,6 @@ public class AandachtContentProvider extends ContentProvider {
         contentValues.put(ReportsTable.COLUMN_STATUS, ReportsTable.STATUS_FINISHED);
         update(CONTENT_URI_REPORTS, contentValues, selection, null);
     }
+    */
 
 }

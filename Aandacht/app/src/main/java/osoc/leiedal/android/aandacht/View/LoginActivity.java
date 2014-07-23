@@ -1,7 +1,6 @@
 package osoc.leiedal.android.aandacht.View;
 
 import android.app.Activity;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +13,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -142,8 +140,8 @@ public class LoginActivity extends Activity {
                 Intent gotoPref = new Intent(this,ViewReportsActivity.class);
                 startActivity(gotoPref);
 
-                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().putString("user",login).commit();
-                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().putBoolean("authenticated",true).commit();
+                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().putString("user",login).apply();
+                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().putBoolean("authenticated",true).apply();
             }else{
                 finish();
             }
@@ -296,6 +294,6 @@ public class LoginActivity extends Activity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
+        editor.apply();
     }
 }

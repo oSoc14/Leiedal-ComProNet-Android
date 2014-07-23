@@ -13,6 +13,5 @@ public class FontTextView extends TextView {
     public FontTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         // set font face
-
     }
 }

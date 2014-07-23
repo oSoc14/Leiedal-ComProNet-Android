@@ -5,9 +5,6 @@ package osoc.leiedal.android.aandacht.View.model.apiAccess;
  */
 public interface iAPIAccess {
 
-    //singleton
-    //public /*static*/ iAPIAccess getInstance();// => annoying rules
-
     /**
      * Checks if the user login is correct
      * @param user username

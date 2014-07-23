@@ -57,8 +57,8 @@ public class ViewProfileActivity extends ParentActivity implements StatsTabFragm
         tabs.setViewPager(pager);
 
         //back / up button
-        if (getActionBar() != null)
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         profPic = (ImageButton) findViewById(R.id.profile_picture);
         SharedPreferences pref = getSharedPreferences(getResources().getString(R.string.app_pref,""),0);

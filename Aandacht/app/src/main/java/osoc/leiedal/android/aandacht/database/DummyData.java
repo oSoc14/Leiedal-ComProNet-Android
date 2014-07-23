@@ -1,16 +1,21 @@
 package osoc.leiedal.android.aandacht.database;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 
 import java.util.Random;
 
 import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
-import osoc.leiedal.android.aandacht.database.model.messages.Message;
 import osoc.leiedal.android.aandacht.database.model.reports.Report;
 
 /**
+ * This static class contains data and methods to generate test data. Each injection of data into
+ * the database will attempt to randomly combine attributes to provide for a more realistic user
+ * experience.
+ * </p>
+ * It should be noted that this class will clear the database before injecting newly
+ * generated data.
+ *
  * Created by Maarten on 11/07/2014.
  */
 public class DummyData {
@@ -18,16 +23,20 @@ public class DummyData {
     public static int REPORT_COUNT = 20;
     public static int MESSAGE_COUNT = 25; // per report
 
+    // arrays holding a status and chance for it's occurrence
     public static String[] STATUSES_LABELS = {ReportsTable.STATUS_ACTIVE, ReportsTable.STATUS_PENDING, ReportsTable.STATUS_DENIED, ReportsTable.STATUS_FINISHED};
     public static double[] STATUSES_CHANCES = {0.15, 0.15, 0.20, 0.50};
 
     private static final Random rnd = new Random();
 
+    // locations around which generated reports will be situated
     private static final double[] LOCATION_GHENT = {51.0537439, 3.7241694};
     private static final double[] LOCATION_KORTRIJK = {50.8249558, 3.2643610};
 
+    // which location to use from the previously defined ones
     private static double[] LOCATION = LOCATION_GHENT;
 
+    // array of address names
     private static final String[] ADDRESSES = {
             "A. Casier De Ter Bekenlaan",
             "Aaigemstraat",
@@ -987,6 +996,8 @@ public class DummyData {
             "Zwembadstraat",
             "Zwijnaardsesteenweg",
     };
+
+    // list of pieces of text with different lengths
     private static final String[] DESCRIPTION = {
             "Sed nec metus facilisis lorem tristique aliquet.",
             "Phasellus fermentum convallis ligula.",
@@ -1188,6 +1199,16 @@ public class DummyData {
 
     // ------------------------------
 
+    /**********************************************************************************************
+     * PUBLIC METHODS
+     **********************************************************************************************/
+
+    /**
+     * This will delete all records from the database and then fill it again with generated
+     * test data.
+     *
+     * @param cr the ContentResolver to access the database
+     */
     public static void InjectDummyData(ContentResolver cr) {
         System.out.println("[DummyData] InjectDummyData(" + cr + ")");
 
@@ -1196,13 +1217,23 @@ public class DummyData {
         cr.delete(AandachtContentProvider.CONTENT_URI_MESSAGES, null, null);
 
         ContentValues[] reports = new ContentValues[REPORT_COUNT];
-        ContentValues[] messages = new ContentValues[MESSAGE_COUNT];
+        // ContentValues[] messages = new ContentValues[MESSAGE_COUNT];
         for (int i = 0; i < REPORT_COUNT; i++) {
             reports[i] = Report().getContentValues();
+            /*
+            Generate messages here
+             */
         }
         cr.bulkInsert(AandachtContentProvider.CONTENT_URI_REPORTS, reports);
     }
 
+    /**
+     * This will insert a single report into the database without any messages linked to it. This
+     * is used by the notification services.
+     *
+     * @param cr the ContentResolver to access the database
+     * @param r the Report to insert into the database
+     */
     public static void injectReport(ContentResolver cr, Report r) {
         System.out.println("[DummyData] InjectReport(" + cr + ")");
         cr.insert(AandachtContentProvider.CONTENT_URI_REPORTS, r.getContentValues());
@@ -1210,6 +1241,7 @@ public class DummyData {
 
     // ------------------------------
 
+    /* UNUSED
     public static void StartDynamicInjecting(final ContentResolver cr) {
         new Thread(new Runnable(){
             public void run() {
@@ -1228,8 +1260,13 @@ public class DummyData {
         })
             .start();
     }
+    */
 
     // ------------------------------
+
+    /**********************************************************************************************
+     * PRIVATE METHODS
+     **********************************************************************************************/
 
     private static Report Report() {
         return new Report(

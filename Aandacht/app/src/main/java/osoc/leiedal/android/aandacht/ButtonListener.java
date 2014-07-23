@@ -10,6 +10,8 @@ import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 /**
+ * This class handles the press of either the confirm or deny button of a single report.
+ *
  * Created by Maarten on 22/07/2014.
  */
 public class ButtonListener implements View.OnClickListener {

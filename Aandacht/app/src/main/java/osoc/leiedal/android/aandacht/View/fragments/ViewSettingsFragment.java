@@ -1,7 +1,6 @@
 package osoc.leiedal.android.aandacht.View.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,10 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
 import osoc.leiedal.android.aandacht.R;
-import osoc.leiedal.android.aandacht.View.LoginActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,7 +121,6 @@ public class ViewSettingsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 

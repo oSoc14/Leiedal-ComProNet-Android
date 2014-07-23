@@ -2,26 +2,23 @@ package osoc.leiedal.android.aandacht.View.fragments;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import osoc.leiedal.android.aandacht.R;
 
 
 public class StatsTabFragment extends Fragment{
+
     private final static String ARG_POSITION = "arg_position";
+
+    // ------------------------------
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,8 +37,6 @@ public class StatsTabFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -50,12 +45,6 @@ public class StatsTabFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_stats_tab, container, false);
-
-        int position = 0;
-        if(getArguments().containsKey(ARG_POSITION))
-        {
-            position = getArguments().getInt(ARG_POSITION);
-        }
 
         String[] text = {"5 minutes", "3 hours 2 minutes"}; //TODO get stats from backend
 
@@ -90,6 +79,8 @@ public class StatsTabFragment extends Fragment{
         super.onDetach();
         mListener = null;
     }
+
+    // ------------------------------
 
     /**
      * This interface must be implemented by activities that contain this
