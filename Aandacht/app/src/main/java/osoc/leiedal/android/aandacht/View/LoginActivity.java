@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -30,14 +31,15 @@ import osoc.leiedal.android.aandacht.database.DummyData;
 
 public class LoginActivity extends Activity {
 
+    public static final String PROPERTY_REG_ID = "registration_id";
     public static String SENDER_ID;
 
     private static final String TAG = LoginActivity.class.getSimpleName();
-    public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private GoogleCloudMessaging gcm = null;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static String regid;
+
+    private GoogleCloudMessaging gcm = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,39 +57,38 @@ public class LoginActivity extends Activity {
             regid = getRegistrationId(getApplicationContext());
 
 
-            if ("".equals(regid)) {
-                Log.i(TAG,"regid empty, registering");
+            if (TextUtils.isEmpty(regid)) {
+                Log.i(TAG, "regid empty, registering");
                 registerInBackground();
-            }else {
-                Log.i(TAG,"devide already registered id: " + regid);
+            } else {
+                Log.i(TAG, "devide already registered id: " + regid);
             }
 
-            //NOTE this is not secure at all; a used can edit sharedpreferences and set the authenticated boolean to true
-            //For a more secure login, a working backend is needed.
-            //used for proof of concept! handle with care!
+            // NOTE this is not secure at all; a user can edit SharedPreferences and set the authenticated boolean to true
+            // For a more secure login, a working backend is needed; used for proof of concept! handle with care!
 
             //if authenticated & action is main => proceed
-            if (getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean("authenticated",false)){
+            if (getSharedPreferences(getResources().getString(R.string.app_pref), 0).getBoolean("authenticated", false)) {
                 //ALREADY SIGNED IN
-                Intent gotoPref = new Intent(this,ViewReportsActivity.class);
+                Intent gotoPref = new Intent(this, ViewReportsActivity.class);
                 startActivity(gotoPref);
-            }else{
+            } else {
 
                 setContentView(R.layout.activity_login);
                 final EditText edittext = (EditText) findViewById(R.id.login_txtPass);
                 edittext.setOnKeyListener(new View.OnKeyListener() {
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            String login = ( (EditText)findViewById(R.id.login_txtLogin)).getText().toString();
-                            String pass  = ( (EditText)findViewById(R.id.login_txtPass) ).getText().toString();
+                            String login = ((EditText) findViewById(R.id.login_txtLogin)).getText().toString();
+                            String pass = ((EditText) findViewById(R.id.login_txtPass)).getText().toString();
 
-                            login(login,pass);
+                            login(login, pass);
                             return true;
                         }
                         return false;
                     }
                 });
-                ((EditText) findViewById(R.id.login_txtLogin)).setText(getSharedPreferences(getResources().getString(R.string.app_pref),0).getString("user",""));
+                ((EditText) findViewById(R.id.login_txtLogin)).setText(getSharedPreferences(getResources().getString(R.string.app_pref), 0).getString("user", ""));
             }
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
@@ -100,12 +101,14 @@ public class LoginActivity extends Activity {
         checkPlayServices();
         ((EditText) findViewById(R.id.login_txtPass)).setText("");
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(osoc.leiedal.android.aandacht.R.menu.login, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -118,43 +121,42 @@ public class LoginActivity extends Activity {
      * checks if play services are running
      * if both are true, the ViewReportsActivity will be launched
      */
-    public void login(View view){
-        String login = ( (EditText)findViewById(R.id.login_txtLogin)).getText().toString();
-        String pass  = ( (EditText)findViewById(R.id.login_txtPass) ).getText().toString();
+    public void login(View view) {
+        String login = ((EditText) findViewById(R.id.login_txtLogin)).getText().toString();
+        String pass = ((EditText) findViewById(R.id.login_txtPass)).getText().toString();
 
-        login(login,pass);
+        login(login, pass);
     }
 
     public void generate(View view) {
         DummyData.InjectDummyData(this.getContentResolver());
     }
 
-    public void login(String login, String pass){
+    public void login(String login, String pass) {
         iAPIAccess api = DummyAPIAccess.getInstance();
         if (api.login(login, pass)) {
 
             //gotoPref.putExtra("user",login);
-            startActivity(new Intent(this,ViewReportsActivity.class));
+            startActivity(new Intent(this, ViewReportsActivity.class));
 
-            if (checkPlayServices()){
-                Intent gotoPref = new Intent(this,ViewReportsActivity.class);
+            if (checkPlayServices()) {
+                Intent gotoPref = new Intent(this, ViewReportsActivity.class);
                 startActivity(gotoPref);
 
-                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().putString("user",login).apply();
-                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().putBoolean("authenticated",true).apply();
-            }else{
+                getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putString("user", login).apply();
+                getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean("authenticated", true).apply();
+            } else {
                 finish();
             }
             //else => finish in checkPlayServices()
-        }else{
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.login_tstFail), Toast.LENGTH_LONG);
             toast.show();
         }
     }
 
+    // GCM stuff
 
-
-    //GCM stuffs
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
@@ -174,13 +176,14 @@ public class LoginActivity extends Activity {
         }
         return true;
     }
+
     /**
      * Gets the current registration ID for application on GCM service.
-     * <p>
+     * <p/>
      * If result is empty, the app needs to register.
      *
      * @return registration ID, or empty string if there is no existing
-     *         registration ID.
+     * registration ID.
      */
     private String getRegistrationId(Context context) {
         final SharedPreferences prefs = getGCMPreferences();
@@ -201,6 +204,7 @@ public class LoginActivity extends Activity {
         }
         return registrationId;
     }
+
     /**
      * @return Application's {@code SharedPreferences}.
      */
@@ -210,6 +214,7 @@ public class LoginActivity extends Activity {
         return getSharedPreferences(LoginActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
+
     /**
      * @return Application's version code from the {@code PackageManager}.
      */
@@ -222,9 +227,10 @@ public class LoginActivity extends Activity {
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
+
     /**
      * Registers the application with GCM servers asynchronously.
-     * <p>
+     * <p/>
      * Stores the registration ID and app versionCode in the application's
      * shared preferences.
      */
@@ -241,7 +247,7 @@ public class LoginActivity extends Activity {
                     }
                     regid = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regid;
-                    Log.i(TAG,"registering in background: " + regid);
+                    Log.i(TAG, "registering in background: " + regid);
 
                     // You should send the registration ID to your server over HTTP,
                     // so it can use GCM/HTTP or CCS to send messages to your app.
@@ -261,11 +267,12 @@ public class LoginActivity extends Activity {
                     // Require the user to click a button again, or perform
                     // exponential back-off.
                 }
-                Log.i(TAG,msg);
+                Log.i(TAG, msg);
                 return msg;
             }
         }).execute(null, null, null);
     }
+
     /**
      * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP
      * or CCS to send messages to your app. Not needed for this demo since the
@@ -280,12 +287,13 @@ public class LoginActivity extends Activity {
 
 
     }
+
     /**
      * Stores the registration ID and app versionCode in the application's
      * {@code SharedPreferences}.
      *
      * @param context application's context.
-     * @param regId registration ID
+     * @param regId   registration ID
      */
     private void storeRegistrationId(Context context, String regId) {
         final SharedPreferences prefs = getGCMPreferences();
@@ -296,4 +304,5 @@ public class LoginActivity extends Activity {
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.apply();
     }
+
 }

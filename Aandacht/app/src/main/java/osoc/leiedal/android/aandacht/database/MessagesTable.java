@@ -11,6 +11,10 @@ import android.util.Log;
  */
 public class MessagesTable {
 
+    /**********************************************************************************************
+     * STATIC MEMBERS
+     **********************************************************************************************/
+
     // Database and column names
     public static final String TABLE_NAME = "messages";
     public static final String COLUMN_ID = "_id";
@@ -18,6 +22,8 @@ public class MessagesTable {
     public static final String COLUMN_SOURCE = "source";
     public static final String COLUMN_CONTENT = "content";
     public static final String COLUMN_TIMESTAMP = "timestamp";
+
+    // --------------------------------------------------------------------------------------------
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE =
@@ -30,6 +36,10 @@ public class MessagesTable {
             + COLUMN_TIMESTAMP + " integer not null"
             + ")";
 
+    /**********************************************************************************************
+     * STATIC METHODS
+     **********************************************************************************************/
+
     public static void onCreate(final SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);
     }
@@ -39,6 +49,5 @@ public class MessagesTable {
         Log.i(MessagesTable.class.getSimpleName(), "updated table from version " + oldVersion + " to " + newVersion);
         onCreate(database);
     }
-
 
 }

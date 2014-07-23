@@ -11,6 +11,10 @@ import android.util.Log;
  */
 public class ReportsTable {
 
+    /**********************************************************************************************
+     * STATIC MEMBERS
+     **********************************************************************************************/
+
     // database and column names
     public static final String TABLE_NAME = "reports";
     public static final String COLUMN_ID = "_id";
@@ -29,6 +33,8 @@ public class ReportsTable {
     public static final String STATUS_FINISHED = "finished";
     public static final String STATUS_DELETED = "deleted";
 
+    // --------------------------------------------------------------------------------------------
+
     // Database creation SQL statement
     private static final String DATABASE_CREATE =
             "create table " + TABLE_NAME
@@ -42,6 +48,10 @@ public class ReportsTable {
             + COLUMN_TIMESTAMP_START + " integer not null,"
             + COLUMN_TIMESTAMP_END + " integer not null"
             + ")";
+
+    /**********************************************************************************************
+     * STATIC METHODS
+     **********************************************************************************************/
 
     public static void onCreate(final SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);

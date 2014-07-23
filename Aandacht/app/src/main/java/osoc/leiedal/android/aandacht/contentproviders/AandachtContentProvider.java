@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import osoc.leiedal.android.aandacht.database.DatabaseHelper;
 import osoc.leiedal.android.aandacht.database.MessagesTable;
@@ -56,9 +57,12 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
  * -update: update all messages belonging to the report with the given id
  * -delete: delete all messages belonging to the report with the given id
  *
- * Created by Maarten on 7/07/2014.
  */
 public class AandachtContentProvider extends ContentProvider {
+
+    /**********************************************************************************************
+     * STATIC MEMBERS
+     **********************************************************************************************/
 
     public static final String PROVIDER_NAME = "osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider";
 
@@ -73,6 +77,8 @@ public class AandachtContentProvider extends ContentProvider {
     // uris for the messages table
     public static final Uri CONTENT_URI_MESSAGES_ID = Uri.parse("content://" + PROVIDER_NAME + "/messages");
     public static final Uri CONTENT_URI_MESSAGES_REPORT = Uri.parse("content://" + PROVIDER_NAME + "/messages/report");
+
+    // --------------------------------------------------------------------------------------------
 
     private static final int TYPE_ALL = 1;                  // uri for the ContentProvider
     private static final int TYPE_REPORTS = 10;             // uri for the reports table
@@ -97,25 +103,30 @@ public class AandachtContentProvider extends ContentProvider {
         uriMatcher.addURI(PROVIDER_NAME, "messages/report/#", TYPE_MESSAGES_REPORT);
     }
 
-    // ------------------------------------------------------------------------------------------
+    /**********************************************************************************************
+     * MEMBERS
+     **********************************************************************************************/
 
     private SQLiteDatabase database;
 
+    /**********************************************************************************************
+     * METHODS
+     **********************************************************************************************/
+
     @Override
     public boolean onCreate() {
-        DatabaseHelper databaseHelper = (new DatabaseHelper(this.getContext()));
-        this.database = databaseHelper.getWritableDatabase();
+        // it is unnecessary to remember the DatabaseHelper
+        this.database = (new DatabaseHelper(this.getContext())).getWritableDatabase();
         return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-
         // use a querybuilder and set the table to 'reports'
-        SQLiteQueryBuilder qBuilder = new SQLiteQueryBuilder();
+        final SQLiteQueryBuilder qBuilder = new SQLiteQueryBuilder();
 
         // get the number of one of our uris which match the given uri
-        int match = uriMatcher.match(uri);
+        final int match = uriMatcher.match(uri);
 
         switch (match) {
             case TYPE_ALL:
@@ -125,7 +136,7 @@ public class AandachtContentProvider extends ContentProvider {
             case TYPE_REPORTS:
                 // all reports ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
-                if (sortOrder == null || sortOrder.equals("")) {
+                if (TextUtils.isEmpty(sortOrder)) {
                     sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
                 break;
@@ -138,7 +149,7 @@ public class AandachtContentProvider extends ContentProvider {
                 // all reports with a given status ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
                 qBuilder.appendWhere(ReportsTable.COLUMN_STATUS + "=\"" + uri.getLastPathSegment() + "\"");
-                if (sortOrder == null || sortOrder.equals("")) {
+                if (TextUtils.isEmpty(sortOrder)) {
                     sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
                 break;
@@ -146,14 +157,14 @@ public class AandachtContentProvider extends ContentProvider {
                 // all reports with a given address ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(ReportsTable.TABLE_NAME);
                 qBuilder.appendWhere(ReportsTable.COLUMN_ADDRESS + "=\"" + uri.getLastPathSegment() + "\"");
-                if (sortOrder == null || sortOrder.equals("")) {
+                if (TextUtils.isEmpty(sortOrder)) {
                     sortOrder = ReportsTable.COLUMN_TIMESTAMP_START + " DESC";
                 }
                 break;
             case TYPE_MESSAGES:
                 // all messages ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(MessagesTable.TABLE_NAME);
-                if (sortOrder == null || sortOrder.equals("")) {
+                if (TextUtils.isEmpty(sortOrder)) {
                     sortOrder = MessagesTable.COLUMN_TIMESTAMP + " DESC";
                 }
                 break;
@@ -166,7 +177,7 @@ public class AandachtContentProvider extends ContentProvider {
                 // all messages belonging to a report with a given id ordered by timestamp descending, unless specified otherwise
                 qBuilder.setTables(MessagesTable.TABLE_NAME);
                 qBuilder.appendWhere(MessagesTable.COLUMN_REPORT_ID + "=" + uri.getLastPathSegment());
-                if (sortOrder == null || sortOrder.equals("")) {
+                if (TextUtils.isEmpty(sortOrder)) {
                     sortOrder = MessagesTable.COLUMN_TIMESTAMP + " DESC";
                 }
                 break;
@@ -174,20 +185,16 @@ public class AandachtContentProvider extends ContentProvider {
                 // uri did not match one of our specified uris, throw an exception
                 throw new IllegalArgumentException("Invalid uri: " + uri);
         }
-
-        //checkForFinishedReports();
-
         // execute the query on the given database, then notify all observers for the uri
-        Cursor cursor = qBuilder.query(this.database, projection, selection, selectionArgs, null, null, sortOrder);
+        final Cursor cursor = qBuilder.query(this.database, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(this.getContext().getContentResolver(), uri);
-
         return cursor;
     }
 
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
         // first, we'll define which table to insert the values into
-        String tableName;
+        final String tableName;
         int match = uriMatcher.match(uri);
         switch (match) {
             case TYPE_REPORTS:
@@ -208,7 +215,7 @@ public class AandachtContentProvider extends ContentProvider {
         try {
             // for each value, insert it and check if it has been inserted, if not throw an exception
             for (ContentValues cv : values) {
-                long newId = this.database.insertOrThrow(tableName, null, cv);
+                final long newId = this.database.insertOrThrow(tableName, null, cv);
                 if (newId < 0) {
                     throw new SQLException("Failed to insert row into " + uri);
                 }
@@ -226,8 +233,8 @@ public class AandachtContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        String tableName;
-        int match = uriMatcher.match(uri);
+        final String tableName;
+        final int match = uriMatcher.match(uri);
         // first, define the table in which to insert the data
         switch (match) {
             case TYPE_REPORTS:
@@ -240,7 +247,7 @@ public class AandachtContentProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unsupported uri: " + uri);
         }
         // insert the data
-        long newId = this.database.insert(tableName, null, values);
+        final long newId = this.database.insert(tableName, null, values);
         if (newId < 0) {
             throw new SQLException("Failed to insert row into " + uri);
         }
@@ -250,9 +257,10 @@ public class AandachtContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {String tableName;
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        final String tableName;
+        final int match = uriMatcher.match(uri);
         int numUpdated;
-        int match = uriMatcher.match(uri);
         switch (match) {
             case TYPE_ALL:
                 throw new UnsupportedOperationException("Unsupported uri: " + uri);
@@ -293,9 +301,9 @@ public class AandachtContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        String tableName;
+        final String tableName;
+        final int match = uriMatcher.match(uri);
         int numDeleted;
-        int match = uriMatcher.match(uri);
         switch (match) {
             case TYPE_ALL:
                 throw new UnsupportedOperationException("Unsupported uri: " + uri);
@@ -336,8 +344,8 @@ public class AandachtContentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        String type;
-        int match = uriMatcher.match(uri);
+        final String type;
+        final int match = uriMatcher.match(uri);
         switch(match) {
             case TYPE_ALL:
             case TYPE_REPORTS:
@@ -353,18 +361,5 @@ public class AandachtContentProvider extends ContentProvider {
         }
         return type;
     }
-
-    // ------------------------------
-
-    /* UNUSED
-    private void checkForFinishedReports() {
-        String time = Long.toString(System.currentTimeMillis() / 1000);
-        String selection = ReportsTable.COLUMN_STATUS + " != \"" + ReportsTable.STATUS_FINISHED + "\"" +
-            " AND " + ReportsTable.COLUMN_TIMESTAMP_END + " <= " + time;
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(ReportsTable.COLUMN_STATUS, ReportsTable.STATUS_FINISHED);
-        update(CONTENT_URI_REPORTS, contentValues, selection, null);
-    }
-    */
 
 }

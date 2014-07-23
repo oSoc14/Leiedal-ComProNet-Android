@@ -9,24 +9,31 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
  * The model representing a report in the database. This class is currently only used to
  * temporarily store generated test data.
  *
- * Created by Maarten on 11/07/2014.
  */
 public class Report {
 
+    /**********************************************************************************************
+     * MEMBERS
+     **********************************************************************************************/
+
     public ContentValues properties;
 
+    /**********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+
     public Report(
-            String description,
-            String address,
-            double latitude,
-            double longitude,
-            String status,
-            long timestamp_start,
-            long timestamp_end) {
+            final String description,
+            final String address,
+            final double latitude,
+            final double longitude,
+            final String status,
+            final long timestamp_start,
+            final long timestamp_end) {
        fillValues(description,address,latitude,longitude,status,timestamp_start,timestamp_end);
     }
 
-    public Report(Bundle jor){
+    public Report(final Bundle jor){
         fillValues(jor.getString("description"),
                 jor.getString("address"),
                 Double.parseDouble(jor.getString("latitude")),
@@ -37,8 +44,23 @@ public class Report {
         );
     }
 
-    private void fillValues(String description, String address, double latitude, double longitude,
-                            String status, long timestamp_start, long timestamp_end) {
+    /**********************************************************************************************
+     * METHODS
+     **********************************************************************************************/
+
+    public ContentValues getContentValues() {
+        return properties;
+    }
+
+    // --------------------------------------------------------------------------------------------
+
+    private void fillValues(final String description,
+                            final String address,
+                            final double latitude,
+                            final double longitude,
+                            final String status,
+                            final long timestamp_start,
+                            final long timestamp_end) {
         properties = new ContentValues();
         properties.put(ReportsTable.COLUMN_DESCRIPTION, description);
         properties.put(ReportsTable.COLUMN_ADDRESS, address);
@@ -47,10 +69,6 @@ public class Report {
         properties.put(ReportsTable.COLUMN_STATUS, status);
         properties.put(ReportsTable.COLUMN_TIMESTAMP_START, timestamp_start);
         properties.put(ReportsTable.COLUMN_TIMESTAMP_END, timestamp_end);
-    }
-
-    public ContentValues getContentValues() {
-        return properties;
     }
 
 }

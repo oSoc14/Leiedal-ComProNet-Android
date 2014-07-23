@@ -16,9 +16,12 @@ import osoc.leiedal.android.aandacht.database.model.reports.Report;
  * It should be noted that this class will clear the database before injecting newly
  * generated data.
  *
- * Created by Maarten on 11/07/2014.
  */
 public class DummyData {
+
+    /**********************************************************************************************
+     * STATIC MEMBERS
+     **********************************************************************************************/
 
     public static int REPORT_COUNT = 20;
     public static int MESSAGE_COUNT = 25; // per report
@@ -26,6 +29,8 @@ public class DummyData {
     // arrays holding a status and chance for it's occurrence
     public static String[] STATUSES_LABELS = {ReportsTable.STATUS_ACTIVE, ReportsTable.STATUS_PENDING, ReportsTable.STATUS_DENIED, ReportsTable.STATUS_FINISHED};
     public static double[] STATUSES_CHANCES = {0.15, 0.15, 0.20, 0.50};
+
+    // --------------------------------------------------------------------------------------------
 
     private static final Random rnd = new Random();
 
@@ -1197,10 +1202,8 @@ public class DummyData {
             "Aenean sed pede nec ante blandit vitae semper egestas, urna justo faucibus lectus, a sollicitudin.",
     };
 
-    // ------------------------------
-
     /**********************************************************************************************
-     * PUBLIC METHODS
+     * STATIC METHODS
      **********************************************************************************************/
 
     /**
@@ -1239,34 +1242,7 @@ public class DummyData {
         cr.insert(AandachtContentProvider.CONTENT_URI_REPORTS, r.getContentValues());
     }
 
-    // ------------------------------
-
-    /* UNUSED
-    public static void StartDynamicInjecting(final ContentResolver cr) {
-        new Thread(new Runnable(){
-            public void run() {
-                while(true) {
-                    Report r = Report();
-                    r.getContentValues().put(ReportsTable.COLUMN_STATUS, ReportsTable.STATUS_PENDING);
-                    r.getContentValues().put(ReportsTable.COLUMN_TIMESTAMP_START, (System.currentTimeMillis() / 1000));
-                    injectReport(cr, r);
-                    try {
-                        Thread.sleep(rnd.nextInt(120000));
-                    } catch (InterruptedException ie) {
-
-                    }
-                }
-            }
-        })
-            .start();
-    }
-    */
-
-    // ------------------------------
-
-    /**********************************************************************************************
-     * PRIVATE METHODS
-     **********************************************************************************************/
+    // --------------------------------------------------------------------------------------------
 
     private static Report Report() {
         return new Report(
@@ -1309,12 +1285,12 @@ public class DummyData {
     }
 
     private static long TimeStart() {
-        long curr = System.currentTimeMillis();
+        final long curr = System.currentTimeMillis();
         return (curr / 1000) - rnd.nextInt(600);
     }
 
     private static long TimeEnd() {
-        long curr = System.currentTimeMillis();
+        final long curr = System.currentTimeMillis();
         return (curr / 1000) + rnd.nextInt(3600);
     }
 

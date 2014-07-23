@@ -96,7 +96,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
         Location l = null;
 
-        for (int i=providers.size()-1; i>=0; i--) {
+        for (int i = providers.size() - 1; i >= 0; i--) {
             l = lm.getLastKnownLocation(providers.get(i));
             if (l != null) break;
         }
@@ -108,6 +108,7 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         }
         return gps;
     }
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Uri uri = AandachtContentProvider.CONTENT_URI_REPORTS;
@@ -123,13 +124,8 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
             // create a new array to hold all MarkerOptions
             MarkerOptions[] markerOptionses = new MarkerOptions[cursor.getCount()];
             do {
-                // compare the current time to the expiry timestamp of the report and only add it if it's not expired
-                long timestamp_end = cursor.getLong(cursor.getColumnIndex(ReportsTable.COLUMN_TIMESTAMP_END));
-                long current_time = System.currentTimeMillis() / 1000;
-                if (current_time < timestamp_end) {
-                    // extract the oprions from the cursor and save it locally in the array
-                    markerOptionses[cursor.getPosition()] = extractMarkerOptions(cursor);
-                }
+                // extract the options from the cursor and save it locally in the array
+                markerOptionses[cursor.getPosition()] = extractMarkerOptions(cursor);
             } while (cursor.moveToNext());
             setUpMarkers(markerOptionses);
         }
@@ -174,12 +170,12 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
 
     private void setUpMarkers(MarkerOptions[] markerOptionses) {
         //try {
-            for (MarkerOptions markerOptions : markerOptionses) {
-                map.addMarker(markerOptions);
-            }
+        for (MarkerOptions markerOptions : markerOptionses) {
+            map.addMarker(markerOptions);
+        }
         //} catch(NullPointerException ignored) {
 
-       // }
+        // }
     }
 
 }

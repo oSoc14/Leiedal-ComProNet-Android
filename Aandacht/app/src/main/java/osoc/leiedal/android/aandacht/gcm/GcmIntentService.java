@@ -21,22 +21,40 @@ import osoc.leiedal.android.aandacht.database.model.reports.Report;
 
 public class GcmIntentService extends IntentService {
 
-    private static final String TAG = "GcmIntentService";
+    /**********************************************************************************************
+     * STATIC MEMBERS
+     **********************************************************************************************/
+
     public static final int NOTIFICATION_ID = 1;
 
-    // ------------------------------
+    // --------------------------------------------------------------------------------------------
+
+    private static final String TAG = "GcmIntentService";
+
+    /**********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
 
     public GcmIntentService() {
         super("GcmIntentService");
     }
 
+    /**********************************************************************************************
+     * METHODS
+     **********************************************************************************************/
+
+    /*
+        There are no public methods
+    */
+
+    // --------------------------------------------------------------------------------------------
+
     @Override
     protected void onHandleIntent(Intent intent) {
-        Bundle extras = intent.getExtras();
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        // The getMessageType() intent parameter must be the intent you received
-        // in your BroadcastReceiver.
-        String messageType = gcm.getMessageType(intent);
+        final Bundle extras = intent.getExtras();
+        final GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+        // the getMessageType() intent parameter must be the intent you received in your BroadcastReceiver
+        final String messageType = gcm.getMessageType(intent);
 
         if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
             /*
@@ -45,26 +63,18 @@ public class GcmIntentService extends IntentService {
              * any message types you're not interested in, or that you don't
              * recognize.
              */
-            if (GoogleCloudMessaging.
-                    MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
+            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
                 sendNotification("Send error: " + extras.toString());
-            } else if (GoogleCloudMessaging.
-                    MESSAGE_TYPE_DELETED.equals(messageType)) {
+            } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
                 sendNotification("Deleted messages on server: " +
                         extras.toString());
-            } else if (GoogleCloudMessaging.
-                    MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-
+            } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 //add report to SQLite
                 addReport(extras);
-
-                if ( getSharedPreferences(getResources().getString(R.string.app_pref),0)
-                        .getBoolean(getResources().getString(R.string.settings_option_notif), true)
-                ){
+                if (getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean(getResources().getString(R.string.settings_option_notif), true)) {
                     // Post notification of received message.
                     sendNotification(extras.toString());
                 }
-
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -72,16 +82,19 @@ public class GcmIntentService extends IntentService {
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
-    // Put the message into a notification and post it.
-    // This is just one simple example of what you might choose to do with
-    // a GCM message.
+    // --------------------------------------------------------------------------------------------
+
+    /**
+     * Put the message into a notification and post it. This is just one simple example of what
+     * you might choose to do with a GCM message.
+     *
+     * @param msg the message to display in the notification
+     */
     private void sendNotification(String msg) {
-        NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, LoginActivity.class), 0);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, LoginActivity.class), 0);
-
-        NotificationCompat.Builder mBuilder =
+        final NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.logo)//ic_stat_gcm)
                     .setContentTitle("GCM Notification")
@@ -91,12 +104,12 @@ public class GcmIntentService extends IntentService {
                     .setLights(Color.BLUE, 500, 500);
 
         if ( getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean(getResources().getString(R.string.settings_option_sound),true) ){
-            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            final Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             mBuilder.setSound(alarmSound);
         }
 
         if ( getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean(getResources().getString(R.string.settings_option_vibrate),true) ){
-            long[] pattern = {500,500,500,500,500,500,500,500,500};
+            final long[] pattern = {500,500,500,500,500,500,500,500,500};
             mBuilder.setVibrate(pattern);
         }
 

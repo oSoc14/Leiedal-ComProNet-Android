@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="address"
                 android:singleLine="true"
-                android:textColor="#0075c6"
+                android:textColor="@color/aandacht_dark_blue"
                 android:textStyle="bold"/>
 
             <TextView
@@ -41,7 +41,7 @@
                 android:paddingLeft="5dp"
                 android:text="summary"
                 android:singleLine="true"
-                android:textColor="#0E7AFF" />
+                android:textColor="@color/aandacht_light_blue" />
 
             <TextView
                 android:id="@+id/txtView_timestamp"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:text="timestamp"
-                android:textColor="#7777AA"
+                android:textColor="@color/aandacht_dark_grey"
                 android:textStyle="italic" />
 
         </LinearLayout>

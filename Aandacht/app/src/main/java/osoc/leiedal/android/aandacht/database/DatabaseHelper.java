@@ -7,16 +7,27 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Class to abstract database creation.
  *
- * Created by Maarten on 7/07/2014.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
+
+    /**********************************************************************************************
+     * STATIC MEMBERS
+     **********************************************************************************************/
 
     private static final int dbVersion = 3;
     private static final String dbName = "aandacht.db";
 
+    /**********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+
     public DatabaseHelper(Context context) {
         super(context, dbName, null, dbVersion);
     }
+
+    /**********************************************************************************************
+     * METHODS
+     **********************************************************************************************/
 
     @Override
     public void onCreate(SQLiteDatabase database) {
