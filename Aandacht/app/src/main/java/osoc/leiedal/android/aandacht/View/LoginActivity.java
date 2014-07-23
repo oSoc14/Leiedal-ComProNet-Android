@@ -1,5 +1,6 @@
 package osoc.leiedal.android.aandacht.View;
 
+import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -26,10 +27,10 @@ import java.io.IOException;
 import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.DummyAPIAccess;
 import osoc.leiedal.android.aandacht.View.model.apiAccess.iAPIAccess;
+import osoc.leiedal.android.aandacht.database.DummyData;
 
 
-
-public class LoginActivity extends ParentActivity {
+public class LoginActivity extends Activity {
 
     public static String SENDER_ID;
 
@@ -124,6 +125,10 @@ public class LoginActivity extends ParentActivity {
         String pass  = ( (EditText)findViewById(R.id.login_txtPass) ).getText().toString();
 
         login(login,pass);
+    }
+
+    public void generate(View view) {
+        DummyData.InjectDummyData(this.getContentResolver());
     }
 
     public void login(String login, String pass){

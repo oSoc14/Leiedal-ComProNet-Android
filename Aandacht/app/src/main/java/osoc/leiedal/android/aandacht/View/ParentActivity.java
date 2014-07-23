@@ -17,10 +17,6 @@ public class ParentActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
-
-        // inject dummy data
-        DummyData.InjectDummyData(this.getContentResolver());
-        DummyData.StartDynamicInjecting(this.getContentResolver());
     }
 
 
