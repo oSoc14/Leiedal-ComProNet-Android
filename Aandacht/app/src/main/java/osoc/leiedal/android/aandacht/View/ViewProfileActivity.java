@@ -39,7 +39,9 @@ public class ViewProfileActivity extends ParentActivity implements StatsTabFragm
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = {"time"};
+        private final String[] TITLES = {
+                getResources().getString(R.string.tab_profile_time)
+        };
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

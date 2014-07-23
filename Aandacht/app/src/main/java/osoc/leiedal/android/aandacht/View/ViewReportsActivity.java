@@ -33,7 +33,11 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = {"Actief", "Alle", "Mijn"};
+        private final String[] TITLES = {
+                getResources().getString(R.string.tab_reports_active),
+                getResources().getString(R.string.tab_reports_all),
+                getResources().getString(R.string.tab_reports_mine)
+        };
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

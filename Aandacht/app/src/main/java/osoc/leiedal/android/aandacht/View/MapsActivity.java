@@ -8,10 +8,10 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBarActivity;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,7 +28,7 @@ import osoc.leiedal.android.aandacht.R;
 import osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider;
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
-public class MapsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MapsActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     /* ============================================================================================
         STATIC MEMBERS
@@ -86,8 +86,8 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         //back / up button
-        if (getActionBar() != null)
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setUpMapIfNeeded();
         getSupportLoaderManager().initLoader(LOADER_REQUEST, null, this);
