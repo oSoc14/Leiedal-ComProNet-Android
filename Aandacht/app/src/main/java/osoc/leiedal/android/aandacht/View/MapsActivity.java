@@ -30,9 +30,15 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 public class MapsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
+
     private static final int LOADER_REQUEST = 3;
 
-    // ------------------------------
+    /* ============================================================================================
+        MEMBERS
+    ============================================================================================ */
 
     private BitmapDescriptor MARKER_PENDING;
     private BitmapDescriptor MARKER_ACTIVE;
@@ -41,73 +47,9 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
 
     private GoogleMap map;
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        //back / up button
-        if (getActionBar() != null)
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        setUpMapIfNeeded();
-        getSupportLoaderManager().initLoader(LOADER_REQUEST, null, this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-    }
-
-    // ------------------------------
-
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (map == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (map != null) {
-                setUpMap();
-            }
-        }
-    }
-
-    private void setUpMap() {
-        map.setMyLocationEnabled(true);
-        MARKER_PENDING = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
-        MARKER_ACTIVE = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
-        MARKER_DENIED = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
-        MARKER_FINISHED = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
-
-        double loc[] = getGPS();
-        LatLng coordinate = new LatLng(loc[0], loc[1]);
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 13);
-        map.animateCamera(yourLocation);
-    }
-
-    //get last know location
-    private double[] getGPS() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        List<String> providers = lm.getProviders(true);
-
-        /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
-        Location l = null;
-
-        for (int i = providers.size() - 1; i >= 0; i--) {
-            l = lm.getLastKnownLocation(providers.get(i));
-            if (l != null) break;
-        }
-
-        double[] gps = new double[2];
-        if (l != null) {
-            gps[0] = l.getLatitude();
-            gps[1] = l.getLongitude();
-        }
-        return gps;
-    }
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -136,7 +78,74 @@ public class MapsActivity extends FragmentActivity implements LoaderManager.Load
 
     }
 
-    // ------------------------------
+    // --------------------------------------------------------------------------------------------
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        //back / up button
+        if (getActionBar() != null)
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setUpMapIfNeeded();
+        getSupportLoaderManager().initLoader(LOADER_REQUEST, null, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpMapIfNeeded();
+    }
+
+    // --------------------------------------------------------------------------------------------
+
+    private void setUpMapIfNeeded() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (map == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+                    .getMap();
+            // Check if we were successful in obtaining the map.
+            if (map != null) {
+                setUpMap();
+            }
+        }
+    }
+
+    private void setUpMap() {
+        map.setMyLocationEnabled(true);
+        MARKER_PENDING = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
+        MARKER_ACTIVE = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+        MARKER_DENIED = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
+        MARKER_FINISHED = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
+
+        double loc[] = getGPS();
+        LatLng coordinate = new LatLng(loc[0], loc[1]);
+        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 13);
+        map.animateCamera(yourLocation);
+    }
+
+    private double[] getGPS() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = lm.getProviders(true);
+
+        /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
+        Location l = null;
+
+        for (int i = providers.size() - 1; i >= 0; i--) {
+            l = lm.getLastKnownLocation(providers.get(i));
+            if (l != null) break;
+        }
+
+        double[] gps = new double[2];
+        if (l != null) {
+            gps[0] = l.getLatitude();
+            gps[1] = l.getLongitude();
+        }
+        return gps;
+    }
 
     private MarkerOptions extractMarkerOptions(Cursor cursor) {
         // extract the data from the cursor

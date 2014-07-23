@@ -21,9 +21,9 @@ import osoc.leiedal.android.aandacht.database.model.reports.Report;
 
 public class GcmIntentService extends IntentService {
 
-    /**********************************************************************************************
-     * STATIC MEMBERS
-     **********************************************************************************************/
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
 
     public static final int NOTIFICATION_ID = 1;
 
@@ -31,17 +31,17 @@ public class GcmIntentService extends IntentService {
 
     private static final String TAG = "GcmIntentService";
 
-    /**********************************************************************************************
-     * CONSTRUCTORS
-     **********************************************************************************************/
+    /* ============================================================================================
+        CONSTRUCTORS
+    ============================================================================================ */
 
     public GcmIntentService() {
         super("GcmIntentService");
     }
 
-    /**********************************************************************************************
-     * METHODS
-     **********************************************************************************************/
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     /*
         There are no public methods
@@ -71,7 +71,7 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 //add report to SQLite
                 addReport(extras);
-                if (getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean(getResources().getString(R.string.settings_option_notif), true)) {
+                if (getSharedPreferences(getResources().getString(R.string.app_pref), 0).getBoolean(getResources().getString(R.string.settings_option_notif), true)) {
                     // Post notification of received message.
                     sendNotification(extras.toString());
                 }
@@ -96,20 +96,20 @@ public class GcmIntentService extends IntentService {
 
         final NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.logo)//ic_stat_gcm)
-                    .setContentTitle("GCM Notification")
-                    .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(msg))
-                    .setContentText(msg)
-                    .setLights(Color.BLUE, 500, 500);
+                        .setSmallIcon(R.drawable.logo)//ic_stat_gcm)
+                        .setContentTitle("GCM Notification")
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(msg))
+                        .setContentText(msg)
+                        .setLights(Color.BLUE, 500, 500);
 
-        if ( getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean(getResources().getString(R.string.settings_option_sound),true) ){
+        if (getSharedPreferences(getResources().getString(R.string.app_pref), 0).getBoolean(getResources().getString(R.string.settings_option_sound), true)) {
             final Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             mBuilder.setSound(alarmSound);
         }
 
-        if ( getSharedPreferences(getResources().getString(R.string.app_pref),0).getBoolean(getResources().getString(R.string.settings_option_vibrate),true) ){
-            final long[] pattern = {500,500,500,500,500,500,500,500,500};
+        if (getSharedPreferences(getResources().getString(R.string.app_pref), 0).getBoolean(getResources().getString(R.string.settings_option_vibrate), true)) {
+            final long[] pattern = {500, 500, 500, 500, 500, 500, 500, 500, 500};
             mBuilder.setVibrate(pattern);
         }
 
@@ -118,8 +118,8 @@ public class GcmIntentService extends IntentService {
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
-    private void addReport(Bundle bundle){
-        DummyData.injectReport(getContentResolver(),new Report(bundle));
+    private void addReport(Bundle bundle) {
+        DummyData.injectReport(getContentResolver(), new Report(bundle));
     }
 
 }

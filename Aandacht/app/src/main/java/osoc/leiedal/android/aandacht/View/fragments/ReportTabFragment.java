@@ -22,15 +22,20 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 public class ReportTabFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private final static String ARG_POSITION = "arg_position";
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
+
+    private static final String ARG_POSITION = "arg_position";
     private static final int LOADER_REQUEST = 1;
 
     private static final int TAB_ACTIVE = 0;
     private static final int TAB_ALL = 1;
     private static final int TAB_MINE = 2;
 
-    private int mPosition;
-    private MyCursorAdaptor myCursorAdaptor;
+    /* ============================================================================================
+        STATIC METHODS
+    ============================================================================================ */
 
     public static ReportTabFragment instantiate(int number) {
         final ReportTabFragment frag = new ReportTabFragment();
@@ -39,6 +44,17 @@ public class ReportTabFragment extends Fragment implements LoaderManager.LoaderC
         frag.setArguments(args);
         return frag;
     }
+
+    /* ============================================================================================
+        MEMBERS
+    ============================================================================================ */
+
+    private int mPosition;
+    private MyCursorAdaptor myCursorAdaptor;
+
+    /* ============================================================================================
+        METHOSD
+    ============================================================================================ */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,8 +83,7 @@ public class ReportTabFragment extends Fragment implements LoaderManager.LoaderC
                 String selection = null;
                 if (mPosition == TAB_ACTIVE) {
                     selection = ReportsTable.COLUMN_STATUS + "=\"" + ReportsTable.STATUS_ACTIVE + "\"";
-                }
-                else if (mPosition == TAB_MINE) {
+                } else if (mPosition == TAB_MINE) {
                     selection = ReportsTable.COLUMN_STATUS + " IN ('" + ReportsTable.STATUS_ACTIVE + "','" + ReportsTable.STATUS_PENDING + "')";
                 }
                 /*else if (mPosition == TAB_ALL) {

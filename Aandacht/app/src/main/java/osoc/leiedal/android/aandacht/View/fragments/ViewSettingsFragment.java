@@ -15,25 +15,55 @@ import osoc.leiedal.android.aandacht.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ViewSettingsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ViewSettingsFragment#newInstance} factory method to
- * create an instance of this fragment.
  *
  */
 public class ViewSettingsFragment extends Fragment {
 
+    /* ============================================================================================
+        NESTED INTERFACES
+    ============================================================================================ */
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        public void onFragmentInteraction(Uri uri);
+    }
+
+    /* ============================================================================================
+        STATIC METHODS
+    ============================================================================================ */
+
+    // unnecessary but this structure is according to android rules...
+    public static ViewSettingsFragment newInstance() {
+        return new ViewSettingsFragment();
+    }
+
+    /* ============================================================================================
+        CONSTRUCTORS
+    ============================================================================================ */
+
+    // constructor is public AND there is a static newInstance method, this is according to android rules...
+    public ViewSettingsFragment() {
+        // fragment constructors must be empty
+    }
+
+    /* ============================================================================================
+        MEMBERS
+    ============================================================================================ */
+
     private OnFragmentInteractionListener mListener;
 
-    public static ViewSettingsFragment newInstance() {
-        ViewSettingsFragment fragment = new ViewSettingsFragment();
-        return fragment;
-    }
-
-    public ViewSettingsFragment() {
-        // Required empty public constructor
-    }
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,10 +87,10 @@ public class ViewSettingsFragment extends Fragment {
         CompoundButton vibrate = (CompoundButton) view.findViewById(R.id.settings_vibrate);
 
 
-        SharedPreferences pref = getActivity().getSharedPreferences(getResources().getString(R.string.app_pref),0);
-        notif.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_notif),true));
-        sound.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_sound),true));
-        vibrate.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_vibrate),true));
+        SharedPreferences pref = getActivity().getSharedPreferences(getResources().getString(R.string.app_pref), 0);
+        notif.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_notif), true));
+        sound.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_sound), true));
+        vibrate.setChecked(pref.getBoolean(getResources().getString(R.string.settings_option_vibrate), true));
 
         notif.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -87,11 +117,14 @@ public class ViewSettingsFragment extends Fragment {
         return view;
     }
 
+    // UNUSED METHOD
+    /**
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+     */
 
     @Override
     public void onAttach(Activity activity) {
@@ -108,20 +141,6 @@ public class ViewSettingsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
     }
 
 }

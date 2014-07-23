@@ -13,9 +13,9 @@ import android.support.v4.content.WakefulBroadcastReceiver;
  */
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
-    /**********************************************************************************************
-     * METHODS
-     **********************************************************************************************/
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     @Override
     public void onReceive(Context context, Intent intent) {

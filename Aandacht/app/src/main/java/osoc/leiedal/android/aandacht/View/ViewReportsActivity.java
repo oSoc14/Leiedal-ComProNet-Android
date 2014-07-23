@@ -27,66 +27,13 @@ import osoc.leiedal.android.aandacht.View.fragments.ReportTabFragment;
 
 public class ViewReportsActivity extends ParentActivity implements View.OnCreateContextMenuListener {
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //get reports in area
-        setContentView(R.layout.activity_view_reports);
-
-
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        tabs.setIndicatorColor(getResources().getColor(R.color.aandacht_dark_blue));
-        tabs.setTextColor(getResources().getColor(R.color.aandacht_dark_blue));
-        tabs.setBackgroundColor(getResources().getColor(R.color.aandacht_background));
-
-        pager.setAdapter(adapter);
-
-        tabs.setViewPager(pager);
-    }
-
-    public void call(View v){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.reports_popup_title);
-        builder.setMessage(R.string.reports_popup_text);
-        builder.setPositiveButton(R.string.reports_btnCall, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton){
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:0478927411"));
-                startActivity(callIntent);
-            }
-        });
-        builder.setNegativeButton(R.string.reports_popup_btnCancel, null);
-
-        AlertDialog dialog = builder.show();
-        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER);
-        dialog.show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        super.onCreateOptionsMenu(menu);
-
-        getMenuInflater().inflate(R.menu.view_reports, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return super.onOptionsItemSelected(item);
-    }
+    /* ============================================================================================
+        NESTED CLASSES
+    ============================================================================================ */
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = { "Actief", "Alle", "Mijn" };
+        private final String[] TITLES = {"Actief", "Alle", "Mijn"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -109,24 +56,87 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.view_reports, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         //clear login data
-        getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().clear().commit();
+        getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().clear().commit();
 
-        this.startActivity(new Intent(this,LoginActivity.class));
+        this.startActivity(new Intent(this, LoginActivity.class));
     }
 
+    public void call(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.reports_popup_title);
+        builder.setMessage(R.string.reports_popup_text);
+        builder.setPositiveButton(R.string.reports_btnCall, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:0478927411"));
+                startActivity(callIntent);
+            }
+        });
+        builder.setNegativeButton(R.string.reports_popup_btnCancel, null);
+
+        AlertDialog dialog = builder.show();
+        TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER);
+        dialog.show();
+    }
+
+    // --------------------------------------------------------------------------------------------
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //get reports in area
+        setContentView(R.layout.activity_view_reports);
+
+
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        tabs.setIndicatorColor(getResources().getColor(R.color.aandacht_dark_blue));
+        tabs.setTextColor(getResources().getColor(R.color.aandacht_dark_blue));
+        tabs.setBackgroundColor(getResources().getColor(R.color.aandacht_background));
+
+        pager.setAdapter(adapter);
+
+        tabs.setViewPager(pager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    // UNUSED METHOD
+    /**
     public void send(final View view) {
         new AsyncTask() {
-
             @Override
             protected Object doInBackground(Object[] params) {
                 String msg = "";
@@ -146,6 +156,7 @@ public class ViewReportsActivity extends ParentActivity implements View.OnCreate
             }
         }.execute(null, null, null);
     }
+    */
 
 }
 

@@ -12,18 +12,9 @@ import osoc.leiedal.android.aandacht.View.fragments.ViewSettingsFragment;
 
 public class ViewSettingsActivity extends ParentActivity implements ViewSettingsFragment.OnFragmentInteractionListener {
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_settings);
-
-        //back / up button
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,4 +36,19 @@ public class ViewSettingsActivity extends ParentActivity implements ViewSettings
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    // --------------------------------------------------------------------------------------------
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_settings);
+
+        //back / up button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
 }

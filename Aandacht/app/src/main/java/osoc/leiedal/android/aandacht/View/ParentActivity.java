@@ -9,16 +9,19 @@ import android.view.MenuItem;
 import osoc.leiedal.android.aandacht.R;
 
 /**
- * Used for 'global stuffs' like option menu, ...
+ * Used to setup global things that needs to persist through multiple activities.
  */
 public class ParentActivity extends ActionBarActivity {
+
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,23 +37,23 @@ public class ParentActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.action_settings:
-                this.startActivity(new Intent(this,ViewSettingsActivity.class));
+                this.startActivity(new Intent(this, ViewSettingsActivity.class));
                 break;
             case R.id.action_profile:
                 //goto profile
-                this.startActivity(new Intent(this,ViewProfileActivity.class));
+                this.startActivity(new Intent(this, ViewProfileActivity.class));
                 break;
             case R.id.action_logout:
 
                 //clear login data
-                getSharedPreferences(getResources().getString(R.string.app_pref),0).edit().clear().commit();
+                getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().clear().commit();
 
-                this.startActivity(new Intent(this,LoginActivity.class));
+                this.startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.action_map:
-                this.startActivity(new Intent(this,MapsActivity.class));
+                this.startActivity(new Intent(this, MapsActivity.class));
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -66,9 +69,9 @@ public class ParentActivity extends ActionBarActivity {
         MenuItem menuItem = null;
         if (getClass().equals(osoc.leiedal.android.aandacht.View.ViewSettingsActivity.class)) {
             menuItem = menu.findItem(R.id.action_settings);
-        }else if (getClass().equals(osoc.leiedal.android.aandacht.View.ViewProfileActivity.class)) {
+        } else if (getClass().equals(osoc.leiedal.android.aandacht.View.ViewProfileActivity.class)) {
             menuItem = menu.findItem(R.id.action_profile);
-        }else if (getClass().equals(osoc.leiedal.android.aandacht.View.LoginActivity.class)) {
+        } else if (getClass().equals(osoc.leiedal.android.aandacht.View.LoginActivity.class)) {
             menuItem = menu.findItem(R.id.action_logout);
         }
 
@@ -80,4 +83,5 @@ public class ParentActivity extends ActionBarActivity {
         }
         return true;
     }
+
 }

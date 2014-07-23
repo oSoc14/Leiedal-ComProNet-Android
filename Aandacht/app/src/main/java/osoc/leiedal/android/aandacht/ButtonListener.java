@@ -11,17 +11,29 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 /**
  * This class handles the press of either the confirm or deny button of a single report.
- *
+ * <p/>
  * Created by Maarten on 22/07/2014.
  */
 public class ButtonListener implements View.OnClickListener {
 
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
+
     public static final int TYPE_CONFIRM = 0;
     public static final int TYPE_DENY = 1;
+
+    /* ============================================================================================
+        MEMBERS
+    ============================================================================================ */
 
     private Context context;
     private int id;
     private int type;
+
+    /* ============================================================================================
+        CONSTRUCTORS
+    ============================================================================================ */
 
     public ButtonListener(Context context, int id, int type) {
         this.context = context;
@@ -29,19 +41,25 @@ public class ButtonListener implements View.OnClickListener {
         this.type = type;
     }
 
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
+
     @Override
     public void onClick(View view) {
         Uri queryUri = Uri.withAppendedPath(AandachtContentProvider.CONTENT_URI_REPORTS_ID, Integer.toString(id));
         Cursor cursor = context.getContentResolver().query(queryUri, null, null, null, null);
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             String currentStatus = cursor.getString(cursor.getColumnIndex(ReportsTable.COLUMN_STATUS));
             String newStatus = decideNewStatus(currentStatus);
             updateStatus(id, newStatus);
         }
     }
 
+    // --------------------------------------------------------------------------------------------
+
     private void updateStatus(int id, String status) {
-        if(status.equals(ReportsTable.STATUS_DELETED)) {
+        if (status.equals(ReportsTable.STATUS_DELETED)) {
             Uri uri = Uri.withAppendedPath(AandachtContentProvider.CONTENT_URI_REPORTS_ID, Integer.toString(id));
             context.getContentResolver().delete(uri, null, null);
             Uri uri2 = Uri.withAppendedPath(AandachtContentProvider.CONTENT_URI_MESSAGES_REPORT, Integer.toString(id));
@@ -55,7 +73,7 @@ public class ButtonListener implements View.OnClickListener {
     }
 
     private String decideNewStatus(String status) {
-        if(type == TYPE_CONFIRM)
+        if (type == TYPE_CONFIRM)
             return decideNewStatusOnConfirm(status);
         else
             return decideNewStatusOnDeny(status);
@@ -66,7 +84,7 @@ public class ButtonListener implements View.OnClickListener {
     }
 
     private String decideNewStatusOnDeny(String status) {
-        if(status.equals(ReportsTable.STATUS_FINISHED))
+        if (status.equals(ReportsTable.STATUS_FINISHED))
             return ReportsTable.STATUS_DELETED;
         else
             return ReportsTable.STATUS_DENIED;

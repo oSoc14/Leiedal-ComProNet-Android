@@ -5,9 +5,16 @@ package osoc.leiedal.android.aandacht.View.model.apiAccess;
  */
 public class DummyAPIAccess implements iAPIAccess {
 
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
+
     //singleton
     private static iAPIAccess api = null;
 
+    /* ============================================================================================
+        STATIC METHODS
+    ============================================================================================ */
 
     @Override
     public boolean login(String user, String pass) {

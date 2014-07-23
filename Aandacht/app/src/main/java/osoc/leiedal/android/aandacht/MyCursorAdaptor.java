@@ -17,10 +17,18 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
 
 public class MyCursorAdaptor extends CursorAdapter {
 
+    /* ============================================================================================
+        CONSTRUCTORS
+    ============================================================================================ */
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public MyCursorAdaptor(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
+
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -52,15 +60,15 @@ public class MyCursorAdaptor extends CursorAdapter {
         int confirmVisibility = View.VISIBLE;
         int denyBg = R.drawable.button_deny_inactive;
         int denyVisibility = View.VISIBLE;
-        if(status.equals(ReportsTable.STATUS_ACTIVE)) {
+        if (status.equals(ReportsTable.STATUS_ACTIVE)) {
             color = context.getResources().getColor(R.color.status_active);
             confirmBg = R.drawable.button_confirm_active;
-        } else if(status.equals(ReportsTable.STATUS_PENDING)) {
+        } else if (status.equals(ReportsTable.STATUS_PENDING)) {
             color = context.getResources().getColor(R.color.status_pending);
-        } else if(status.equals(ReportsTable.STATUS_DENIED)) {
+        } else if (status.equals(ReportsTable.STATUS_DENIED)) {
             color = context.getResources().getColor(R.color.status_denied);
             denyBg = R.drawable.button_deny_active;
-        } else if(status.equals(ReportsTable.STATUS_FINISHED)) {
+        } else if (status.equals(ReportsTable.STATUS_FINISHED)) {
             color = context.getResources().getColor(R.color.status_finished);
             confirmVisibility = View.INVISIBLE;
         }
@@ -77,24 +85,26 @@ public class MyCursorAdaptor extends CursorAdapter {
 
     }
 
+    // --------------------------------------------------------------------------------------------
+
     private String wrapTimestamp(long timestamp) {
         String textBuff = "";
-        if(timestamp >= 604800) {
+        if (timestamp >= 604800) {
             long h = timestamp / 604800;
             textBuff += h + (h > 1 ? " weken" : " week");
-        } else if(timestamp >= 86400) {
+        } else if (timestamp >= 86400) {
             long h = timestamp / 86400;
             textBuff += h + (h > 1 ? " dagen" : " dag");
-        } else if(timestamp >= 3600) {
+        } else if (timestamp >= 3600) {
             long h = timestamp / 3600;
             textBuff += h + (h > 1 ? " uren" : " uur");
-        } else if(timestamp >= 60) {
+        } else if (timestamp >= 60) {
             long h = timestamp / 60;
             textBuff += h + (h > 1 ? " minuten" : " minuut");
         } else {
             textBuff += "enkele ogenblikken";
         }
-        textBuff+= " geleden";
+        textBuff += " geleden";
         return textBuff;
     }
 

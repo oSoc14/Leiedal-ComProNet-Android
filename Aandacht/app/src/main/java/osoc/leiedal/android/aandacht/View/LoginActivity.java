@@ -31,15 +31,103 @@ import osoc.leiedal.android.aandacht.database.DummyData;
 
 public class LoginActivity extends Activity {
 
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
+
     public static final String PROPERTY_REG_ID = "registration_id";
+
     public static String SENDER_ID;
+
+    // --------------------------------------------------------------------------------------------
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
     private static String regid;
 
+    /* ============================================================================================
+        STATIC METHODS
+    ============================================================================================ */
+
+    /**
+     * @return Application's version code from the {@code PackageManager}.
+     */
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
+    }
+
+    /* ============================================================================================
+        MEMBERS
+    ============================================================================================ */
+
     private GoogleCloudMessaging gcm = null;
+
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(osoc.leiedal.android.aandacht.R.menu.login, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Handles the login button
+     * checks login details
+     * checks if play services are running
+     * if both are true, the ViewReportsActivity will be launched
+     */
+    public void login(View view) {
+        String login = ((EditText) findViewById(R.id.login_txtLogin)).getText().toString();
+        String pass = ((EditText) findViewById(R.id.login_txtPass)).getText().toString();
+
+        login(login, pass);
+    }
+
+    public void generate(View view) {
+        DummyData.InjectDummyData(this.getContentResolver());
+    }
+
+    public void login(String login, String pass) {
+        iAPIAccess api = DummyAPIAccess.getInstance();
+        if (api.login(login, pass)) {
+
+            //gotoPref.putExtra("user",login);
+            startActivity(new Intent(this, ViewReportsActivity.class));
+
+            if (checkPlayServices()) {
+                Intent gotoPref = new Intent(this, ViewReportsActivity.class);
+                startActivity(gotoPref);
+
+                getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putString("user", login).apply();
+                getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean("authenticated", true).apply();
+            } else {
+                finish();
+            }
+            //else => finish in checkPlayServices()
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.login_tstFail), Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    // --------------------------------------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,60 +190,7 @@ public class LoginActivity extends Activity {
         ((EditText) findViewById(R.id.login_txtPass)).setText("");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(osoc.leiedal.android.aandacht.R.menu.login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Handles the login button
-     * checks login details
-     * checks if play services are running
-     * if both are true, the ViewReportsActivity will be launched
-     */
-    public void login(View view) {
-        String login = ((EditText) findViewById(R.id.login_txtLogin)).getText().toString();
-        String pass = ((EditText) findViewById(R.id.login_txtPass)).getText().toString();
-
-        login(login, pass);
-    }
-
-    public void generate(View view) {
-        DummyData.InjectDummyData(this.getContentResolver());
-    }
-
-    public void login(String login, String pass) {
-        iAPIAccess api = DummyAPIAccess.getInstance();
-        if (api.login(login, pass)) {
-
-            //gotoPref.putExtra("user",login);
-            startActivity(new Intent(this, ViewReportsActivity.class));
-
-            if (checkPlayServices()) {
-                Intent gotoPref = new Intent(this, ViewReportsActivity.class);
-                startActivity(gotoPref);
-
-                getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putString("user", login).apply();
-                getSharedPreferences(getResources().getString(R.string.app_pref), 0).edit().putBoolean("authenticated", true).apply();
-            } else {
-                finish();
-            }
-            //else => finish in checkPlayServices()
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.login_tstFail), Toast.LENGTH_LONG);
-            toast.show();
-        }
-    }
-
-    // GCM stuff
+    // --------------------------------------------------------------------------------------------
 
     /**
      * Check the device to make sure it has the Google Play Services APK. If
@@ -213,19 +248,6 @@ public class LoginActivity extends Activity {
         // how you store the regID in your app is up to you.
         return getSharedPreferences(LoginActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
-    }
-
-    /**
-     * @return Application's version code from the {@code PackageManager}.
-     */
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            // should never happen
-            throw new RuntimeException("Could not get package name: " + e);
-        }
     }
 
     /**
