@@ -36,6 +36,7 @@ public class MessagesTable {
 
     public static void onUpgrade(final SQLiteDatabase database, final int oldVersion, final int newVersion) {
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        Log.i(MessagesTable.class.getSimpleName(), "updated table from version " + oldVersion + " to " + newVersion);
         onCreate(database);
     }
 

@@ -1,6 +1,7 @@
 package osoc.leiedal.android.aandacht.database;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * The static class which represents the Messages table in the database. It contains the SQL command
@@ -48,6 +49,7 @@ public class ReportsTable {
 
     public static void onUpgrade(final SQLiteDatabase database, final int oldVersion, final int newVersion) {
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        Log.i(ReportsTable.class.getSimpleName(), "updated table from version " + oldVersion + " to " + newVersion);
         onCreate(database);
     }
 
