@@ -6,14 +6,14 @@ import android.util.Log;
 /**
  * The static class which represents the Messages table in the database. It contains the SQL command
  * responsible for it's creation.
- *
+ * <p/>
  * Created by Maarten on 7/07/2014.
  */
 public class ReportsTable {
 
-    /**********************************************************************************************
-     * STATIC MEMBERS
-     **********************************************************************************************/
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
 
     // database and column names
     public static final String TABLE_NAME = "reports";
@@ -38,20 +38,20 @@ public class ReportsTable {
     // Database creation SQL statement
     private static final String DATABASE_CREATE =
             "create table " + TABLE_NAME
-            + "("
-            + COLUMN_ID + " integer primary key autoincrement,"
-            + COLUMN_DESCRIPTION + " text not null,"
-            + COLUMN_ADDRESS + " text not null,"
-            + COLUMN_LOCATION_LAT + " real not null,"
-            + COLUMN_LOCATION_LNG + " real not null,"
-            + COLUMN_STATUS + " string not null,"
-            + COLUMN_TIMESTAMP_START + " integer not null,"
-            + COLUMN_TIMESTAMP_END + " integer not null"
-            + ")";
+                    + "("
+                    + COLUMN_ID + " integer primary key autoincrement,"
+                    + COLUMN_DESCRIPTION + " text not null,"
+                    + COLUMN_ADDRESS + " text not null,"
+                    + COLUMN_LOCATION_LAT + " real not null,"
+                    + COLUMN_LOCATION_LNG + " real not null,"
+                    + COLUMN_STATUS + " string not null,"
+                    + COLUMN_TIMESTAMP_START + " integer not null,"
+                    + COLUMN_TIMESTAMP_END + " integer not null"
+                    + ")";
 
-    /**********************************************************************************************
-     * STATIC METHODS
-     **********************************************************************************************/
+    /* ============================================================================================
+        STATIC METHODS
+    ============================================================================================ */
 
     public static void onCreate(final SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);

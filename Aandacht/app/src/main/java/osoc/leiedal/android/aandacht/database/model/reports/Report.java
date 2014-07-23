@@ -5,22 +5,22 @@ import android.os.Bundle;
 
 import osoc.leiedal.android.aandacht.database.ReportsTable;
 
+
 /**
  * The model representing a report in the database. This class is currently only used to
  * temporarily store generated test data.
- *
  */
 public class Report {
 
-    /**********************************************************************************************
-     * MEMBERS
-     **********************************************************************************************/
+    /* ============================================================================================
+        MEMBERS
+    ============================================================================================ */
 
     public ContentValues properties;
 
-    /**********************************************************************************************
-     * CONSTRUCTORS
-     **********************************************************************************************/
+    /* ============================================================================================
+        CONSTRUCTORS
+    ============================================================================================ */
 
     public Report(
             final String description,
@@ -30,10 +30,10 @@ public class Report {
             final String status,
             final long timestamp_start,
             final long timestamp_end) {
-       fillValues(description,address,latitude,longitude,status,timestamp_start,timestamp_end);
+        fillValues(description, address, latitude, longitude, status, timestamp_start, timestamp_end);
     }
 
-    public Report(final Bundle jor){
+    public Report(final Bundle jor) {
         fillValues(jor.getString("description"),
                 jor.getString("address"),
                 Double.parseDouble(jor.getString("latitude")),
@@ -44,9 +44,9 @@ public class Report {
         );
     }
 
-    /**********************************************************************************************
-     * METHODS
-     **********************************************************************************************/
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     public ContentValues getContentValues() {
         return properties;

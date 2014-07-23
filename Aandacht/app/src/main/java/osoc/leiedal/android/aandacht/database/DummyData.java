@@ -15,13 +15,12 @@ import osoc.leiedal.android.aandacht.database.model.reports.Report;
  * </p>
  * It should be noted that this class will clear the database before injecting newly
  * generated data.
- *
  */
 public class DummyData {
 
-    /**********************************************************************************************
-     * STATIC MEMBERS
-     **********************************************************************************************/
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
 
     public static int REPORT_COUNT = 20;
     public static int MESSAGE_COUNT = 25; // per report
@@ -1202,9 +1201,9 @@ public class DummyData {
             "Aenean sed pede nec ante blandit vitae semper egestas, urna justo faucibus lectus, a sollicitudin.",
     };
 
-    /**********************************************************************************************
-     * STATIC METHODS
-     **********************************************************************************************/
+    /* ============================================================================================
+        STATIC METHODS
+    ============================================================================================ */
 
     /**
      * This will delete all records from the database and then fill it again with generated
@@ -1235,7 +1234,7 @@ public class DummyData {
      * is used by the notification services.
      *
      * @param cr the ContentResolver to access the database
-     * @param r the Report to insert into the database
+     * @param r  the Report to insert into the database
      */
     public static void injectReport(ContentResolver cr, Report r) {
         System.out.println("[DummyData] InjectReport(" + cr + ")");

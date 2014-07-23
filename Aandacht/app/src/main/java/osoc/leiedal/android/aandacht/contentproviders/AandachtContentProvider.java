@@ -17,52 +17,51 @@ import osoc.leiedal.android.aandacht.database.ReportsTable;
 /**
  * The ContentProvider which provides access to reports and messages through URIs. Below is a list
  * of possible URIs and their supported actions.
- *
+ * <p/>
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider
- *
+ * <p/>
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports
  * -query: the complete reports table
  * -insert: insert into the reports table
  * -update: update all rows in the reports table
  * -delete: delete all rows in the reports table
- *
+ * <p/>
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports/[id]
  * -query: the report with the given id
  * -update: update the row with the given id
  * -delete: delete the row with the given id
- *
+ * <p/>
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports/status/[status]
  * -query: all reports with the given status
  * -update: update all rows with the given status
  * -delete: delete all rows with the given status
- *
+ * <p/>
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/reports/address/[address]
  * -query: all reports with the given address
  * -update: update all rows with the given address
  * -delete: delete all rows with the given address
- *
+ * <p/>
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages
  * -query: the complete messages table
  * -insert: insert into the messages table
  * -update: update all rows in the reports table
  * -delete: delete all rows in the reports table
- *
+ * <p/>
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages/[id]
  * -query: the message with the given id
  * -update: update the message with the given id
  * -delete: delete the message with the given id
- *
+ * <p/>
  * content://osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider/messages/report/[id]
  * -query: all messages belonging to the report with the given id
  * -update: update all messages belonging to the report with the given id
  * -delete: delete all messages belonging to the report with the given id
- *
  */
 public class AandachtContentProvider extends ContentProvider {
 
-    /**********************************************************************************************
-     * STATIC MEMBERS
-     **********************************************************************************************/
+    /* ============================================================================================
+        STATIC MEMBERS
+    ============================================================================================ */
 
     public static final String PROVIDER_NAME = "osoc.leiedal.android.aandacht.contentproviders.AandachtContentProvider";
 
@@ -90,6 +89,7 @@ public class AandachtContentProvider extends ContentProvider {
     private static final int TYPE_MESSAGES_REPORT = 22;     // uri for the messages by report(-id)
 
     private static final UriMatcher uriMatcher;
+
     static {
         // # = any number; * = any string of text
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -103,15 +103,15 @@ public class AandachtContentProvider extends ContentProvider {
         uriMatcher.addURI(PROVIDER_NAME, "messages/report/#", TYPE_MESSAGES_REPORT);
     }
 
-    /**********************************************************************************************
-     * MEMBERS
-     **********************************************************************************************/
+    /* ============================================================================================
+        MEMBERS
+    ============================================================================================ */
 
     private SQLiteDatabase database;
 
-    /**********************************************************************************************
-     * METHODS
-     **********************************************************************************************/
+    /* ============================================================================================
+        METHODS
+    ============================================================================================ */
 
     @Override
     public boolean onCreate() {
@@ -278,7 +278,7 @@ public class AandachtContentProvider extends ContentProvider {
                 break;
             case TYPE_REPORTS_ADDRESS:
                 tableName = ReportsTable.TABLE_NAME;
-                selection =ReportsTable.COLUMN_ADDRESS + "=\"" + uri.getLastPathSegment() + "\"";
+                selection = ReportsTable.COLUMN_ADDRESS + "=\"" + uri.getLastPathSegment() + "\"";
                 break;
             case TYPE_MESSAGES:
                 tableName = MessagesTable.TABLE_NAME;
@@ -346,7 +346,7 @@ public class AandachtContentProvider extends ContentProvider {
     public String getType(Uri uri) {
         final String type;
         final int match = uriMatcher.match(uri);
-        switch(match) {
+        switch (match) {
             case TYPE_ALL:
             case TYPE_REPORTS:
             case TYPE_REPORTS_ID:
