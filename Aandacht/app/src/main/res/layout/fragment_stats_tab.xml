@@ -4,67 +4,102 @@
     android:layout_height="match_parent"
     tools:context=".View.fragments.StatsTabFragment">
 
-    <RelativeLayout
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/txtavgtimeres"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Average\nResponse Time"
-                android:textAlignment="center"
-                android:layout_alignParentLeft="true"
-                />
+                android:layout_weight="1"
+                android:fontFamily="Roboto Light"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                android:text="@string/stats_title_response"
+                android:textColor="@color/aandacht_dark_blue"
+                android:textSize="8pt"
+                android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/avg_image"
-                android:adjustViewBounds="true"
-                android:src="@drawable/icon_avg"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_alignParentLeft="true"
-                android:layout_above="@+id/avg_text"
-                />
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:gravity="center"
+                android:src="@drawable/icon_average_response_time" />
+
             <TextView
                 android:id="@+id/avg_text"
-                tools:text="5 minuten"
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                />
+                android:layout_weight="1"
+                android:fontFamily="Roboto Light"
+                android:gravity="center_horizontal"
+                android:textColor="@color/aandacht_light_blue"
+                android:textSize="12pt"
+                android:textStyle="bold"
+                tools:text="@string/stats_value_response" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/txttottimeactive"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total Time Active"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                />
+                android:layout_weight="1"
+                android:fontFamily="Roboto Light"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                android:text="@string/stats_title_active"
+                android:textColor="@color/aandacht_dark_blue"
+                android:textSize="8pt"
+                android:textStyle="bold" />
+
             <ImageView
-                android:id="@+id/total_image"
-                android:adjustViewBounds="true"
-                android:src="@drawable/icon_total_time_active"
-                android:layout_width="wrap_content"
+                android:id="@+id/active_image"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_alignParentRight="true"
-                android:layout_above="@+id/total_text"
-                />
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:gravity="center"
+                android:src="@drawable/icon_total_time_active" />
+
             <TextView
                 android:id="@+id/total_text"
-                tools:text="5uur 3 minuten"
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                />
+                android:layout_weight="1"
+                android:fontFamily="Roboto Light"
+                android:gravity="center_horizontal"
+                android:textColor="@color/aandacht_light_blue"
+                android:textSize="12pt"
+                android:textStyle="bold"
+                tools:text="@string/stats_value_active" />
 
-    </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </FrameLayout>

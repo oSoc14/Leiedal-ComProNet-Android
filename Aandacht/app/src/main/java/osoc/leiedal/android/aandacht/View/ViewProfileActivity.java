@@ -130,11 +130,11 @@ public class ViewProfileActivity extends ParentActivity implements StatsTabFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
-
+/*
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabs.setIndicatorColor(Color.parseColor("#0075c6"));
-        tabs.setTextColor(Color.parseColor("#0075c6"));
-        tabs.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        tabs.setIndicatorColor(getResources().getColor(R.color.aandacht_dark_blue));
+        tabs.setTextColor(getResources().getColor(R.color.aandacht_dark_blue));
+        tabs.setBackgroundColor(getResources().getColor(R.color.aandacht_background));
 
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
@@ -144,6 +144,9 @@ public class ViewProfileActivity extends ParentActivity implements StatsTabFragm
         tabs.setShouldExpand(true);
 
         tabs.setViewPager(pager);
+*/
+
+
 
         //back / up button
         if (getSupportActionBar() != null)

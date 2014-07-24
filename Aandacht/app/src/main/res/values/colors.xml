@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="aandacht_dark_blue">#0075C6</color>
-    <color name="aandacht_light_blue">#0E7AFF</color>
+    <!--<color name="aandacht_dark_blue">#0075C6</color>-->
+    <color name="aandacht_dark_blue">#ff24436a</color>
+    <!--<color name="aandacht_light_blue">#0E7AFF</color>-->
+    <color name="aandacht_light_blue">#ff0989d9</color>
     <color name="aandacht_dark_grey">#7777AA</color>
     <color name="aandacht_background">#F5F5F5</color>
     <color name="aandacht_white">#F5F5F5</color>

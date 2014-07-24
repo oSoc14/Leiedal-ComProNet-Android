@@ -37,18 +37,12 @@
             android:layout_margin="10dp"
         />
 
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/tabs"
-            app:pstsShouldExpand="true"
+        <fragment
+            android:name="osoc.leiedal.android.aandacht.View.fragments.StatsTabFragment"
+            android:id="@+id/stats_fragment"
+            tools:layout="@layout/fragment_stats_tab"
             android:layout_width="match_parent"
-            android:layout_height="48dp"/>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/colors"
-            android:layout_below="@+id/tabs" />
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </RelativeLayout>

@@ -81,7 +81,10 @@ public class StatsTabFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_stats_tab, container, false);
 
-        String[] text = {"5 minutes", "3 hours 2 minutes"}; //TODO get stats from backend
+        String[] text = {
+                getResources().getString(R.string.stats_value_response),
+                getResources().getString(R.string.stats_value_active)
+        }; //TODO get stats from backend
 
         //((ImageView) v.findViewById(R.id.avg_image)).setImageDrawable(getResources().getDrawable(R.drawable.icon_average_response_time));
         ((TextView) v.findViewById(R.id.avg_text)).setText(text[0]);

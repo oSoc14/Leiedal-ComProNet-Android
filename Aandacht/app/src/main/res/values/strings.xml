@@ -32,14 +32,20 @@ Misbruik is strafbaar!</string>
     <string name="title_activity_default">defaultActivity</string>
     <string name="title_activity_parent">parentActivity</string>
 
+    <!-- stats -->
+    <string name="stats_title_response">gemiddelde\nrespons tijd</string>
+    <string name="stats_title_active">totale tijd\nactief</string>
+    <string name="stats_value_response">76\nsec.</string>
+    <string name="stats_value_active">2391\nuur</string>
+
     <!-- settings -->
-    <string name="settings_active">Notifications</string>
-    <string name="title_activity_view_settings">Settings</string>
-    <string name="settings_sound">Sound</string>
+    <string name="settings_active">Notificaties</string>
+    <string name="title_activity_view_settings">Instellingen</string>
+    <string name="settings_sound">Geluid</string>
     <string name="settings_option_notif">notifications</string>
     <string name="settings_option_sound">sound</string>
     <string name="settings_option_vibrate">vibrate</string>
-    <string name="settings_vibrate">vibrate</string>
+    <string name="settings_vibrate">Trillen</string>
 
     <!-- maps -->
     <string name="title_activity_maps">Map</string>
