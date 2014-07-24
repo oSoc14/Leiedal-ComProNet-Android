@@ -26,7 +26,6 @@ Misbruik is strafbaar!</string>
     <string name="reports_popup_btnCancel">Annuleer</string>
 
     <!-- profile -->
-    <string name="profile_banner">U bent aangemeld als </string>
     <string name="title_activity_view_profile">Profile</string>
     <string name="profile_btnEditPicture">Edit picture</string>
     <string name="title_activity_default">defaultActivity</string>
