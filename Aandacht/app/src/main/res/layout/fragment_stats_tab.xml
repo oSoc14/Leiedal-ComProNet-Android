@@ -26,7 +26,7 @@
                 android:maxLines="2"
                 android:text="@string/stats_title_response"
                 android:textColor="@color/aandacht_dark_blue"
-                android:textSize="8pt"
+                android:textSize="7pt"
                 android:textStyle="bold" />
 
             <ImageView
@@ -74,7 +74,7 @@
                 android:maxLines="2"
                 android:text="@string/stats_title_active"
                 android:textColor="@color/aandacht_dark_blue"
-                android:textSize="8pt"
+                android:textSize="7pt"
                 android:textStyle="bold" />
 
             <ImageView
